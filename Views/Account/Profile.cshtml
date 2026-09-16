@@ -1,0 +1,1259 @@
+﻿@model Hotel_MVC.ViewModels.AccountVM.ProfileVM
+
+@{
+    ViewData["Title"] = "Guest Profile & Preferences";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-margin pt-6">
+        <div class="rounded-lg bg-green-50 border border-green-200 text-green-700 px-5 py-3">
+            @TempData["SuccessMessage"]
+        </div>
+    </div>
+}
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+
+    <div class="flex flex-col w-full">
+
+        <!-- =========================
+             PROFILE HERO
+        ========================== -->
+        <div class="relative w-full overflow-hidden bg-surface-container-low py-10 lg:py-14">
+
+            <div class="max-w-[1320px] mx-auto px-6 lg:px-margin relative z-10">
+
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+
+                    <div class="space-y-3">
+
+                        <div class="flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-widest text-primary font-semibold">
+
+                            <span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+
+                            <span>
+                                Guest Portal • Membership ID #EMA-MEM-4091
+                            </span>
+
+                        </div>
+
+                        <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                            Guest Profile &amp; Preferences
+                        </h1>
+
+                        <p class="font-body-lead text-body-lead text-on-surface-variant max-w-xl">
+                            Manage your personal credentials, sanctuary preferences, and reservation security.
+                        </p>
+
+                    </div>
+
+                    <div class="flex items-center gap-4 bg-surface-container-lowest px-5 py-3.5 rounded shadow-sm">
+
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+
+                            <span class="material-symbols-outlined text-[22px]"
+                                  style="font-variation-settings: 'FILL' 1;">
+                                workspace_premium
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <div class="font-label-caps text-label-caps uppercase text-primary font-bold tracking-wider">
+                                EMA Circle Preferred Member
+                            </div>
+
+                            <div class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1.5 pt-0.5">
+
+                                <span class="font-medium text-on-surface">
+                                    11 Stays Completed
+                                </span>
+
+                                <span class="text-outline-variant">
+                                    •
+                                </span>
+
+                                <span>
+                                    48,500 Sanctuary Pts
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             PROFILE CONTENT
+        ========================== -->
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-margin py-10 lg:py-16 w-full">
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+
+                <!-- =========================
+                     LEFT SIDEBAR
+                ========================== -->
+                <div class="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-28">
+
+                    <!-- Profile Card -->
+                    <div class="bg-surface-container-lowest rounded-xl p-6 lg:p-8 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+
+                        <div class="absolute top-0 inset-x-0 h-2 bg-primary"></div>
+
+                        <!-- Profile Image -->
+                        <div class="relative group mt-2 mb-4">
+
+                            <div class="w-28 h-28 rounded-full overflow-hidden shadow-md">
+
+                                <img alt="Eleanor Vance - Guest Portrait"
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                     src="~/Images/team/mohamed-sayed.png" />
+
+                            </div>
+
+                            <button class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md hover:bg-primary-container transition-all"
+                                    title="Update profile photo"
+                                    type="button">
+
+                                <span class="material-symbols-outlined text-[16px]">
+                                    photo_camera
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                        <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                            @Model.FirstName @Model.LastName
+                        </h2>
+
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">
+                            @Model.Email
+                        </span>
+
+
+                        <!-- Membership -->
+                        <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary font-label-caps text-label-caps uppercase tracking-wider font-semibold">
+
+                            <span class="material-symbols-outlined text-[14px]">
+                                hotel_class
+                            </span>
+
+                            Tier Preferred
+
+                        </div>
+
+
+                        <div class="w-full h-[1px] bg-surface-variant my-6"></div>
+
+
+                        <!-- Navigation -->
+                        <nav class="w-full flex flex-col gap-1.5 text-left">
+
+                            <a class="flex items-center justify-between px-4 py-3 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md font-semibold transition-colors"
+                               href="#personal-information">
+
+                                <span class="flex items-center gap-3">
+
+                                    <span class="material-symbols-outlined text-[20px]"
+                                          style="font-variation-settings: 'FILL' 1;">
+                                        person
+                                    </span>
+
+                                    Personal Details
+
+                                </span>
+
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_right
+                                </span>
+
+                            </a>
+
+
+                            <a class="flex items-center justify-between px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md"
+                               href="#account-security">
+
+                                <span class="flex items-center gap-3">
+
+                                    <span class="material-symbols-outlined text-[20px]">
+                                        lock_reset
+                                    </span>
+
+                                    Security &amp; Password
+
+                                </span>
+
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_right
+                                </span>
+
+                            </a>
+
+
+                            <a class="flex items-center justify-between px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md"
+                               href="#sanctuary-preferences">
+
+                                <span class="flex items-center gap-3">
+
+                                    <span class="material-symbols-outlined text-[20px]">
+                                        room_service
+                                    </span>
+
+                                    Stay Preferences
+
+                                </span>
+
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_right
+                                </span>
+
+                            </a>
+
+
+                            <a class="flex items-center justify-between px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md"
+                               href="#payment-methods">
+
+                                <span class="flex items-center gap-3">
+
+                                    <span class="material-symbols-outlined text-[20px]">
+                                        credit_card
+                                    </span>
+
+                                    Payment Methods
+
+                                </span>
+
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_right
+                                </span>
+
+                            </a>
+
+                        </nav>
+
+
+                        <div class="w-full h-[1px] bg-surface-variant my-6"></div>
+
+
+                        <!-- Sign Out -->
+                        <form asp-controller="Account"
+                              asp-action="Logout"
+                              method="post"
+                              class="w-full">
+
+                            @Html.AntiForgeryToken()
+
+                            <button class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-surface-container hover:bg-error-container hover:text-on-error-container text-on-surface-variant font-label-md text-label-md font-medium transition-all group"
+                                    type="submit">
+
+                                <span class="material-symbols-outlined text-[18px] group-hover:text-error transition-colors">
+                                    logout
+                                </span>
+
+                                <span>
+                                    Sign Out from Sanctuary
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- Concierge -->
+                    <div class="bg-surface-container-low rounded-xl p-6 shadow-sm flex items-start gap-4">
+
+                        <div class="p-2.5 rounded-full bg-surface-container-lowest text-primary shadow-sm flex-shrink-0">
+
+                            <span class="material-symbols-outlined text-[22px]">
+                                concierge
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="font-label-md text-label-md font-semibold text-on-surface">
+                                Dedicated Concierge
+                            </h4>
+
+                            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">
+                                Assigned to assist your retreat arrangements 24/7.
+                            </p>
+
+                            <a class="inline-flex items-center gap-1 font-label-caps text-label-caps text-primary uppercase font-bold mt-2 tracking-wider hover:underline"
+                               asp-controller="Home"
+                               asp-action="Contact">
+
+                                Contact Desk
+
+                                <span class="material-symbols-outlined text-[14px]">
+                                    arrow_forward
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     RIGHT CONTENT
+                ========================== -->
+                <div class="lg:col-span-8 flex flex-col gap-8">
+
+
+                    <!-- =========================
+                         PERSONAL INFORMATION
+                    ========================== -->
+                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
+                             id="personal-information">
+
+                        <div class="flex items-center justify-between pb-6 mb-8 border-b border-surface-variant/40">
+
+                            <div>
+
+                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
+                                    Sanctuary Records
+                                </span>
+
+                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
+                                    Personal Information
+                                </h3>
+
+                            </div>
+
+                            <span class="hidden sm:inline-flex items-center gap-1.5 text-secondary font-label-sm text-label-sm bg-surface-container-low px-3 py-1.5 rounded">
+
+                                <span class="material-symbols-outlined text-[16px]">
+                                    verified
+                                </span>
+
+                                Identity Verified
+
+                            </span>
+
+                        </div>
+
+
+                        <form asp-controller="Account"
+                              asp-action="Profile"
+                              method="post"
+                              class="space-y-6"
+                              id="personal-info-form">
+
+                            @Html.AntiForgeryToken()
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="text-red-600 text-sm mb-4">
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+
+                                <!-- First Name -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="firstName">
+                                        First Name
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
+                                            badge
+                                        </span>
+
+                                        <input asp-for="FirstName"
+                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="firstName"
+                                               type="text" />
+
+                                        <span asp-validation-for="FirstName"
+                                              class="text-red-600 text-sm">
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Last Name -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="lastName">
+                                        Last Name
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
+                                            person
+                                        </span>
+
+                                        <input asp-for="LastName"
+                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="lastName"
+                                               type="text" />
+
+                                        <span asp-validation-for="LastName"
+                                              class="text-red-600 text-sm">
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Email -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="email">
+                                        Email Address
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
+                                            mail
+                                        </span>
+
+                                        <input asp-for="Email"
+                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="email"
+                                               type="email"
+                                               readonly />
+
+                                        <span asp-validation-for="Email"
+                                              class="text-red-600 text-sm">
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Phone -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="phone">
+                                        Phone Number
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
+                                            call
+                                        </span>
+
+                                        <input asp-for="PhoneNumber"
+                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="phone"
+                                               type="tel" />
+
+                                        <span asp-validation-for="PhoneNumber"
+                                              class="text-red-600 text-sm">
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Nationality -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="nationality">
+                                        Nationality
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
+                                            public
+                                        </span>
+
+                                        <select asp-for="Nationality"
+                                                class="w-full h-12 pl-11 pr-10 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none cursor-pointer border border-surface-variant hover:border-outline-variant"
+                                                id="nationality">
+
+                                            <option value="">Select nationality</option>
+                                            <option value="US">United States</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="FR">France</option>
+                                            <option value="CH">Switzerland</option>
+                                            <option value="JP">Japan</option>
+                                            <option value="EG">Egypt</option>
+
+                                        </select>
+
+                                        <span class="material-symbols-outlined absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant pointer-events-none text-[20px]">
+                                            expand_more
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Passport -->
+                                <div class="space-y-2">
+
+                                    <div class="flex items-center justify-between">
+
+                                        <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                               for="passportId">
+                                            Passport / ID Document
+                                        </label>
+
+                                        <span class="font-label-caps text-label-caps text-secondary uppercase">
+                                            Encrypted
+                                        </span>
+
+                                    </div>
+
+                                    <div class="relative">
+
+                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
+                                            shield
+                                        </span>
+
+                                        <input asp-for="PassportOrNationalId"
+                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-low/70 rounded text-on-surface font-body-md text-body-md cursor-not-allowed border border-surface-variant/70 tracking-widest"
+                                               id="passportId"
+                                               readonly
+                                               type="text" />
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="pt-4 flex flex-wrap items-center justify-end gap-3">
+
+                                <button class="px-6 py-3 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md font-medium"
+                                        type="button"
+                                        id="discard-personal">
+
+                                    Discard
+
+                                </button>
+
+                                <button class="inline-flex items-center justify-center gap-2 px-7 py-3 rounded bg-primary text-on-primary font-label-md text-label-md font-medium shadow-[0_4px_14px_rgba(160,120,62,0.22)] hover:bg-primary-container transition-all"
+                                        type="submit">
+
+                                    <span class="material-symbols-outlined text-[18px]">
+                                        check
+                                    </span>
+
+                                    <span>
+                                        Save Changes
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- =========================
+                         STAY PREFERENCES
+                    ========================== -->
+                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
+                             id="sanctuary-preferences">
+
+                        <div class="flex items-center justify-between pb-6 mb-6 border-b border-surface-variant/40">
+
+                            <div>
+
+                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
+                                    Tailored Living
+                                </span>
+
+                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
+                                    Sanctuary Stay Preferences
+                                </h3>
+
+                            </div>
+
+                            <span class="material-symbols-outlined text-primary text-[28px]">
+                                spa
+                            </span>
+
+                        </div>
+
+                        <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mb-6">
+                            Our stewards curate every suite to your bespoke sensory standards prior to check-in.
+                        </p>
+
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+
+
+                            <!-- Room Placement -->
+                            <div class="p-4 rounded-lg bg-surface-container-low flex flex-col gap-2">
+
+                                <div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+
+                                    <span class="material-symbols-outlined text-[18px]">
+                                        wb_sunny
+                                    </span>
+
+                                </div>
+
+                                <span class="font-label-md text-label-md font-semibold text-on-surface">
+                                    Room Placement
+                                </span>
+
+                                <span class="font-body-sm text-body-sm text-on-surface-variant">
+                                    High Floor Oceanfront with morning sunlight
+                                </span>
+
+                            </div>
+
+
+                            <!-- Bedding -->
+                            <div class="p-4 rounded-lg bg-surface-container-low flex flex-col gap-2">
+
+                                <div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+
+                                    <span class="material-symbols-outlined text-[18px]">
+                                        bed
+                                    </span>
+
+                                </div>
+
+                                <span class="font-label-md text-label-md font-semibold text-on-surface">
+                                    Bedding Customization
+                                </span>
+
+                                <span class="font-body-sm text-body-sm text-on-surface-variant">
+                                    Feather-free organic botanical pillows
+                                </span>
+
+                            </div>
+
+
+                            <!-- Refreshment -->
+                            <div class="p-4 rounded-lg bg-surface-container-low flex flex-col gap-2">
+
+                                <div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+
+                                    <span class="material-symbols-outlined text-[18px]">
+                                        local_bar
+                                    </span>
+
+                                </div>
+
+                                <span class="font-label-md text-label-md font-semibold text-on-surface">
+                                    Arrival Refreshment
+                                </span>
+
+                                <span class="font-body-sm text-body-sm text-on-surface-variant">
+                                    Chilled sparkling mineral water with fresh lime
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex items-center justify-between pt-2">
+
+                            <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+
+                                <span class="material-symbols-outlined text-primary text-[18px]">
+                                    tune
+                                </span>
+
+                                <span>
+                                    Updated automatically across all confirmed EMA retreats
+                                </span>
+
+                            </div>
+
+                            <button class="inline-flex items-center gap-1 font-label-md text-label-md font-medium text-primary hover:text-on-surface transition-colors"
+                                    type="button"
+                                    id="modify-preferences">
+
+                                <span>
+                                    Modify Preferences
+                                </span>
+
+                                <span class="material-symbols-outlined text-[16px]">
+                                    open_in_new
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =========================
+                         ACCOUNT SECURITY
+                    ========================== -->
+                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
+                             id="account-security">
+
+                        <div class="flex items-center justify-between pb-6 mb-8 border-b border-surface-variant/40">
+
+                            <div>
+
+                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
+                                    Access Protection
+                                </span>
+
+                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
+                                    Account Security &amp; Password
+                                </h3>
+
+                            </div>
+
+                            <span class="material-symbols-outlined text-outline text-[24px]">
+                                lock
+                            </span>
+
+                        </div>
+
+
+                        <form class="space-y-6"
+                              id="password-form">
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+
+                                <!-- Current Password -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="currentPassword">
+                                        Current Password
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <input class="w-full h-12 pl-4 pr-11 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="currentPassword"
+                                               placeholder="••••••••••••"
+                                               type="password" />
+
+                                        <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors"
+                                                onclick="togglePasswordVisibility('currentPassword', this)"
+                                                title="Toggle password view"
+                                                type="button">
+
+                                            <span class="material-symbols-outlined text-[18px]">
+                                                visibility
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- New Password -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="newPassword">
+                                        New Password
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <input class="w-full h-12 pl-4 pr-11 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="newPassword"
+                                               placeholder="Min 8 characters"
+                                               type="password" />
+
+                                        <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors"
+                                                onclick="togglePasswordVisibility('newPassword', this)"
+                                                title="Toggle password view"
+                                                type="button">
+
+                                            <span class="material-symbols-outlined text-[18px]">
+                                                visibility
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Confirm Password -->
+                                <div class="space-y-2">
+
+                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
+                                           for="confirmPassword">
+                                        Confirm Password
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <input class="w-full h-12 pl-4 pr-11 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
+                                               id="confirmPassword"
+                                               placeholder="Re-enter password"
+                                               type="password" />
+
+                                        <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors"
+                                                onclick="togglePasswordVisibility('confirmPassword', this)"
+                                                title="Toggle password view"
+                                                type="button">
+
+                                            <span class="material-symbols-outlined text-[18px]">
+                                                visibility
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+
+                                <div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+
+                                    <span class="material-symbols-outlined text-[16px] text-tertiary">
+                                        check_circle
+                                    </span>
+
+                                    <span>
+                                        Includes uppercase letter, symbol, and 8+ characters
+                                    </span>
+
+                                </div>
+
+                                <button class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-inverse-surface text-surface-bright font-label-md text-label-md font-medium shadow-sm hover:bg-on-background transition-all"
+                                        type="submit">
+
+                                    <span class="material-symbols-outlined text-[18px]">
+                                        key
+                                    </span>
+
+                                    <span>
+                                        Update Password
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- =========================
+                         PAYMENT METHODS
+                    ========================== -->
+                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
+                             id="payment-methods">
+
+                        <div class="flex items-center justify-between pb-6 mb-6 border-b border-surface-variant/40">
+
+                            <div>
+
+                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
+                                    Billing Security
+                                </span>
+
+                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
+                                    Stored Payment Methods
+                                </h3>
+
+                            </div>
+
+                            <button class="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md font-medium"
+                                    type="button"
+                                    id="add-card">
+
+                                <span class="material-symbols-outlined text-[18px]">
+                                    add
+                                </span>
+
+                                <span>
+                                    Add Card
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+
+                            <!-- Amex -->
+                            <div class="p-5 rounded-lg bg-surface-container-low flex flex-col justify-between h-36 relative overflow-hidden">
+
+                                <div class="flex items-center justify-between">
+
+                                    <div class="flex items-center gap-2">
+
+                                        <span class="material-symbols-outlined text-primary text-[24px]">
+                                            credit_card
+                                        </span>
+
+                                        <span class="font-label-md text-label-md font-semibold text-on-surface">
+                                            Amex Centurion
+                                        </span>
+
+                                    </div>
+
+                                    <span class="font-label-caps text-label-caps bg-primary text-on-primary px-2 py-0.5 rounded uppercase">
+                                        Default
+                                    </span>
+
+                                </div>
+
+                                <div>
+
+                                    <div class="font-body-md text-body-md text-on-surface tracking-widest font-medium">
+                                        •••• •••••• 39041
+                                    </div>
+
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant flex justify-between mt-1">
+
+                                        <span>
+                                            Eleanor Vance
+                                        </span>
+
+                                        <span>
+                                            Exp 09/28
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Visa -->
+                            <div class="p-5 rounded-lg bg-surface-container-low flex flex-col justify-between h-36 relative overflow-hidden">
+
+                                <div class="flex items-center justify-between">
+
+                                    <div class="flex items-center gap-2">
+
+                                        <span class="material-symbols-outlined text-secondary text-[24px]">
+                                            credit_card
+                                        </span>
+
+                                        <span class="font-label-md text-label-md font-semibold text-on-surface">
+                                            Visa Infinite
+                                        </span>
+
+                                    </div>
+
+                                    <button class="text-on-surface-variant hover:text-error text-[13px] font-label-sm font-medium transition-colors"
+                                            type="button"
+                                            id="remove-card">
+
+                                        Remove
+
+                                    </button>
+
+                                </div>
+
+                                <div>
+
+                                    <div class="font-body-md text-body-md text-on-surface tracking-widest font-medium">
+                                        •••• •••• •••• 1084
+                                    </div>
+
+                                    <div class="font-body-sm text-body-sm text-on-surface-variant flex justify-between mt-1">
+
+                                        <span>
+                                            Eleanor Vance
+                                        </span>
+
+                                        <span>
+                                            Exp 12/26
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             TOAST
+        ========================== -->
+        <div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none"
+             id="toast-notification">
+
+            <div class="bg-inverse-surface text-inverse-on-surface px-5 py-3.5 rounded-lg shadow-xl flex items-center gap-3">
+
+                <span class="material-symbols-outlined text-primary-fixed-dim text-[20px]">
+                    check_circle
+                </span>
+
+                <span class="font-body-sm text-body-sm font-medium"
+                      id="toast-message">
+                    Changes saved successfully.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+@section Scripts {
+
+    <script>
+
+        // ==========================================
+        // PASSWORD VISIBILITY
+        // ==========================================
+
+        function togglePasswordVisibility(inputId, triggerBtn) {
+
+            const input = document.getElementById(inputId);
+
+            if (!input) return;
+
+            const icon = triggerBtn.querySelector('.material-symbols-outlined');
+
+            if (input.type === 'password') {
+
+                input.type = 'text';
+
+                if (icon) {
+                    icon.textContent = 'visibility_off';
+                }
+
+            } else {
+
+                input.type = 'password';
+
+                if (icon) {
+                    icon.textContent = 'visibility';
+                }
+
+            }
+        }
+
+
+        // ==========================================
+        // TOAST
+        // ==========================================
+
+        function showToast(message) {
+
+            const toast = document.getElementById('toast-notification');
+
+            const msgEl = document.getElementById('toast-message');
+
+            if (!toast || !msgEl) return;
+
+            msgEl.textContent = message;
+
+            toast.classList.remove(
+                'translate-y-20',
+                'opacity-0',
+                'pointer-events-none'
+            );
+
+            toast.classList.add(
+                'translate-y-0',
+                'opacity-100'
+            );
+
+
+            setTimeout(() => {
+
+                toast.classList.remove(
+                    'translate-y-0',
+                    'opacity-100'
+                );
+
+                toast.classList.add(
+                    'translate-y-20',
+                    'opacity-0',
+                    'pointer-events-none'
+                );
+
+            }, 3200);
+
+        }
+
+
+        // ==========================================
+
+
+        // ==========================================
+        // DISCARD PERSONAL INFORMATION
+        // ==========================================
+
+        document
+            .getElementById('discard-personal')
+            ?.addEventListener('click', function() {
+
+                showToast(
+                    'Changes discarded.'
+                );
+
+            });
+
+
+        // ==========================================
+        // PASSWORD
+        // ==========================================
+
+        document
+            .getElementById('password-form')
+            ?.addEventListener('submit', function(e) {
+
+                e.preventDefault();
+
+                const currentPassword =
+                    document.getElementById('currentPassword');
+
+                const newPassword =
+                    document.getElementById('newPassword');
+
+                const confirmPassword =
+                    document.getElementById('confirmPassword');
+
+
+                if (
+                    newPassword &&
+                    confirmPassword &&
+                    newPassword.value !== confirmPassword.value
+                ) {
+
+                    showToast(
+                        'New password and confirmation do not match.'
+                    );
+
+                    return;
+                }
+
+
+                if (currentPassword) {
+                    currentPassword.value = '';
+                }
+
+                if (newPassword) {
+                    newPassword.value = '';
+                }
+
+                if (confirmPassword) {
+                    confirmPassword.value = '';
+                }
+
+
+                showToast(
+                    'Security password successfully renewed.'
+                );
+
+            });
+
+
+        // ==========================================
+        // MODIFY PREFERENCES
+        // ==========================================
+
+        document
+            .getElementById('modify-preferences')
+            ?.addEventListener('click', function() {
+
+                showToast(
+                    'Preference editor will be available soon.'
+                );
+
+            });
+
+
+        // ==========================================
+        // ADD CARD
+        // ==========================================
+
+        document
+            .getElementById('add-card')
+            ?.addEventListener('click', function() {
+
+                showToast(
+                    'Payment method management will be available soon.'
+                );
+
+            });
+
+
+        // ==========================================
+        // REMOVE CARD
+        // ==========================================
+
+        document
+            .getElementById('remove-card')
+            ?.addEventListener('click', function() {
+
+                const confirmed = confirm(
+                    'Remove this payment method?'
+                );
+
+                if (!confirmed) return;
+
+                showToast(
+                    'Payment method removed from this demo.'
+                );
+
+            });
+
+    </script>
+
+}

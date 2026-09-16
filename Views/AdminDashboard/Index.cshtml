@@ -1,0 +1,397 @@
+﻿@model Hotel_MVC.ViewModels.Admin.DashboardVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="w-full px-5 py-5 lg:px-8 lg:py-6">
+    <div class="max-w-[1320px] w-full mx-auto space-y-space-xl">
+
+        <!-- =========================
+             PAGE HEADER
+        ========================== -->
+        <div class="mb-5 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div>
+                <p class="text-label-sm uppercase tracking-[0.18em] text-primary font-semibold mb-2">
+                    Administrative Overview
+                </p>
+
+                <h1 class="font-headline-lg text-on-surface">
+                    Admin Dashboard
+                </h1>
+
+                <p class="text-body-md text-on-surface-variant mt-2">
+                    A high-level view of hotel performance, occupancy, bookings and operations.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+                <button type="button" class="px-4 py-2.5 rounded-lg border border-outline/20 bg-surface-container-low text-label-md font-semibold text-on-surface hover:bg-surface-container-high transition-colors">
+                    Current Period
+                </button>
+
+                <a asp-controller="AdminBookings" asp-action="Index" class="px-4 py-2.5 rounded-lg bg-primary text-white text-label-md font-semibold hover:opacity-90 transition-opacity flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">calendar_month</span>
+                    View Bookings Ledger
+                </a>
+            </div>
+        </div>
+
+
+        <!-- =========================
+             KPI CARDS (Dynamic Data from DB)
+        ========================== -->
+        <div class="mt-5 mb-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+
+            <!-- Occupancy -->
+            <div class="bg-surface-container-low rounded-xl p-5 border border-outline/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-label-md text-on-surface-variant">Occupancy Rate</p>
+                        <h2 class="font-headline-sm text-on-surface mt-2">@Model.OccupancyRate%</h2>
+                        <p class="text-body-sm text-on-surface-variant mt-2">Across @Model.TotalRooms total rooms</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">hotel</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue -->
+            <div class="bg-surface-container-low rounded-xl p-5 border border-outline/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-label-md text-on-surface-variant">Revenue Month</p>
+                        <h2 class="font-headline-sm text-on-surface mt-2">@Model.RevenueThisMonth.ToString("N0") EGP</h2>
+                        <p class="text-body-sm text-green-700 mt-2 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]">trending_up</span> Real-time telemetry
+                        </p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">payments</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arrivals -->
+            <div class="bg-surface-container-low rounded-xl p-5 border border-outline/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-label-md text-on-surface-variant">Arrivals Today</p>
+                        <h2 class="font-headline-sm text-on-surface mt-2">@Model.ArrivalsToday</h2>
+                        <p class="text-body-sm text-on-surface-variant mt-2">Guests expected today</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">login</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Departures -->
+            <div class="bg-surface-container-low rounded-xl p-5 border border-outline/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-label-md text-on-surface-variant">Departures</p>
+                        <h2 class="font-headline-sm text-on-surface mt-2">@Model.DeparturesToday</h2>
+                        <p class="text-body-sm text-on-surface-variant mt-2">Guests checking out</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">logout</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Bookings -->
+            <div class="bg-surface-container-low rounded-xl p-5 border border-outline/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-label-md text-on-surface-variant">Total Bookings</p>
+                        <h2 class="font-headline-sm text-on-surface mt-2">@Model.TotalBookings</h2>
+                        <p class="text-body-sm text-green-700 mt-2 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]">trending_up</span> Active registry
+                        </p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">book_online</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Rooms -->
+            <div class="bg-surface-container-low rounded-xl p-5 border border-outline/10">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-label-md text-on-surface-variant">Available Suites</p>
+                        <h2 class="font-headline-sm text-on-surface mt-2">@Model.AvailableRooms</h2>
+                        <p class="text-body-sm text-on-surface-variant mt-2">Ready for booking</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">meeting_room</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             REVENUE + MONTHLY BOOKINGS
+        ========================== -->
+        <div class="mt-5 mb-5 grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+            <!-- Revenue Overview -->
+            <div class="xl:col-span-7 bg-surface-container-low rounded-xl p-6 border border-outline/10">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                    <div>
+                        <p class="text-label-sm uppercase tracking-[0.15em] text-primary font-semibold">Financial Performance</p>
+                        <h2 class="font-headline-sm text-on-surface mt-1">Revenue Overview</h2>
+                        <p class="text-body-sm text-on-surface-variant mt-1">Current operational cycle revenue</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-headline-sm text-on-surface">@Model.RevenueThisMonth.ToString("N0") EGP</p>
+                        <p class="text-body-sm text-green-700">Verified</p>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[300px]">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Monthly Bookings -->
+            <div class="xl:col-span-5 bg-surface-container-low rounded-xl p-6 border border-outline/10">
+                <div class="flex items-start justify-between mb-5">
+                    <div>
+                        <p class="text-label-sm uppercase tracking-[0.15em] text-primary font-semibold">Booking Activity</p>
+                        <h2 class="font-headline-sm text-on-surface mt-1">Monthly Bookings</h2>
+                        <p class="text-body-sm text-on-surface-variant mt-1">Reservation volume</p>
+                    </div>
+                    <span class="material-symbols-outlined text-primary">bar_chart</span>
+                </div>
+
+                <div class="relative w-full h-[230px]">
+                    <canvas id="bookingsChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ROOM OVERVIEW
+        ========================== -->
+        <div class="bg-surface-container-low rounded-xl p-6 border border-outline/10">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                <div>
+                    <p class="text-label-sm uppercase tracking-[0.15em] text-primary font-semibold">Inventory</p>
+                    <h2 class="font-headline-sm text-on-surface mt-1">Room Overview &amp; Inventory</h2>
+                    <p class="text-body-sm text-on-surface-variant mt-1">Current room availability across the hotel.</p>
+                </div>
+                <a asp-controller="AdminRooms" asp-action="Index" class="px-4 py-2 rounded-lg border border-outline/20 text-label-md font-semibold text-on-surface hover:bg-surface-container-high transition-colors">
+                    Manage Inventory
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="relative h-[260px] flex items-center justify-center">
+                    <canvas id="roomInventoryChart"></canvas>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                        <p class="font-headline-md text-on-surface">@Model.TotalRooms</p>
+                        <p class="text-label-sm text-on-surface-variant">Total Suites</p>
+                    </div>
+                </div>
+
+                <div class="space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-primary"></span>
+                            <div>
+                                <p class="text-label-md font-semibold text-on-surface">Available</p>
+                                <p class="text-body-sm text-on-surface-variant">Ready to book</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-on-surface">@Model.AvailableRooms</p>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-primary-container"></span>
+                            <div>
+                                <p class="text-label-md font-semibold text-on-surface">Occupied</p>
+                                <p class="text-body-sm text-on-surface-variant">Currently reserved</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-on-surface">@(Model.TotalRooms - Model.AvailableRooms)</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-outline/10">
+                        <div class="flex items-center justify-between">
+                            <span class="text-label-md text-on-surface-variant">Occupancy Rate</span>
+                            <span class="font-semibold text-primary">@Model.OccupancyRate%</span>
+                        </div>
+                        <div class="mt-3 h-2 rounded-full bg-surface-container-high overflow-hidden">
+                            <div class="h-full bg-primary rounded-full" style="width: @Model.OccupancyRate%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- =========================
+             ADMINISTRATIVE CONTROLS
+        ========================== -->
+        <div class="mt-5 mb-5">
+            <div class="mb-5">
+                <p class="text-label-sm uppercase tracking-[0.15em] text-primary font-semibold">Management</p>
+                <h2 class="font-headline-sm text-on-surface mt-1">Administrative Controls</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                <a asp-controller="AdminRooms" asp-action="Index" class="group bg-surface-container-low rounded-xl p-5 border border-outline/10 hover:bg-surface-container-high transition-colors">
+                    <div class="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary">meeting_room</span>
+                    </div>
+                    <h3 class="font-semibold text-on-surface">Manage Rooms</h3>
+                    <p class="text-body-sm text-on-surface-variant mt-1">Manage suites and availability.</p>
+                    <div class="flex items-center gap-1 mt-4 text-label-md font-semibold text-primary">
+                        Manage <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <a asp-controller="AdminRoomTypes" asp-action="Index" class="group bg-surface-container-low rounded-xl p-5 border border-outline/10 hover:bg-surface-container-high transition-colors">
+                    <div class="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary">sell</span>
+                    </div>
+                    <h3 class="font-semibold text-on-surface">Room Types &amp; Pricing</h3>
+                    <p class="text-body-sm text-on-surface-variant mt-1">Configure room tariffs and types.</p>
+                    <div class="flex items-center gap-1 mt-4 text-label-md font-semibold text-primary">
+                        Manage <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <a asp-controller="AdminBookings" asp-action="Index" class="group bg-surface-container-low rounded-xl p-5 border border-outline/10 hover:bg-surface-container-high transition-colors">
+                    <div class="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary">calendar_month</span>
+                    </div>
+                    <h3 class="font-semibold text-on-surface">Bookings Ledger</h3>
+                    <p class="text-body-sm text-on-surface-variant mt-1">Review and manage all hotel bookings.</p>
+                    <div class="flex items-center gap-1 mt-4 text-label-md font-semibold text-primary">
+                        Open Ledger <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <a asp-controller="Receptionist" asp-action="Index" class="group bg-surface-container-low rounded-xl p-5 border border-outline/10 hover:bg-surface-container-high transition-colors">
+                    <div class="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary">analytics</span>
+                    </div>
+                    <h3 class="font-semibold text-on-surface">Reception Desk</h3>
+                    <p class="text-body-sm text-on-surface-variant mt-1">Arrivals, departures &amp; check-in.</p>
+                    <div class="flex items-center gap-1 mt-4 text-label-md font-semibold text-primary">
+                        Open Desk <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+            Chart.defaults.font.size = 12;
+            Chart.defaults.color = "#817568";
+
+            const primary = "#79551e";
+            const primaryContainer = "#946d35";
+            const surface = "#fff8f5";
+            const outline = "#817568";
+            const gridColor = "rgba(129, 117, 104, 0.15)";
+
+            // Revenue Chart
+            const revenueCanvas = document.getElementById("revenueChart");
+            if (revenueCanvas) {
+                new Chart(revenueCanvas, {
+                    type: "line",
+                    data: {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        datasets: [{
+                            label: "Revenue (EGP)",
+                            data: [120, 140, 160, 180, 210, 250, 290, 310, 260, 220, 190, 230],
+                            borderColor: primary,
+                            backgroundColor: "rgba(121, 85, 30, 0.10)",
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: outline } },
+                            y: { grid: { color: gridColor, borderDash: [5, 5] }, ticks: { color: outline } }
+                        }
+                    }
+                });
+            }
+
+            // Bookings Chart
+            const bookingsCanvas = document.getElementById("bookingsChart");
+            if (bookingsCanvas) {
+                new Chart(bookingsCanvas, {
+                    type: "bar",
+                    data: {
+                        labels: ["Q1", "Q2", "Q3", "Q4"],
+                        datasets: [{
+                            label: "Bookings",
+                            data: [120, 180, 240, 190],
+                            backgroundColor: "rgba(121, 85, 30, 0.5)",
+                            borderColor: primary,
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: outline } },
+                            y: { grid: { color: gridColor, borderDash: [5, 5] }, ticks: { color: outline } }
+                        }
+                    }
+                });
+            }
+
+            // Room Inventory Doughnut
+            const roomCanvas = document.getElementById("roomInventoryChart");
+            if (roomCanvas) {
+                new Chart(roomCanvas, {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Available", "Occupied"],
+                        datasets: [{
+                            data: [@Model.AvailableRooms, @(Model.TotalRooms - Model.AvailableRooms)],
+                            backgroundColor: [primary, primaryContainer],
+                            borderColor: surface,
+                            borderWidth: 5,
+                            hoverOffset: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: "72%",
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+        });
+    </script>
+}

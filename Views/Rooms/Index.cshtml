@@ -1,0 +1,410 @@
+﻿@model List<Hotel_MVC.ViewModels.Room.RoomBrowseItemVM>
+@{
+    ViewData["Title"] = "Our Rooms & Suites";
+}
+
+<div class="flex flex-col w-full">
+
+    <!-- Ambient Glow -->
+    <div class="relative w-full overflow-hidden">
+
+        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[320px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <!-- EDITORIAL HEADER -->
+        <section class="max-w-[1320px] mx-auto w-full px-6 lg:px-margin pt-12 pb-8">
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-0 pb-2">
+
+                <div class="space-y-2">
+
+                    <div class="flex items-center gap-space-sm text-primary">
+                        <span class="font-label-caps text-label-caps uppercase tracking-widest">Sanctuary &amp; Suites</span>
+                        <span class="w-8 h-[1px] bg-primary/40"></span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Curated Collection</span>
+                    </div>
+
+                    <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Our Rooms &amp; Suites</h1>
+
+                    <p class="font-body-lead text-body-lead text-on-surface-variant max-w-xl">
+                        Select your preferred sanctuary. Designed with warm limestone, tactile linen, and unbroken horizon views.
+                    </p>
+
+                </div>
+
+                <div class="hidden lg:flex items-center gap-4 text-on-surface-variant bg-surface-container-low px-4 py-2.5 rounded-lg shadow-sm">
+                    <span id="sanctuary-count" class="font-label-sm text-label-sm text-primary font-medium">@Model.Count Sanctuaries Open</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- BOOK BY SENTENCE (AI SEARCH BAR) -->
+        <section class="max-w-[1320px] mx-auto w-full px-6 lg:px-margin mb-6">
+            <div class="bg-surface-container-lowest p-4 md:p-6 rounded-xl shadow-md space-y-3 border border-primary/10">
+                <div class="flex items-center gap-2 text-primary font-label-caps text-label-caps uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                    <span>Book by Sentence (AI Search)</span>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <input type="text" id="aiSearchSentence"
+                           class="w-full px-4 py-3 bg-surface-container-low text-on-surface font-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
+                           placeholder="e.g., Sea view room under 2000 EGP a night for next weekend..." />
+                    
+                    <button type="button" onclick="executeSmartSearch()" id="smartSearchBtn"
+                            class="w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-lg transition flex items-center justify-center gap-2 shrink-0 shadow-md">
+                        <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                        <span>Search AI</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH BAR (real dates -> Rooms/Search) -->
+        <section class="max-w-[1320px] mx-auto w-full px-6 lg:px-margin mb-12">
+
+            <div class="bg-surface-container-lowest p-4 md:p-6 rounded-xl shadow-md space-y-4">
+
+                <form asp-controller="Rooms" asp-action="Search" method="get"
+                      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4">
+
+                    <div class="lg:col-span-3 bg-surface-container-low p-3 rounded-lg flex flex-col">
+                        <label for="filter-checkin" class="font-label-caps text-label-caps uppercase text-on-surface-variant">Check-in</label>
+                        <input id="filter-checkin" type="date" name="CheckIn" required
+                               class="bg-transparent font-label-md text-label-md text-on-surface font-semibold focus:outline-none mt-1" />
+                    </div>
+
+                    <div class="lg:col-span-3 bg-surface-container-low p-3 rounded-lg flex flex-col">
+                        <label for="filter-checkout" class="font-label-caps text-label-caps uppercase text-on-surface-variant">Check-out</label>
+                        <input id="filter-checkout" type="date" name="CheckOut" required
+                               class="bg-transparent font-label-md text-label-md text-on-surface font-semibold focus:outline-none mt-1" />
+                    </div>
+
+                    <div class="lg:col-span-2 bg-surface-container-low p-3 rounded-lg flex flex-col">
+                        <label for="filter-guests" class="font-label-caps text-label-caps uppercase text-on-surface-variant">Guests</label>
+                        <select id="filter-guests" name="Guests" class="bg-transparent font-label-md text-label-md text-on-surface font-semibold focus:outline-none mt-1">
+                            <option value="1">1 Guest</option>
+                            <option value="2" selected>2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="6">6 Guests</option>
+                        </select>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-surface-container-low p-3 rounded-lg flex flex-col">
+                        <label for="filter-view" class="font-label-caps text-label-caps uppercase text-on-surface-variant">View</label>
+                        <select id="filter-view" name="ViewType" class="bg-transparent font-label-md text-label-md text-on-surface font-semibold focus:outline-none mt-1">
+                            <option value="">Any</option>
+                            <option value="Sea">Sea</option>
+                            <option value="City">City</option>
+                            <option value="Garden">Garden</option>
+                        </select>
+                    </div>
+
+                    <div class="lg:col-span-2 flex items-center">
+                        <button type="submit"
+                                class="w-full h-12 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-md hover:bg-primary-container transition-all">
+                            Search Rooms
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Quick Select -->
+                <div class="flex flex-wrap items-center gap-2 pt-2">
+                    <span class="font-label-caps text-label-caps uppercase text-on-surface-variant mr-1">Quick Select:</span>
+
+                    <button type="button" class="filter-chip active px-3 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm transition-all shadow-sm" data-view="all">All</button>
+                    <button type="button" class="filter-chip px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm transition-all" data-view="Sea">Sea View</button>
+                    <button type="button" class="filter-chip px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm transition-all" data-view="City">City View</button>
+                    <button type="button" class="filter-chip px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm transition-all" data-view="Garden">Garden View</button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ROOMS GRID (real data) -->
+        <section class="max-w-[1320px] mx-auto w-full px-6 lg:px-margin mb-20">
+
+            <div id="rooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+                @foreach (var room in Model)
+                {
+                    <article class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                             data-room-view="@room.ViewType">
+
+                        <div>
+                            <div class="relative w-full h-72 overflow-hidden bg-surface-container">
+                                <img src="@(room.CoverImageUrl ?? "/images/rooms/placeholder.jpg")"
+                                     alt="@room.Name"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"></div>
+
+                                @if (!string.IsNullOrEmpty(room.ViewType))
+                                {
+                                    <div class="absolute top-4 left-4 flex items-center gap-2">
+                                        <span class="px-2.5 py-1 rounded-full bg-surface/90 backdrop-blur-md text-on-surface font-label-caps text-label-caps uppercase shadow-sm">
+                                            @room.ViewType View
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="p-5 md:p-6 space-y-4">
+                                <h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                                    @room.Name
+                                </h3>
+
+                                <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                                    @room.Description
+                                </p>
+
+                                <div class="grid grid-cols-2 gap-2 text-on-surface-variant pt-1">
+                                    <div class="flex items-center gap-2 bg-surface-container-low px-2.5 py-1.5 rounded">
+                                        <span class="material-symbols-outlined text-[18px] text-primary">group</span>
+                                        <span class="font-body-sm text-body-sm text-on-surface">@room.Capacity Guests</span>
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(room.Amenities))
+                                    {
+                                        <div class="flex items-center gap-2 bg-surface-container-low px-2.5 py-1.5 rounded overflow-hidden">
+                                            <span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
+                                            <span class="font-body-sm text-body-sm text-on-surface truncate">@room.Amenities</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-5 md:p-6 pt-0 space-y-4">
+                            <div class="flex items-baseline justify-between pt-2">
+                                <div>
+                                    <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">@room.PricePerNight EGP</span>
+                                    <span class="font-body-sm text-body-sm text-on-surface-variant"> / night</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <a asp-controller="Rooms" asp-action="Details" asp-route-id="@room.Id"
+                                   class="w-full py-2.5 px-3 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md rounded-lg text-center transition-colors">
+                                    View Details
+                                </a>
+
+                                <a asp-controller="Rooms" asp-action="Details" asp-route-id="@room.Id"
+                                   class="w-full py-2.5 px-3 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-lg text-center transition-all shadow-[0_4px_14px_rgba(121,85,30,0.2)]">
+                                    Check Availability
+                                </a>
+                            </div>
+                        </div>
+
+                    </article>
+                }
+
+            </div>
+
+            <div id="no-rooms-message" class="hidden text-center py-16">
+                <span class="material-symbols-outlined text-5xl text-on-surface-variant">hotel</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-4">No rooms found</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-2">Try a different view filter or search query.</p>
+            </div>
+
+        </section>
+
+        <!-- CONCIERGE -->
+        <section class="max-w-[1320px] mx-auto w-full px-6 lg:px-margin mb-16">
+
+            <div class="bg-surface-container-high rounded-xl p-8 lg:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+
+                <div class="space-y-3 max-w-xl z-10">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined text-[20px]">room_service</span>
+                        <span class="font-label-caps text-label-caps uppercase tracking-wider">Uncertain which sanctuary suits your journey?</span>
+                    </div>
+
+                    <h2 class="font-headline-md text-headline-md text-on-surface">Curated Concierge Consultation</h2>
+
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Our guest relations directors can arrange adjoining suites, private culinary masters, bespoke wellness journeys, or private yacht departures.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 z-10 w-full md:w-auto">
+                    <a asp-controller="Home" asp-action="Contact"
+                       class="w-full sm:w-auto text-center px-6 py-3.5 bg-inverse-surface hover:bg-black text-inverse-on-surface font-label-md text-label-md rounded-lg transition-colors shadow-md">
+                        Connect with Concierge
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let roomCards = Array.from(document.querySelectorAll("[data-room-view]"));
+            const noRoomsMessage = document.getElementById("no-rooms-message");
+            const chips = document.querySelectorAll(".filter-chip");
+
+            chips.forEach(function(chip) {
+                chip.addEventListener("click", function() {
+                    chips.forEach(function(c) {
+                        c.classList.remove("bg-primary", "text-on-primary", "shadow-sm", "active");
+                        c.classList.add("bg-surface-container", "text-on-surface-variant");
+                    });
+                    this.classList.remove("bg-surface-container", "text-on-surface-variant");
+                    this.classList.add("bg-primary", "text-on-primary", "shadow-sm", "active");
+
+                    const view = this.dataset.view;
+                    let visible = 0;
+
+                    roomCards = Array.from(document.querySelectorAll("[data-room-view]"));
+                    roomCards.forEach(function(card) {
+                        if (view === "all" || card.dataset.roomView === view) {
+                            card.classList.remove("hidden");
+                            visible++;
+                        } else {
+                            card.classList.add("hidden");
+                        }
+                    });
+
+                    if (noRoomsMessage) {
+                        noRoomsMessage.classList.toggle("hidden", visible !== 0);
+                    }
+                });
+            });
+        });
+
+        // Smart AI Search execution function
+        async function executeSmartSearch() {
+            const queryInput = document.getElementById('aiSearchSentence');
+            const query = queryInput ? queryInput.value.trim() : '';
+            const btn = document.getElementById('smartSearchBtn');
+            const grid = document.getElementById('rooms-grid');
+            const noRoomsMessage = document.getElementById('no-rooms-message');
+            const countLabel = document.getElementById('sanctuary-count');
+
+            if (!query) return;
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">sync</span><span>Searching...</span>`;
+
+            try {
+                const response = await fetch('/Rooms/SmartSearch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query })
+                });
+
+                if (!response.ok) {
+                    alert('Unable to perform search.');
+                    return;
+                }
+
+                const data = await response.json();
+                grid.innerHTML = '';
+
+                if (countLabel) {
+                    countLabel.textContent = `${data.results.length} Sanctuaries Open`;
+                }
+
+                // If dates were extracted by Gemini, fill into the check-in and check-out fields
+                if (data.filters) {
+                    if (data.filters.checkIn) {
+                        const checkInInput = document.getElementById('filter-checkin');
+                        if (checkInInput) checkInInput.value = data.filters.checkIn;
+                    }
+                    if (data.filters.checkOut) {
+                        const checkOutInput = document.getElementById('filter-checkout');
+                        if (checkOutInput) checkOutInput.value = data.filters.checkOut;
+                    }
+                }
+
+                if (!data.results || data.results.length === 0) {
+                    if (noRoomsMessage) noRoomsMessage.classList.remove('hidden');
+                    return;
+                }
+
+                if (noRoomsMessage) noRoomsMessage.classList.add('hidden');
+
+                data.results.forEach(room => {
+                    const viewTypeBadge = room.viewType 
+                        ? `<div class="absolute top-4 left-4 flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-full bg-surface/90 backdrop-blur-md text-on-surface font-label-caps text-label-caps uppercase shadow-sm">
+                                ${room.viewType} View
+                            </span>
+                           </div>` 
+                        : '';
+
+                    const amenitiesBadge = room.amenities 
+                        ? `<div class="flex items-center gap-2 bg-surface-container-low px-2.5 py-1.5 rounded overflow-hidden">
+                            <span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
+                            <span class="font-body-sm text-body-sm text-on-surface truncate">${room.amenities}</span>
+                           </div>` 
+                        : '';
+
+                    const cardHtml = `
+                        <article class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                                 data-room-view="${room.viewType || ''}">
+                            <div>
+                                <div class="relative w-full h-72 overflow-hidden bg-surface-container">
+                                    <img src="${room.coverImageUrl || '/images/rooms/placeholder.jpg'}"
+                                         alt="${room.name}"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"></div>
+                                    ${viewTypeBadge}
+                                </div>
+                                <div class="p-5 md:p-6 space-y-4">
+                                    <h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                                        ${room.name}
+                                    </h3>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                                        ${room.description || ''}
+                                    </p>
+                                    <div class="grid grid-cols-2 gap-2 text-on-surface-variant pt-1">
+                                        <div class="flex items-center gap-2 bg-surface-container-low px-2.5 py-1.5 rounded">
+                                            <span class="material-symbols-outlined text-[18px] text-primary">group</span>
+                                            <span class="font-body-sm text-body-sm text-on-surface">${room.capacity} Guests</span>
+                                        </div>
+                                        ${amenitiesBadge}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5 md:p-6 pt-0 space-y-4">
+                                <div class="flex items-baseline justify-between pt-2">
+                                    <div>
+                                        <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">${room.pricePerNight} EGP</span>
+                                        <span class="font-body-sm text-body-sm text-on-surface-variant"> / night</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="/Rooms/Details/${room.id}"
+                                       class="w-full py-2.5 px-3 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md rounded-lg text-center transition-colors">
+                                        View Details
+                                    </a>
+                                    <a href="/Rooms/Details/${room.id}"
+                                       class="w-full py-2.5 px-3 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-lg text-center transition-all shadow-[0_4px_14px_rgba(121,85,30,0.2)]">
+                                        Check Availability
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                    grid.insertAdjacentHTML('beforeend', cardHtml);
+                });
+
+            } catch (err) {
+                alert('An error occurred during AI search.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">auto_awesome</span><span>Search AI</span>`;
+            }
+        }
+    </script>
+}

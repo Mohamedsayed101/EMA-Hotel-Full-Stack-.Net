@@ -1,0 +1,112 @@
+﻿@model Hotel_MVC.ViewModels.SearchVM.RoomSearchResultsViewModel
+@{
+    ViewData["Title"] = "Available Sanctuaries";
+    var nights = Math.Max(1, (Model.Search.CheckOut - Model.Search.CheckIn).Days);
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-12">
+
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-outline-variant/20">
+            <div>
+                <span class="text-primary font-semibold text-xs tracking-widest uppercase">Live Availability</span>
+                <h1 class="font-headline text-3xl sm:text-4xl text-on-surface font-semibold mt-1">Available Rooms &amp; Suites</h1>
+                <p class="text-on-surface-variant text-sm mt-1">
+                    Stay from <strong class="text-on-surface">@Model.Search.CheckIn.ToString("MMM dd, yyyy")</strong>
+                    to <strong class="text-on-surface">@Model.Search.CheckOut.ToString("MMM dd, yyyy")</strong>
+                    (@nights @(nights > 1 ? "Nights" : "Night") · @Model.Search.Guests @(Model.Search.Guests > 1 ? "Guests" : "Guest"))
+                </p>
+            </div>
+
+            <a asp-controller="Home" asp-action="Index" class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                <span class="material-symbols-outlined text-base">tune</span> Modify Search
+            </a>
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="my-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                @Html.ValidationSummary(false, "", new { @class = "list-disc pl-5" })
+            </div>
+        }
+
+        <!-- Results Grid -->
+        @if (!Model.Results.Any())
+        {
+            <div class="text-center py-20 bg-surface-container-low rounded-2xl my-8">
+                <span class="material-symbols-outlined text-5xl text-primary mb-3">event_busy</span>
+                <h3 class="font-headline text-2xl text-on-surface font-medium">No Sanctuaries Available</h3>
+                <p class="text-on-surface-variant text-sm max-w-md mx-auto mt-2">
+                    All rooms matching your guest count or view preferences are reserved for these dates. Please consider alternative dates.
+                </p>
+                <a asp-controller="Rooms" asp-action="Index" class="mt-6 inline-block px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-container transition">
+                    Browse All Suites
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                @foreach (var room in Model.Results)
+                {
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col border border-black/5">
+                        <div class="relative h-60 w-full overflow-hidden">
+                            <img src="@(room.CoverImageUrl ?? "/Images/hero.jpg")" alt="@room.Name" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                            <span class="absolute top-3 left-3 bg-surface/90 backdrop-blur-md px-3 py-1 rounded text-xs font-semibold text-primary uppercase tracking-wider">
+                                @room.ViewType View
+                            </span>
+                            <span class="absolute bottom-3 right-3 bg-on-surface/80 text-white text-xs px-2.5 py-1 rounded">
+                                @room.AvailableRoomsCount Rooms Left
+                            </span>
+                        </div>
+
+                        <div class="p-6 flex flex-col justify-between flex-grow">
+                            <div>
+                                <h3 class="font-headline text-xl font-semibold text-on-surface">@room.Name</h3>
+                                <p class="text-xs text-on-surface-variant mt-1">Accommodates up to @room.Capacity guests</p>
+                            </div>
+
+                            <div class="mt-6 pt-4 border-t border-black/5 flex items-end justify-between">
+                                <div>
+                                    <span class="text-[11px] text-on-surface-variant uppercase tracking-wider block">Total For @nights Nights</span>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="font-headline text-2xl font-bold text-primary">@room.TotalPriceForStay.ToString("N0")</span>
+                                        <span class="text-xs text-on-surface-variant">EGP</span>
+                                    </div>
+                                    <span class="text-[11px] text-on-surface-variant/80">(@room.PricePerNight.ToString("N0") EGP / night)</span>
+                                </div>
+
+                                <a asp-controller="Booking" asp-action="Create"
+                                   asp-route-roomTypeId="@room.RoomTypeId"
+                                   asp-route-checkIn="@Model.Search.CheckIn.ToString("yyyy-MM-dd")"
+                                   asp-route-checkOut="@Model.Search.CheckOut.ToString("yyyy-MM-dd")"
+                                   asp-route-guests="@Model.Search.Guests"
+                                   class="px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-container transition shadow-sm">
+                                    Reserve
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (Model.TotalPages > 1)
+            {
+                <div class="flex justify-center items-center gap-2 mt-12">
+                    @for (int p = 1; p <= Model.TotalPages; p++)
+                    {
+                        <a asp-action="Search"
+                           asp-route-CheckIn="@Model.Search.CheckIn.ToString("yyyy-MM-dd")"
+                           asp-route-CheckOut="@Model.Search.CheckOut.ToString("yyyy-MM-dd")"
+                           asp-route-Guests="@Model.Search.Guests"
+                           asp-route-Page="@p"
+                           class="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-semibold transition @(p == Model.Search.Page ? "bg-primary text-white" : "bg-surface-container text-on-surface hover:bg-surface-container-high")">
+                            @p
+                        </a>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

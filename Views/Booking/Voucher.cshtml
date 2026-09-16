@@ -1,0 +1,86 @@
+﻿@model Hotel_MVC.Models.Booking
+@{
+    ViewData["Title"] = $"Booking Voucher - {Model.BookingReference}";
+    var nights = (Model.CheckOutDate - Model.CheckInDate).Days;
+}
+
+<div class="w-full bg-surface min-h-screen py-12">
+    <div class="max-w-3xl mx-auto px-6">
+
+        <!-- Action Bar (Hidden on Print) -->
+        <div class="flex items-center justify-between mb-8 print:hidden">
+            <a asp-controller="Booking" asp-action="MyBookings" class="inline-flex items-center gap-1 text-sm text-primary hover:underline">
+                <span class="material-symbols-outlined text-base">arrow_back</span> Back to Reservations
+            </a>
+            <button onclick="window.print()" class="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-container transition shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">print</span> Print Official Voucher
+            </button>
+        </div>
+
+        <!-- Voucher Card -->
+        <div class="bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-8 sm:p-10 shadow-sm print:border-none print:shadow-none print:p-0">
+
+            <!-- Voucher Header -->
+            <div class="flex justify-between items-start border-b border-outline-variant/20 pb-6">
+                <div>
+                    <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">EMA Luxury Hotel</div>
+                    <p class="text-xs text-on-surface-variant uppercase tracking-widest mt-1">Official Guest Stay Voucher</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs uppercase text-on-surface-variant block font-medium">Confirmation Ref</span>
+                    <span class="font-headline text-lg font-bold text-primary">@Model.BookingReference</span>
+                    <span class="inline-block px-2.5 py-0.5 mt-1 rounded text-[11px] font-semibold uppercase bg-emerald-100 text-emerald-800">
+                        @Model.Status
+                    </span>
+                </div>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="grid grid-cols-2 gap-6 my-8 text-sm">
+                <div>
+                    <span class="text-xs text-on-surface-variant uppercase tracking-wider block font-semibold">Guest Name</span>
+                    <span class="text-on-surface font-medium text-base">@(Model.Guest?.FirstName + " " + Model.Guest?.LastName ?? Model.Guest?.UserName ?? "Valued Guest")</span>
+                </div>
+                
+                <div>
+                    <span class="text-xs text-on-surface-variant uppercase tracking-wider block font-semibold">Guests Count</span>
+                    <span class="text-on-surface font-medium">@Model.NumberOfGuests @(Model.NumberOfGuests > 1 ? "Guests" : "Guest")</span>
+                </div>
+                <div>
+                    <span class="text-xs text-on-surface-variant uppercase tracking-wider block font-semibold">Check-in Date</span>
+                    <span class="text-on-surface font-medium text-base">@Model.CheckInDate.ToString("dddd, MMM dd, yyyy")</span>
+                    <span class="text-xs text-on-surface-variant/80 block">Standard: 03:00 PM</span>
+                </div>
+                <div>
+                    <span class="text-xs text-on-surface-variant uppercase tracking-wider block font-semibold">Check-out Date</span>
+                    <span class="text-on-surface font-medium text-base">@Model.CheckOutDate.ToString("dddd, MMM dd, yyyy")</span>
+                    <span class="text-xs text-on-surface-variant/80 block">Standard: 12:00 PM</span>
+                </div>
+            </div>
+
+            <!-- Room Sanctuary Summary -->
+            <div class="bg-surface-container-low rounded-xl p-5 my-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-xs uppercase text-primary font-semibold tracking-wider">Reserved Sanctuary</span>
+                        <h4 class="font-headline text-xl font-semibold text-on-surface">@Model.Room.RoomType.Name</h4>
+                        <p class="text-xs text-on-surface-variant mt-0.5">Assigned Room: No. @Model.Room.RoomNumber (Floor @Model.Room.FloorNumber)</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-on-surface-variant uppercase block font-medium">Total Stay</span>
+                        <span class="font-headline text-xl font-bold text-primary">@Model.TotalAmount.ToString("N0") EGP</span>
+                        <span class="text-[11px] text-on-surface-variant block">@nights Night(s)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policies & Instructions -->
+            <div class="border-t border-outline-variant/20 pt-6 text-xs text-on-surface-variant space-y-2">
+                <p><strong>Identification:</strong> Please present an official Passport or National ID upon arrival at the concierge desk.</p>
+                <p><strong>Cancellation Terms:</strong> Complimentary cancellation is permissible up to 24 hours prior to standard check-in time.</p>
+                <p><strong>Concierge Support:</strong> For early arrivals, transfers, or special requests, contact reservations@emahotel.com.</p>
+            </div>
+        </div>
+
+    </div>
+</div>

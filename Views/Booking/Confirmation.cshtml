@@ -1,0 +1,57 @@
+﻿@model Hotel_MVC.Models.Booking
+@{
+    ViewData["Title"] = "Sanctuary Reservation Confirmed";
+    var nights = (Model.CheckOutDate - Model.CheckInDate).Days;
+}
+
+<div class="w-full bg-surface min-h-[80vh] flex items-center justify-center py-16">
+    <div class="max-w-2xl w-full mx-auto px-6">
+
+        <div class="bg-surface-container-lowest border border-black/5 rounded-3xl p-8 sm:p-12 shadow-sm text-center flex flex-col items-center">
+
+            <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-4xl">check_circle</span>
+            </div>
+
+            <span class="text-primary font-semibold text-xs uppercase tracking-widest">Sanctuary Guaranteed</span>
+            <h1 class="font-headline text-3xl sm:text-4xl text-on-surface font-bold mt-1 mb-2">Reservation Confirmed</h1>
+            <p class="text-sm text-on-surface-variant max-w-md mx-auto mb-8">
+                Thank you for choosing EMA Hotel. Your sanctuary has been officially recorded in our registry.
+            </p>
+
+            <div class="w-full bg-surface-container-low rounded-2xl p-6 text-left space-y-3.5 mb-8 text-sm">
+                <div class="flex justify-between items-center border-b border-black/5 pb-3">
+                    <span class="text-secondary uppercase text-xs font-semibold">Booking Reference</span>
+                    <strong class="font-headline text-base text-primary">@Model.BookingReference</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-on-surface-variant">Reserved Sanctuary:</span>
+                    <strong class="text-on-surface">@Model.Room.RoomType.Name (Room @Model.Room.RoomNumber)</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-on-surface-variant">Stay Duration:</span>
+                    <span class="text-on-surface">@Model.CheckInDate.ToString("MMM dd") – @Model.CheckOutDate.ToString("MMM dd, yyyy") (@nights Nights)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-on-surface-variant">Guests:</span>
+                    <span class="text-on-surface">@Model.NumberOfGuests Guest(s)</span>
+                </div>
+                <div class="flex justify-between items-center pt-2 border-t border-black/5">
+                    <span class="text-on-surface font-semibold">Total Amount:</span>
+                    <strong class="font-headline text-xl text-primary font-bold">@Model.TotalAmount.ToString("N0") EGP</strong>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 w-full">
+                <a asp-controller="Booking" asp-action="Voucher" asp-route-id="@Model.Id" class="px-6 py-3 bg-primary text-white rounded-xl text-sm font-semibold hover:bg-primary-container transition shadow-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">print</span> Print Stay Voucher
+                </a>
+                <a asp-controller="Booking" asp-action="MyBookings" class="px-6 py-3 bg-surface-container text-on-surface rounded-xl text-sm font-semibold hover:bg-surface-container-high transition">
+                    View My Bookings
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>

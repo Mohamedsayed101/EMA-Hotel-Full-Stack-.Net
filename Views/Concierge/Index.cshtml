@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "AI Hotel Concierge";
+}
+
+<div class="max-w-[850px] mx-auto px-4 py-8">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-xl border border-black/5 overflow-hidden flex flex-col h-[650px]">
+
+        <!-- Header -->
+        <div class="bg-primary text-white px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-sm">
+                    <span class="material-symbols-outlined text-2xl">smart_toy</span>
+                </div>
+                <div>
+                    <h1 class="font-headline text-lg font-bold tracking-wide leading-tight">AI Hotel Concierge</h1>
+                    <p class="text-xs text-white/80">Instant answers regarding facilities &amp; policies</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs font-medium text-white/90">Concierge Online</span>
+            </div>
+        </div>
+
+        <!-- Chat Box Output -->
+        <div id="chatBox" class="flex-grow p-6 overflow-y-auto space-y-4 bg-surface/40">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-1">
+                    <span class="material-symbols-outlined text-sm">smart_toy</span>
+                </div>
+                <div class="space-y-3 max-w-[80%]">
+                    <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-black/5 shadow-sm text-sm text-on-surface">
+                        <span class="font-semibold block text-primary mb-1">Concierge</span>
+                        Welcome to EMA Hotel &amp; Suites! How may I assist you with your stay today?
+                    </div>
+
+                    <!-- Quick Action Chips -->
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <button type="button" onclick="useChip('What time is check-in and check-out?')" class="text-xs bg-white hover:bg-primary hover:text-white text-on-surface-variant border border-black/10 px-3 py-1.5 rounded-full transition shadow-xs">
+                            🕒 Check-in Times
+                        </button>
+                        <button type="button" onclick="useChip('What are the breakfast hours and options?')" class="text-xs bg-white hover:bg-primary hover:text-white text-on-surface-variant border border-black/10 px-3 py-1.5 rounded-full transition shadow-xs">
+                            🍳 Breakfast Info
+                        </button>
+                        <button type="button" onclick="useChip('Is valet parking available?')" class="text-xs bg-white hover:bg-primary hover:text-white text-on-surface-variant border border-black/10 px-3 py-1.5 rounded-full transition shadow-xs">
+                            🚗 Parking Rates
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-4 bg-white border-t border-black/5">
+            <div class="flex items-center gap-2">
+                <input type="text" id="userQuery"
+                       class="flex-grow px-4 py-3 bg-surface rounded-xl border border-black/10 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
+                       placeholder="Ask about check-in, breakfast, facilities..."
+                       onkeypress="handleKeyPress(event)" />
+
+                <button id="sendBtn" onclick="sendMessage()" type="button"
+                        class="px-6 py-3 bg-primary hover:bg-primary-container text-white text-sm font-semibold rounded-xl transition flex items-center gap-2 shadow-sm disabled:opacity-50">
+                    <span>Send</span>
+                    <span class="material-symbols-outlined text-base">send</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function useChip(text) {
+        document.getElementById('userQuery').value = text;
+        sendMessage();
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('userQuery');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatBox = document.getElementById('chatBox');
+        const text = input.value.trim();
+
+        if (!text) return;
+
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // User message bubble (safe plain text formatting)
+        const userDiv = document.createElement('div');
+        userDiv.className = 'flex items-start justify-end gap-3';
+        userDiv.innerHTML = `
+            <div class="bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] text-sm">
+                <div class="flex items-center justify-between gap-4 mb-1">
+                    <span class="font-semibold text-white/90">You</span>
+                    <span class="text-[10px] text-white/60">${timeStr}</span>
+                </div>
+                <div>${escapeHtml(text)}</div>
+            </div>`;
+        chatBox.appendChild(userDiv);
+
+        input.value = '';
+        input.disabled = true;
+        sendBtn.disabled = true;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Loading indicator
+        const loadingId = 'loading-' + Date.now();
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = loadingId;
+        loadingDiv.className = 'flex items-start gap-3';
+        loadingDiv.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-1">
+                <span class="material-symbols-outlined text-sm">smart_toy</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-black/5 shadow-sm text-sm text-on-surface-variant italic">
+                Concierge is checking hotel details...
+            </div>`;
+        chatBox.appendChild(loadingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch('/Concierge/Ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            const data = await response.json();
+            document.getElementById(loadingId)?.remove();
+
+            // Extract reply with fallback handling
+            const replyContent = data.reply || data.error || "Sorry, I couldn't process your request right now.";
+
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'flex items-start gap-3';
+            aiDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-1">
+                    <span class="material-symbols-outlined text-sm">smart_toy</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-black/5 shadow-sm max-w-[80%] text-sm text-on-surface">
+                    <div class="flex items-center justify-between gap-4 mb-1">
+                        <span class="font-semibold text-primary">Concierge</span>
+                        <span class="text-[10px] text-on-surface-variant/50">${timeStr}</span>
+                    </div>
+                    <div>${replyContent}</div>
+                </div>`;
+            chatBox.appendChild(aiDiv);
+        } catch (err) {
+            document.getElementById(loadingId)?.remove();
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'flex justify-center my-2';
+            errorDiv.innerHTML = `
+                <div class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-medium border border-red-100">
+                    Failed to communicate with service. Please try again.
+                </div>`;
+            chatBox.appendChild(errorDiv);
+        } finally {
+            input.disabled = false;
+            sendBtn.disabled = false;
+            input.focus();
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    // Helper strictly for user input safety so users cannot inject malicious HTML
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML.replace(/\n/g, '<br/>');
+    }
+</script>

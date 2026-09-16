@@ -1,0 +1,45 @@
+﻿@model Hotel_MVC.Models.Room
+@{
+    ViewData["Title"] = "Delete Room";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-xl mx-auto px-6">
+        
+        <div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-black/5 text-center">
+            <div class="w-16 h-16 rounded-full bg-red-100 text-red-700 flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-3xl">warning</span>
+            </div>
+
+            <h1 class="font-headline text-2xl font-bold text-on-surface mb-2">Delete Room Unit</h1>
+            <p class="text-sm text-on-surface-variant mb-6">
+                Are you sure you want to permanently remove room <strong class="text-on-surface">No. @Model.RoomNumber</strong> from the hotel registry?
+            </p>
+
+            <div class="bg-surface-container-low p-4 rounded-xl text-left text-sm mb-6 space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-on-surface-variant">Room Identifier:</span>
+                    <strong class="text-on-surface">No. @Model.RoomNumber</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-on-surface-variant">Floor Level:</span>
+                    <strong class="text-on-surface">Floor @Model.FloorNumber</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-on-surface-variant">Status:</span>
+                    <strong class="text-primary">@Model.Status</strong>
+                </div>
+            </div>
+
+            <form asp-action="Delete" method="post" onsubmit="return confirm('Final warning: Are you absolutely sure you want to delete this room?');">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="flex items-center justify-center gap-3">
+                    <a asp-action="Index" class="px-5 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Keep Room</a>
+                    <button type="submit" class="px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition shadow-sm">Confirm &amp; Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

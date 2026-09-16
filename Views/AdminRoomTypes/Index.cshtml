@@ -1,0 +1,131 @@
+﻿@model Hotel_MVC.ViewModels.RoomType.RoomTypeListVM
+@{
+    ViewData["Title"] = "Sanctuary Types Catalog";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-12 space-y-8">
+
+        <!-- Page Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="text-primary font-semibold text-xs uppercase tracking-widest">Admin Registry</span>
+                <h1 class="font-headline text-3xl sm:text-4xl font-bold text-on-surface mt-1">Room Types &amp; Pricing</h1>
+                <p class="text-sm text-on-surface-variant mt-1">Manage room tiers, pricing tariffs, and gallery showcases.</p>
+            </div>
+            <div>
+                <a asp-action="Create" class="px-6 py-3 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-md flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">add_circle</span> New Room Type
+                </a>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">check_circle</span>
+                <span>@TempData["Success"]</span>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">error</span>
+                <span>@TempData["Error"]</span>
+            </div>
+        }
+
+        <!-- Search + Sort Form -->
+        <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-black/5">
+            <form asp-action="Index" method="get" class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                <div class="sm:col-span-6">
+                    <label class="block text-xs uppercase font-semibold text-on-surface-variant mb-1.5">Search Catalog</label>
+                    <input type="text" name="Search" value="@Model.Filter.Search" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" placeholder="Search by name..." />
+                </div>
+                <div class="sm:col-span-4">
+                    <label class="block text-xs uppercase font-semibold text-on-surface-variant mb-1.5">Sort Order</label>
+                    <select name="SortBy" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none">
+                        <option value="price_asc" selected="@(Model.Filter.SortBy == "price_asc")">Price: Low to High</option>
+                        <option value="price_desc" selected="@(Model.Filter.SortBy == "price_desc")">Price: High to Low</option>
+                        <option value="name" selected="@(Model.Filter.SortBy == "name")">Name (A-Z)</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2 self-end">
+                    <button type="submit" class="w-full py-3 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-md flex items-center justify-center gap-1.5">
+                        <span class="material-symbols-outlined text-lg">filter_list</span> Apply
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Room Types Table Card -->
+        <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-black/5 overflow-hidden">
+            <div class="px-6 py-5 border-b border-black/5 flex items-center justify-between">
+                <h3 class="font-headline text-xl font-bold text-on-surface">Sanctuary Catalog</h3>
+                <span class="text-xs text-on-surface-variant">Total Catalog Items: @Model.TotalCount</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[900px] text-left border-collapse">
+                    <thead class="bg-surface-container-low text-[11px] uppercase tracking-wider font-semibold text-on-surface-variant border-b border-black/5">
+                        <tr>
+                            <th class="px-6 py-4">Image</th>
+                            <th class="px-6 py-4">Name</th>
+                            <th class="px-6 py-4">Capacity</th>
+                            <th class="px-6 py-4">Price / Night</th>
+                            <th class="px-6 py-4">View</th>
+                            <th class="px-6 py-4">Rooms Linked</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 text-sm">
+                        @if (!Model.RoomTypes.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-on-surface-variant py-12">No room types found in the catalog.</td>
+                            </tr>
+                        }
+                        @foreach (var item in Model.RoomTypes)
+                        {
+                            <tr class="hover:bg-surface-container-low/50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="w-16 h-12 rounded-lg overflow-hidden border border-black/10">
+                                        <img src="@(string.IsNullOrEmpty(item.CoverImageUrl) ? "/Images/hero.jpg" : item.CoverImageUrl)" class="w-full h-full object-cover" />
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-semibold text-on-surface">@item.Name</td>
+                                <td class="px-6 py-4 text-on-surface-variant">Up to @item.Capacity Guests</td>
+                                <td class="px-6 py-4 font-semibold text-primary">@item.PricePerNight.ToString("N0") EGP</td>
+                                <td class="px-6 py-4 text-on-surface-variant">@item.ViewType</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2.5 py-1 rounded-full bg-surface-container text-xs font-semibold text-on-surface">@item.RoomCount Units</span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="px-3 py-1.5 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="px-3 py-1.5 bg-red-100 text-red-700 text-xs font-semibold rounded-lg hover:bg-red-200 transition">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (Model.TotalPages > 1)
+            {
+                <div class="px-6 py-4 border-t border-black/5 flex items-center justify-center gap-1">
+                    @for (int p = 1; p <= Model.TotalPages; p++)
+                    {
+                        <a class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition @(p == Model.Filter.Page ? "bg-primary text-white" : "bg-surface-container-low text-on-surface hover:bg-surface-container-high")"
+                           asp-action="Index"
+                           asp-route-Search="@Model.Filter.Search"
+                           asp-route-SortBy="@Model.Filter.SortBy"
+                           asp-route-Page="@p">@p</a>
+                    }
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

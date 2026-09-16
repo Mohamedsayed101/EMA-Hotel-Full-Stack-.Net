@@ -1,0 +1,78 @@
+﻿@model Hotel_MVC.ViewModels.Room.RoomFormVM
+@{
+    ViewData["Title"] = "Add New Room";
+    var roomTypes = ViewBag.RoomTypes as List<Hotel_MVC.Models.RoomType> ?? new List<Hotel_MVC.Models.RoomType>();
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-3xl mx-auto px-6">
+        
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <span class="text-primary font-semibold text-xs uppercase tracking-widest">Admin Registry</span>
+                <h1 class="font-headline text-3xl font-bold text-on-surface mt-1">Add New Room Unit</h1>
+            </div>
+            <a asp-action="Index" class="px-4 py-2 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">
+                Back to List
+            </a>
+        </div>
+
+        <div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-black/5">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                        @Html.ValidationSummary(false, "", new { @class = "list-disc pl-5" })
+                    </div>
+                }
+
+                <div class="space-y-5">
+                    <div>
+                        <label asp-for="RoomNumber" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Room Number / Identifier</label>
+                        <input asp-for="RoomNumber" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required placeholder="e.g. 104, 302A" />
+                        <span asp-validation-for="RoomNumber" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="RoomTypeId" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Sanctuary Type / Tier</label>
+                        <select asp-for="RoomTypeId" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required>
+                            <option value="">-- Select Room Type --</option>
+                            @foreach (var rt in roomTypes)
+                            {
+                                <option value="@rt.Id">@rt.Name (@rt.PricePerNight.ToString("N0") EGP)</option>
+                            }
+                        </select>
+                        <span asp-validation-for="RoomTypeId" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="FloorNumber" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Floor Level</label>
+                        <input asp-for="FloorNumber" type="number" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required placeholder="e.g. 1, 2, 3" />
+                        <span asp-validation-for="FloorNumber" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Status" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Initial Status</label>
+                        <select asp-for="Status" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none">
+                            <option value="@Hotel_MVC.Enums.RoomStatus.Available">Available</option>
+                            <option value="@Hotel_MVC.Enums.RoomStatus.Maintenance">Under Maintenance</option>
+                            <option value="@Hotel_MVC.Enums.RoomStatus.OutOfService">Booked</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div class="pt-4 flex items-center justify-end gap-3">
+                        <a asp-action="Index" class="px-5 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Cancel</a>
+                        <button type="submit" class="px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-md">Save Room Unit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

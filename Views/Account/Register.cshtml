@@ -1,0 +1,669 @@
+﻿@{
+    ViewData["Title"] = "Create Account";
+}
+
+<div class="w-full flex items-center justify-center">
+    <div class="flex flex-col w-full items-center justify-center py-10 px-4 sm:px-6 lg:px-8 relative">
+
+
+        <!-- Background Decorative Elements -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+            <div class="w-[580px] h-[580px] rounded-full bg-primary/5 blur-3xl -top-24 -left-20 absolute"></div>
+            <div class="w-[480px] h-[480px] rounded-full bg-tertiary/5 blur-3xl bottom-0 right-0 absolute"></div>
+        </div>
+
+        <div class="w-full max-w-2xl relative z-10 flex flex-col items-center">
+
+            <!-- Brand Logo Emblem -->
+            <div class="flex flex-col items-center justify-center mb-8">
+
+                <img alt="HotelMvc Luxury Suites & Resort"
+                     class="h-14 sm:h-16 w-auto object-contain drop-shadow-sm mb-3"
+                     src="~/Images/logo.png" />
+
+                <span class="font-label-caps text-label-caps uppercase tracking-[0.24em] text-primary">
+                    Private Membership Curation
+                </span>
+
+            </div>
+
+            <!-- Registration Card -->
+            <div class="w-full bg-surface-container-lowest shadow-xl rounded-xl p-6 sm:p-10 relative">
+
+                <div class="text-center max-w-lg mx-auto mb-8">
+
+                    <h1 class="font-headline-md text-headline-md text-on-surface mb-3 tracking-tight">
+                        Join HotelMvc Preferred Guest
+                    </h1>
+
+                    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Create your complimentary account to unlock member-only suite discounts,
+                        complimentary room upgrades, and express check-in.
+                    </p>
+
+                </div>
+
+                <!-- Perks Strip -->
+                <div class="bg-surface-container-low rounded-lg p-3.5 mb-8 flex flex-wrap items-center justify-around gap-2 text-center">
+
+                    <div class="flex items-center gap-1.5 text-primary">
+                        <span class="material-symbols-outlined text-base">
+                            check_circle
+                        </span>
+
+                        <span class="font-label-sm text-label-sm text-on-surface font-medium">
+                            Instant 10% Member Rate
+                        </span>
+                    </div>
+
+                    <div class="hidden sm:block w-1 h-1 rounded-full bg-outline-variant"></div>
+
+                    <div class="flex items-center gap-1.5 text-primary">
+                        <span class="material-symbols-outlined text-base">
+                            check_circle
+                        </span>
+
+                        <span class="font-label-sm text-label-sm text-on-surface font-medium">
+                            Wi-Fi & Welcome Drink
+                        </span>
+                    </div>
+
+                    <div class="hidden sm:block w-1 h-1 rounded-full bg-outline-variant"></div>
+
+                    <div class="flex items-center gap-1.5 text-primary">
+                        <span class="material-symbols-outlined text-base">
+                            check_circle
+                        </span>
+
+                        <span class="font-label-sm text-label-sm text-on-surface font-medium">
+                            Flexible Cancellation
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Register Form -->
+                <form asp-controller="Account"
+                      asp-action="Register"
+                      method="post"
+                      class="space-y-5"
+                      onsubmit="return handleRegisterSubmit(event)">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="mb-2 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm space-y-1"></div>
+                    }
+
+                    <!-- Personal Details Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                        <!-- First Name -->
+                        <div class="flex flex-col gap-1.5">
+
+                            <label class="font-label-md text-label-md text-on-surface"
+                                   for="FirstName">
+                                First Name
+                            </label>
+
+                            <div class="relative">
+
+                                <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">
+                                    person
+                                </span>
+
+                                <input class="w-full h-12 pl-10 pr-3 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                                       id="FirstName"
+                                       name="FirstName"
+                                       placeholder="e.g. Eleanor"
+                                       required
+                                       type="text" />
+
+                            </div>
+
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="flex flex-col gap-1.5">
+
+                            <label class="font-label-md text-label-md text-on-surface"
+                                   for="LastName">
+                                Last Name
+                            </label>
+
+                            <div class="relative">
+
+                                <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">
+                                    badge
+                                </span>
+
+                                <input class="w-full h-12 pl-10 pr-3 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                                       id="LastName"
+                                       name="LastName"
+                                       placeholder="e.g. Vance"
+                                       required
+                                       type="text" />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex flex-col gap-1.5">
+
+                        <label class="font-label-md text-label-md text-on-surface"
+                               for="Email">
+                            Email Address
+                        </label>
+
+                        <div class="relative">
+
+                            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">
+                                mail
+                            </span>
+
+                            <input class="w-full h-12 pl-10 pr-3 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                                   id="Email"
+                                   name="Email"
+                                   placeholder="eleanor.vance@luxury.com"
+                                   required
+                                   type="email" />
+
+                        </div>
+
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="flex flex-col gap-1.5">
+
+                        <label class="font-label-md text-label-md text-on-surface"
+                               for="PhoneNumber">
+                            Phone Number
+                        </label>
+
+                        <div class="relative">
+
+                            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">
+                                call
+                            </span>
+
+                            <input class="w-full h-12 pl-10 pr-3 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                                   id="PhoneNumber"
+                                   name="PhoneNumber"
+                                   placeholder="+1 (555) 234-5678"
+                                   type="tel" />
+
+                        </div>
+
+                    </div>
+
+                    <!-- Password Fields -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+
+                        <!-- Password -->
+                        <div class="flex flex-col gap-1.5">
+
+                            <label class="font-label-md text-label-md text-on-surface"
+                                   for="Password">
+                                Password
+                            </label>
+
+                            <div class="relative">
+
+                                <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">
+                                    lock
+                                </span>
+
+                                <input class="w-full h-12 pl-10 pr-10 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                                       id="Password"
+                                       name="Password"
+                                       oninput="evaluatePasswordStrength(this.value)"
+                                       placeholder="••••••••••••"
+                                       required
+                                       type="password" />
+
+                                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface p-1 focus:outline-none"
+                                        onclick="togglePasswordVisibility('Password', this)"
+                                        type="button">
+
+                                    <span class="material-symbols-outlined text-lg">
+                                        visibility
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="flex flex-col gap-1.5">
+
+                            <label class="font-label-md text-label-md text-on-surface"
+                                   for="ConfirmPassword">
+                                Confirm Password
+                            </label>
+
+                            <div class="relative">
+
+                                <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">
+                                    lock_reset
+                                </span>
+
+                                <input class="w-full h-12 pl-10 pr-10 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+                                       id="ConfirmPassword"
+                                       name="ConfirmPassword"
+                                       placeholder="••••••••••••"
+                                       required
+                                       type="password" />
+
+                                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface p-1 focus:outline-none"
+                                        onclick="togglePasswordVisibility('ConfirmPassword', this)"
+                                        type="button">
+
+                                    <span class="material-symbols-outlined text-lg">
+                                        visibility
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Password Requirement Indicator -->
+                    <div class="bg-surface-container-low/70 rounded-lg p-3 space-y-2">
+
+                        <div class="flex items-center justify-between">
+
+                            <span class="font-label-sm text-label-sm text-on-surface-variant">
+                                Security Strength
+                            </span>
+
+                            <span class="font-label-caps text-label-caps uppercase tracking-wider text-outline"
+                                  id="strength-label">
+                                Minimum standards
+                            </span>
+
+                        </div>
+
+                        <div class="w-full h-1.5 bg-secondary-container rounded-full overflow-hidden flex gap-1">
+
+                            <div class="h-full w-1/3 bg-outline-variant transition-colors duration-300"
+                                 id="bar-1">
+                            </div>
+
+                            <div class="h-full w-1/3 bg-outline-variant transition-colors duration-300"
+                                 id="bar-2">
+                            </div>
+
+                            <div class="h-full w-1/3 bg-outline-variant transition-colors duration-300"
+                                 id="bar-3">
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 font-label-sm text-label-sm text-outline">
+
+                            <span class="flex items-center gap-1 transition-colors"
+                                  id="req-len">
+
+                                <span class="material-symbols-outlined text-sm">
+                                    radio_button_unchecked
+                                </span>
+
+                                Min 8 chars
+
+                            </span>
+
+                            <span class="flex items-center gap-1 transition-colors"
+                                  id="req-upper">
+
+                                <span class="material-symbols-outlined text-sm">
+                                    radio_button_unchecked
+                                </span>
+
+                                1 Uppercase
+
+                            </span>
+
+                            <span class="flex items-center gap-1 transition-colors"
+                                  id="req-sym">
+
+                                <span class="material-symbols-outlined text-sm">
+                                    radio_button_unchecked
+                                </span>
+
+                                1 Symbol/Number
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Checkboxes -->
+                    <div class="space-y-3 pt-2">
+
+                        <label class="flex items-start gap-3 cursor-pointer group">
+
+                            <input checked
+                                   class="mt-1 h-4 w-4 rounded accent-primary bg-surface text-primary focus:ring-primary/20"
+                                   required
+                                   type="checkbox" />
+
+                            <span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
+
+                                I agree to the HotelMvc
+
+                                <a class="text-primary font-medium underline underline-offset-2 hover:text-primary-container"
+                                   href="#">
+                                    Terms of Service
+                                </a>
+
+                                and
+
+                                <a class="text-primary font-medium underline underline-offset-2 hover:text-primary-container"
+                                   href="#">
+                                    Privacy Policy
+                                </a>.
+
+                            </span>
+
+                        </label>
+
+                        <label class="flex items-start gap-3 cursor-pointer group">
+
+                            <input class="mt-1 h-4 w-4 rounded accent-primary bg-surface text-primary focus:ring-primary/20"
+                                   type="checkbox" />
+
+                            <span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
+
+                                Receive curated seasonal offers, bespoke dining invitations,
+                                and room upgrade notifications.
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                    <!-- Primary CTA -->
+                    <div class="pt-4">
+
+                        <button id="createAccountBtn"
+                                class="w-full h-12 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group"
+                                type="submit">
+
+                            <span>
+                                Create Account
+                            </span>
+
+                            <span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1">
+                                arrow_forward
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <!-- Link to Login -->
+                <div class="mt-8 pt-6 bg-surface-container-low/50 rounded-b-xl text-center">
+
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+
+                        Already have an account?
+
+                        <a asp-controller="Account"
+                           asp-action="Login"
+                           class="text-primary font-semibold hover:text-primary-container ml-1 inline-flex items-center gap-0.5 group">
+
+                            <span>
+                                Sign in here
+                            </span>
+
+                            <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-0.5">
+                                chevron_right
+                            </span>
+
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Concierge Footer Note -->
+            <div class="mt-8 flex items-center gap-2 text-on-surface-variant">
+
+                <span class="material-symbols-outlined text-primary text-base">
+                    concierge
+                </span>
+
+                <span class="font-label-sm text-label-sm">
+                    Prefer private onboarding? Contact our 24/7 VIP Concierge at concierge@hotelmvc.com
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+@section Scripts {
+
+
+    <script>
+
+        // ==========================================
+        // PASSWORD VISIBILITY
+        // ==========================================
+
+        function togglePasswordVisibility(inputId, triggerBtn) {
+
+            const input = document.getElementById(inputId);
+            const icon = triggerBtn.querySelector(
+                '.material-symbols-outlined'
+            );
+
+            if (input.type === 'password') {
+
+                input.type = 'text';
+
+                icon.textContent = 'visibility_off';
+
+            } else {
+
+                input.type = 'password';
+
+                icon.textContent = 'visibility';
+
+            }
+        }
+
+
+        // ==========================================
+        // PASSWORD STRENGTH
+        // ==========================================
+
+        function evaluatePasswordStrength(val) {
+
+            const hasLen = val.length >= 8;
+            const hasUpper = /[A-Z]/.test(val);
+            const hasSym = /[\d\W]/.test(val);
+
+            const updateRequirement = (elId, met) => {
+
+                const el = document.getElementById(elId);
+                const icon = el.querySelector(
+                    '.material-symbols-outlined'
+                );
+
+                if (met) {
+
+                    el.classList.remove('text-outline');
+                    el.classList.add('text-primary');
+
+                    icon.textContent = 'check_circle';
+
+                } else {
+
+                    el.classList.add('text-outline');
+                    el.classList.remove('text-primary');
+
+                    icon.textContent =
+                        'radio_button_unchecked';
+                }
+            };
+
+            updateRequirement(
+                'req-len',
+                hasLen
+            );
+
+            updateRequirement(
+                'req-upper',
+                hasUpper
+            );
+
+            updateRequirement(
+                'req-sym',
+                hasSym
+            );
+
+
+            const score =
+                (hasLen ? 1 : 0) +
+                (hasUpper ? 1 : 0) +
+                (hasSym ? 1 : 0);
+
+
+            const bar1 =
+                document.getElementById('bar-1');
+
+            const bar2 =
+                document.getElementById('bar-2');
+
+            const bar3 =
+                document.getElementById('bar-3');
+
+            const label =
+                document.getElementById('strength-label');
+
+
+            bar1.className =
+                'h-full w-1/3 transition-colors duration-300 ' +
+                (score >= 1
+                    ? 'bg-primary'
+                    : 'bg-outline-variant');
+
+
+            bar2.className =
+                'h-full w-1/3 transition-colors duration-300 ' +
+                (score >= 2
+                    ? 'bg-primary'
+                    : 'bg-outline-variant');
+
+
+            bar3.className =
+                'h-full w-1/3 transition-colors duration-300 ' +
+                (score === 3
+                    ? 'bg-primary'
+                    : 'bg-outline-variant');
+
+
+            if (score === 0) {
+
+                label.textContent =
+                    'Minimum standards';
+
+                label.className =
+                    'font-label-caps text-label-caps uppercase tracking-wider text-outline';
+
+            }
+            else if (score === 1) {
+
+                label.textContent =
+                    'Weak';
+
+                label.className =
+                    'font-label-caps text-label-caps uppercase tracking-wider text-primary';
+
+            }
+            else if (score === 2) {
+
+                label.textContent =
+                    'Good';
+
+                label.className =
+                    'font-label-caps text-label-caps uppercase tracking-wider text-primary';
+
+            }
+            else {
+
+                label.textContent =
+                    'Strong & Secure';
+
+                label.className =
+                    'font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold';
+
+            }
+        }
+
+
+        // ==========================================
+        // REGISTER BUTTON
+        // FRONTEND ONLY
+        // ==========================================
+
+        function handleRegisterSubmit(event) {
+
+            const password =
+                document.getElementById('Password').value;
+
+            const confirmPassword =
+                document.getElementById('ConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+
+                event.preventDefault();
+
+                alert('Passwords do not match.');
+
+                return false;
+            }
+
+            const button =
+                document.getElementById('createAccountBtn');
+
+            button.classList.add(
+                'opacity-80',
+                'pointer-events-none'
+            );
+
+            button.innerHTML = `
+                    <span class="material-symbols-outlined animate-spin text-lg">
+                        progress_activity
+                    </span>
+
+                    <span>
+                        Creating Membership...
+                    </span>
+                `;
+
+            return true;
+        }
+
+    </script>
+
+
+}

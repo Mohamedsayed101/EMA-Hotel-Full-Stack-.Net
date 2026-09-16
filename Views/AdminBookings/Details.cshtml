@@ -1,0 +1,111 @@
+﻿@model Hotel_MVC.Models.Booking
+@{
+    ViewData["Title"] = "Booking Details";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-3xl mx-auto px-6 space-y-8">
+
+        <!-- Page Header -->
+        <div class="flex items-center justify-between">
+            <div>
+                <span class="text-primary font-semibold text-xs uppercase tracking-widest">Administrative Audit</span>
+                <div class="flex items-center gap-3 mt-1">
+                    <h1 class="font-headline text-3xl font-bold text-on-surface">@Model.BookingReference</h1>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold 
+                        @(Model.Status.ToString() == "Confirmed" ? "bg-emerald-100 text-emerald-800" : 
+                          Model.Status.ToString() == "CheckedIn" ? "bg-blue-100 text-blue-800" : 
+                          Model.Status.ToString() == "CheckedOut" ? "bg-zinc-100 text-zinc-800" : "bg-amber-100 text-amber-800")">
+                        @Model.Status
+                    </span>
+                </div>
+            </div>
+            <a asp-action="Index" class="px-4 py-2 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">
+                Back to Ledger
+            </a>
+        </div>
+
+        <!-- Alerts -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">check_circle</span>
+                <span>@TempData["Success"]</span>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">error</span>
+                <span>@TempData["Error"]</span>
+            </div>
+        }
+
+        <!-- Details Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-black/5 space-y-6">
+            
+            <!-- Guest Information -->
+            <div>
+                <h3 class="text-xs uppercase font-semibold text-primary tracking-wider mb-3">Guest Profile</h3>
+                <div class="bg-surface-container-low p-4 rounded-xl text-sm space-y-1">
+                    <p class="font-bold text-on-surface text-base">@Model.Guest.FirstName @Model.Guest.LastName</p>
+                    <p class="text-on-surface-variant">Email: <span class="font-medium text-on-surface">@Model.Guest.Email</span></p>
+                    <p class="text-on-surface-variant">Phone: <span class="font-medium text-on-surface">@(string.IsNullOrEmpty(Model.Guest.PhoneNumber) ? "N/A" : Model.Guest.PhoneNumber)</span></p>
+                </div>
+            </div>
+
+            <!-- Room & Stay Information -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-surface-container-low p-4 rounded-xl text-sm space-y-1">
+                    <h3 class="text-xs uppercase font-semibold text-primary tracking-wider mb-2">Assigned Unit</h3>
+                    <p class="font-bold text-on-surface text-base">Room No. @Model.Room.RoomNumber</p>
+                    <p class="text-on-surface-variant">Tier: <span class="font-medium text-on-surface">@Model.Room.RoomType.Name</span></p>
+                    <p class="text-on-surface-variant">Floor Level: <span class="font-medium text-on-surface">Floor @Model.Room.FloorNumber</span></p>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded-xl text-sm space-y-1">
+                    <h3 class="text-xs uppercase font-semibold text-primary tracking-wider mb-2">Stay Schedule</h3>
+                    <p class="text-on-surface-variant">Check-In: <span class="font-semibold text-on-surface">@Model.CheckInDate.ToString("MMM dd, yyyy")</span></p>
+                    <p class="text-on-surface-variant">Check-Out: <span class="font-semibold text-on-surface">@Model.CheckOutDate.ToString("MMM dd, yyyy")</span></p>
+                    <p class="text-on-surface-variant">Duration: <span class="font-semibold text-on-surface">@((Model.CheckOutDate - Model.CheckInDate).Days) Nights</span></p>
+                </div>
+            </div>
+
+            <!-- Financial Summary -->
+            <div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between">
+                <div>
+                    <span class="text-xs uppercase font-semibold text-on-surface-variant">Payment Status &amp; Method</span>
+                    <p class="font-bold text-on-surface text-sm mt-0.5">@Model.PaymentMethod / @Model.PaymentStatus</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs uppercase font-semibold text-on-surface-variant">Total Tariff Amount</span>
+                    <h2 class="font-headline text-2xl font-bold text-primary mt-0.5">@Model.TotalAmount.ToString("N0") EGP</h2>
+                </div>
+            </div>
+
+            <!-- Cancellation Form / Actions -->
+            @if (Model.Status != Hotel_MVC.Enums.BookingStatus.Cancelled && Model.Status != Hotel_MVC.Enums.BookingStatus.CheckedOut)
+            {
+                <div class="pt-4 border-t border-black/5">
+                    <form asp-action="Cancel" asp-route-id="@Model.Id" method="post" class="space-y-4" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                        @Html.AntiForgeryToken()
+                        <div>
+                            <label class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Cancellation Reason (Optional)</label>
+                            <input type="text" name="reason" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" placeholder="State reason if cancelling..." />
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <a asp-action="Index" class="px-5 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Back to Ledger</a>
+                            <button type="submit" class="px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition shadow-sm">Cancel Booking</button>
+                        </div>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="pt-4 border-t border-black/5 flex justify-end">
+                    <a asp-action="Index" class="px-6 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Back to Ledger</a>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

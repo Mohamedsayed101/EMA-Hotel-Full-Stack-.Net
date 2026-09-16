@@ -1,0 +1,118 @@
+﻿@model Hotel_MVC.ViewModels.RoomType.RoomTypeFormVM
+@{
+    ViewData["Title"] = "Edit Room Type";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-3xl mx-auto px-6">
+        
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <span class="text-primary font-semibold text-xs uppercase tracking-widest">Sanctuary Catalog</span>
+                <h1 class="font-headline text-3xl font-bold text-on-surface mt-1">Edit Room Type</h1>
+            </div>
+            <a asp-action="Index" class="px-4 py-2 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">
+                Back to List
+            </a>
+        </div>
+
+        <div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-black/5">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                        @Html.ValidationSummary(false, "", new { @class = "list-disc pl-5" })
+                    </div>
+                }
+
+                <div class="space-y-5">
+                    <div>
+                        <label asp-for="Name" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Sanctuary Name</label>
+                        <input asp-for="Name" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required />
+                        <span asp-validation-for="Name" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Description" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Editorial Description</label>
+                        <textarea asp-for="Description" rows="4" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required></textarea>
+                        <span asp-validation-for="Description" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label asp-for="PricePerNight" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Tariff Price (EGP / Night)</label>
+                            <input asp-for="PricePerNight" type="number" step="0.01" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required />
+                            <span asp-validation-for="PricePerNight" class="text-xs text-red-600 mt-1 block"></span>
+                        </div>
+                        <div>
+                            <label asp-for="Capacity" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Max Capacity (Guests)</label>
+                            <input asp-for="Capacity" type="number" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required />
+                            <span asp-validation-for="Capacity" class="text-xs text-red-600 mt-1 block"></span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label asp-for="ViewType" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">View Type</label>
+                            <input asp-for="ViewType" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" />
+                            <span asp-validation-for="ViewType" class="text-xs text-red-600 mt-1 block"></span>
+                        </div>
+                        <div>
+                            <label asp-for="Amenities" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Amenities</label>
+                            <input asp-for="Amenities" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" />
+                            <span asp-validation-for="Amenities" class="text-xs text-red-600 mt-1 block"></span>
+                        </div>
+                    </div>
+
+                    <!-- حقل سياسة الإلغاء المضاف لمنع حدوث خطأ الـ Null -->
+                    <div>
+                        <label asp-for="CancellationPolicy" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Cancellation Policy</label>
+                        <input asp-for="CancellationPolicy" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required />
+                        <span asp-validation-for="CancellationPolicy" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <!-- Existing Images Control -->
+                    @if (Model.ExistingImages != null && Model.ExistingImages.Any())
+                    {
+                        <div>
+                            <label class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Existing Gallery Photos (Check to delete)</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                @for (int i = 0; i < Model.ExistingImages.Count; i++)
+                                {
+                                    <div class="relative h-28 rounded-xl overflow-hidden border border-black/10 bg-surface-container-low flex flex-col justify-end p-2 group">
+                                        <input type="hidden" asp-for="ExistingImages[i].Id" />
+                                        <input type="hidden" asp-for="ExistingImages[i].ImageUrl" />
+                                        <img src="@Model.ExistingImages[i].ImageUrl" class="absolute inset-0 w-full h-full object-cover" />
+                                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                            <label class="flex items-center gap-1.5 bg-white/90 px-3 py-1 rounded-lg text-xs font-semibold text-red-600 cursor-pointer">
+                                                <input type="checkbox" name="ImagesToDelete" value="@Model.ExistingImages[i].Id" class="rounded text-red-600 focus:ring-red-500" /> Delete
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <div>
+                        <label asp-for="NewImages" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Upload Additional Images</label>
+                        <input asp-for="NewImages" type="file" multiple class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-primary-container" />
+                        <span asp-validation-for="NewImages" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div class="pt-4 flex items-center justify-end gap-3">
+                        <a asp-action="Index" class="px-5 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Cancel</a>
+                        <button type="submit" class="px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-md">Update Room Type</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

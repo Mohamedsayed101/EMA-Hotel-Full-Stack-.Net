@@ -1,0 +1,232 @@
+﻿@model Hotel_MVC.ViewModels.Booking.CreateBookingVM
+@{
+    ViewData["Title"] = "Complete Your Stay";
+    var nights = Math.Max(1, (Model.CheckOut - Model.CheckIn).Days);
+    var extras = ViewBag.Extras as List<Hotel_MVC.Models.Extra> ?? new List<Hotel_MVC.Models.Extra>();
+}
+
+<div class="w-full bg-surface min-h-screen">
+    <section class="max-w-[1320px] mx-auto px-6 lg:px-12 pt-16 pb-8">
+        <div class="flex items-center gap-3 text-sm text-on-surface-variant mb-6">
+            <a asp-controller="Rooms" asp-action="Index" class="text-primary hover:underline">Rooms</a>
+            <span>›</span>
+            <span class="text-primary">@Model.RoomTypeName</span>
+            <span>›</span>
+            <span class="text-on-surface font-medium">Reservation</span>
+        </div>
+        <h1 class="font-headline text-4xl text-on-surface font-bold">Complete Your Stay</h1>
+        <p class="text-on-surface-variant mt-2 text-base">Select dates, customize genuine hospitality services, and confirm your reservation.</p>
+    </section>
+
+    <section class="max-w-[1320px] mx-auto px-6 lg:px-12 pb-20">
+        <form asp-controller="Booking" asp-action="Create" method="post" id="bookingForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="RoomTypeId" />
+            <input type="hidden" asp-for="RoomTypeName" />
+            <input type="hidden" asp-for="CoverImageUrl" />
+            <input type="hidden" asp-for="PricePerNight" id="pricePerNightVal" value="@Model.PricePerNight" />
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="mb-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                    @Html.ValidationSummary(false, "", new { @class = "list-disc pl-5" })
+                </div>
+            }
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="lg:col-span-8 flex flex-col gap-8">
+                    <!-- Suite summary -->
+                    <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col sm:flex-row items-center gap-6">
+                        <div class="w-full sm:w-48 h-36 rounded-xl overflow-hidden flex-shrink-0">
+                            <img src="@(Model.CoverImageUrl ?? "/Images/hero.jpg")" alt="@Model.RoomTypeName" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="flex-grow">
+                            <span class="text-primary font-semibold text-xs uppercase tracking-widest">Sanctuary Tier</span>
+                            <h2 class="font-headline text-2xl font-bold text-on-surface mt-1">@Model.RoomTypeName</h2>
+                            <p class="text-sm text-on-surface-variant mt-1 font-semibold">@Model.PricePerNight.ToString("N0") EGP / Night</p>
+                        </div>
+                    </div>
+
+                    <!-- Stay Configuration -->
+                    <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col gap-6">
+                        <h3 class="font-headline text-xl font-semibold text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">calendar_month</span> Stay Schedule
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                            <div>
+                                <label asp-for="CheckIn" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Check-in</label>
+                                <input asp-for="CheckIn" type="date" id="checkInInput" min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                       class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required />
+                                <span asp-validation-for="CheckIn" class="text-xs text-red-600 mt-1 block"></span>
+                            </div>
+                            <div>
+                                <label asp-for="CheckOut" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Check-out</label>
+                                <input asp-for="CheckOut" type="date" id="checkOutInput" min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")"
+                                       class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" required />
+                                <span asp-validation-for="CheckOut" class="text-xs text-red-600 mt-1 block"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Guests" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Guests</label>
+                                <select asp-for="Guests" id="guestsSelect" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none">
+                                    @for (int i = 1; i <= 6; i++)
+                                    {
+                                        <option value="@i">@i @(i == 1 ? "Guest" : "Guests")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Genuine Extras from Database -->
+                    @if (extras.Any())
+                    {
+                        <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col gap-4">
+                            <h3 class="font-headline text-xl font-semibold text-on-surface flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">room_service</span> Bespoke Add-on Services
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                @foreach (var extra in extras)
+                                {
+                                    <label class="flex items-start gap-3 p-4 rounded-xl border border-outline-variant/30 hover:border-primary cursor-pointer transition">
+                                        <input type="checkbox" name="selectedExtras" value="@extra.Id" data-price="@extra.Price" data-pricing="@extra.PricingType"
+                                               class="extra-checkbox mt-1 text-primary focus:ring-primary rounded" />
+                                        <div class="flex-grow">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm font-semibold text-on-surface">@extra.Name</span>
+                                                <span class="text-xs font-bold text-primary">@extra.Price.ToString("N0") EGP</span>
+                                            </div>
+                                            
+                                            <span class="text-[10px] uppercase tracking-wider text-secondary font-medium mt-1 block">(@extra.PricingType)</span>
+                                        </div>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Payment Method -->
+                    <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col gap-4">
+                        <h3 class="font-headline text-xl font-semibold text-on-surface flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">payments</span> Payment Options
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                            <label class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant/30 hover:border-primary cursor-pointer transition">
+                                <input type="radio" asp-for="PaymentMethod" value="@Hotel_MVC.Enums.PaymentMethod.Cash" checked class="text-primary focus:ring-primary" />
+                                <div>
+                                    <span class="text-sm font-semibold text-on-surface block">Pay on Arrival</span>
+                                    <span class="text-xs text-on-surface-variant">Settle at concierge check-in</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant/30 hover:border-primary cursor-pointer transition">
+                                <input type="radio" asp-for="PaymentMethod" value="@Hotel_MVC.Enums.PaymentMethod.Card" class="text-primary focus:ring-primary" />
+                                <div>
+                                    <span class="text-sm font-semibold text-on-surface block">Online Card Payment</span>
+                                    <span class="text-xs text-on-surface-variant">Instant digital confirmation</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Summary -->
+                <div class="lg:col-span-4">
+                    <div class="sticky top-28 bg-surface-container-lowest rounded-2xl p-7 shadow-sm border border-black/5 flex flex-col gap-6">
+                        <h3 class="font-headline text-xl font-semibold text-on-surface">Stay Folio Summary</h3>
+                        <div class="flex flex-col gap-3 text-sm text-on-surface-variant pb-6 border-b border-black/5">
+                            <div class="flex justify-between">
+                                <span>Check-in:</span>
+                                <strong class="text-on-surface font-medium" id="summaryCheckIn">@Model.CheckIn.ToString("yyyy-MM-dd")</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Check-out:</span>
+                                <strong class="text-on-surface font-medium" id="summaryCheckOut">@Model.CheckOut.ToString("yyyy-MM-dd")</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Nights:</span>
+                                <strong class="text-on-surface font-medium"><span id="summaryNights">@nights</span> Night(s)</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Room Total:</span>
+                                <strong class="text-on-surface font-medium"><span id="summaryRoomBase">@((Model.PricePerNight * nights).ToString("N0"))</span> EGP</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Services Total:</span>
+                                <strong class="text-primary font-medium"><span id="summaryExtras">0</span> EGP</strong>
+                            </div>
+                        </div>
+
+                        <div class="flex items-baseline justify-between">
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-on-surface-variant block font-semibold">Total Amount</span>
+                                <span class="text-[11px] text-on-surface-variant">Taxes &amp; Service included</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-headline text-3xl font-bold text-primary" id="summaryTotalAmount">@((Model.PricePerNight * nights).ToString("N0"))</span>
+                                <span class="text-xs text-on-surface-variant font-medium">EGP</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-md flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-lg">verified</span> Confirm &amp; Reserve Sanctuary
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkIn = document.getElementById("checkInInput");
+            const checkOut = document.getElementById("checkOutInput");
+            const summaryCheckIn = document.getElementById("summaryCheckIn");
+            const summaryCheckOut = document.getElementById("summaryCheckOut");
+            const summaryNights = document.getElementById("summaryNights");
+            const summaryRoomBase = document.getElementById("summaryRoomBase");
+            const summaryExtras = document.getElementById("summaryExtras");
+            const summaryTotal = document.getElementById("summaryTotalAmount");
+            const pricePerNight = parseFloat(document.getElementById("pricePerNightVal").value) || 0;
+            const extraCheckboxes = document.querySelectorAll(".extra-checkbox");
+
+            function updateCalculations() {
+                if (checkIn.value && checkOut.value) {
+                    const start = new Date(checkIn.value);
+                    let end = new Date(checkOut.value);
+
+                    checkOut.min = checkIn.value;
+                    if (end <= start) {
+                        end = new Date(start);
+                        end.setDate(end.getDate() + 1);
+                        checkOut.value = end.toISOString().split("T")[0];
+                    }
+
+                    const diffDays = Math.max(1, Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24)));
+                    const roomTotal = diffDays * pricePerNight;
+
+                    let extrasCost = 0;
+                    extraCheckboxes.forEach(cb => {
+                        if (cb.checked) {
+                            const p = parseFloat(cb.dataset.price) || 0;
+                            const isPerNight = cb.dataset.pricing === "PerNight";
+                            extrasCost += isPerNight ? (p * diffDays) : p;
+                        }
+                    });
+
+                    summaryCheckIn.innerText = checkIn.value;
+                    summaryCheckOut.innerText = checkOut.value;
+                    summaryNights.innerText = diffDays;
+                    summaryRoomBase.innerText = roomTotal.toLocaleString();
+                    summaryExtras.innerText = extrasCost.toLocaleString();
+                    summaryTotal.innerText = (roomTotal + extrasCost).toLocaleString();
+                }
+            }
+
+            checkIn.addEventListener("change", updateCalculations);
+            checkOut.addEventListener("change", updateCalculations);
+            extraCheckboxes.forEach(cb => cb.addEventListener("change", updateCalculations));
+            updateCalculations();
+        });
+    </script>
+}

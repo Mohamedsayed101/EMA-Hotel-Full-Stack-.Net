@@ -1,0 +1,59 @@
+﻿@model Hotel_MVC.ViewModels.Extra.ExtraFormVM
+@{
+    ViewData["Title"] = "Add New Extra";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-xl mx-auto px-6">
+        
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <span class="text-primary font-semibold text-xs uppercase tracking-widest">Catalog Expansion</span>
+                <h1 class="font-headline text-3xl font-bold text-on-surface mt-1">Add New Add-on</h1>
+            </div>
+            <a asp-action="Index" class="px-4 py-2 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">
+                Back to List
+            </a>
+        </div>
+
+        <div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-black/5">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="space-y-6">
+                    <div>
+                        <label asp-for="Name" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Service Name</label>
+                        <input asp-for="Name" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" placeholder="e.g. Airport Pickup, Spa Access..." required />
+                        <span asp-validation-for="Name" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Price" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Price (EGP)</label>
+                        <input asp-for="Price" type="number" step="0.01" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none" placeholder="0.00" required />
+                        <span asp-validation-for="Price" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="PricingType" class="block text-xs uppercase font-semibold text-on-surface-variant mb-2">Pricing Type</label>
+                        <select asp-for="PricingType" class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant/30 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none">
+                            @foreach (var val in Enum.GetValues<Hotel_MVC.Enums.ExtraPricingType>())
+                            {
+                                <option value="@val">@val</option>
+                            }
+                        </select>
+                        <span asp-validation-for="PricingType" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+
+                    <div class="pt-4 flex items-center justify-end gap-3">
+                        <a asp-action="Index" class="px-5 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Cancel</a>
+                        <button type="submit" class="px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-md">Create Add-on</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

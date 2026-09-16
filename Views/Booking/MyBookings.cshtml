@@ -1,0 +1,268 @@
+﻿@model List<Hotel_MVC.Models.Booking>
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+    <div class="flex flex-col w-full">
+
+        <!-- Top Welcome Header -->
+        <section class="relative w-full bg-surface-container-low px-6 lg:px-margin pt-10 pb-12 overflow-hidden">
+            <div class="absolute -right-20 -top-24 w-96 h-96 rounded-full bg-primary-fixed/30 blur-3xl pointer-events-none"></div>
+            <div class="absolute left-1/3 -bottom-24 w-72 h-72 rounded-full bg-surface-container-high/60 blur-2xl pointer-events-none"></div>
+
+            <div class="relative max-w-[1320px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="flex flex-col space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="font-label-caps text-label-caps uppercase tracking-widest text-primary">
+                            Guest Sanctuary Portal
+                        </span>
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+                        <span class="font-label-caps text-label-caps text-secondary uppercase">
+                            Verified Guest
+                        </span>
+                    </div>
+
+                    <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                        My Bookings
+                    </h1>
+
+                    <p class="font-body-lead text-body-lead text-on-surface-variant max-w-xl">
+                        Manage your upcoming reservations and past stays. Download your stay vouchers and tailor your coastal experience.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 bg-surface-container-lowest rounded-xl shadow-sm self-start md:self-auto border border-black/5">
+                    <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined text-2xl">diamond</span>
+                    </div>
+                    <div class="flex flex-col pr-4">
+                        <span class="font-label-caps text-label-caps uppercase text-secondary">Reservations Recorded</span>
+                        <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">@Model.Count Stays</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Tabs -->
+        <section class="w-full bg-surface px-6 lg:px-margin pt-6 pb-2">
+            <div class="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-2 p-1.5 bg-surface-container rounded-lg" id="bookingTabGroup">
+                    <button type="button" class="tab-btn active-tab px-5 py-2 rounded font-label-md text-label-md transition-all flex items-center gap-2 bg-surface-container-lowest text-primary shadow-sm font-semibold" onclick="filterBookings('all', this)">
+                        <span>All Reservations</span>
+                        <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px]">@Model.Count</span>
+                    </button>
+                   
+                    <button type="button" class="tab-btn px-5 py-2 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-2 font-medium" onclick="filterBookings('checkedout', this)">
+                        <span>Completed</span>
+                        <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px]">
+                            @Model.Count(b => b.Status == Hotel_MVC.Enums.BookingStatus.CheckedOut)
+                        </span>
+                    </button>
+                </div>
+
+                <a asp-controller="Rooms" asp-action="Index" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-label-md text-label-md hover:bg-primary-container transition shadow-sm">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    <span>Book Another Sanctuary</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Main Booking Cards List -->
+        <section class="w-full px-6 lg:px-margin py-8">
+            <div class="max-w-[1320px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                <div class="lg:col-span-8 flex flex-col gap-6" id="bookingsContainer">
+                    @if (!Model.Any())
+                    {
+                        <div class="flex flex-col items-center justify-center py-20 px-6 text-center bg-surface-container-lowest rounded-2xl border border-black/5">
+                            <span class="material-symbols-outlined text-5xl text-primary mb-3">calendar_today</span>
+                            <h3 class="font-headline text-2xl text-on-surface font-semibold">No Reservations Yet</h3>
+                            <p class="text-sm text-on-surface-variant max-w-sm my-3">
+                                You have not booked any sanctuaries yet. Explore our luxury suites and seaside villas.
+                            </p>
+                            <a asp-controller="Rooms" asp-action="Index" class="mt-2 px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-container transition shadow-sm">
+                                Explore Rooms &amp; Suites
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            var statusClass = item.Status.ToString().ToLower();
+                            var nights = (item.CheckOutDate - item.CheckInDate).Days;
+                            var coverImg = item.Room?.RoomType?.RoomImages?.OrderBy(i => i.DisplayOrder).Select(i => i.ImageUrl).FirstOrDefault() ?? "/Images/hero.jpg";
+
+                            <article class="booking-card @statusClass bg-surface-container-lowest rounded-xl p-6 sm:p-7 shadow-sm border border-black/5 flex flex-col gap-6" data-status="@statusClass">
+
+                                <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-black/5">
+                                    <div class="flex items-center gap-3">
+                                        <span class="font-label-caps text-label-caps uppercase text-secondary tracking-wider">Reference:</span>
+                                        <span class="font-label-md text-label-md font-bold text-on-surface tracking-wide">@item.BookingReference</span>
+
+                                        @if (item.Status == Hotel_MVC.Enums.BookingStatus.Confirmed)
+                                        {
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Confirmed</span>
+                                        }
+                                        else if (item.Status == Hotel_MVC.Enums.BookingStatus.CheckedOut)
+                                        {
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">Checked Out</span>
+                                        }
+                                        else if (item.Status == Hotel_MVC.Enums.BookingStatus.Cancelled)
+                                        {
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-red-100 text-red-800 text-xs font-semibold">Cancelled</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold">@item.Status</span>
+                                        }
+                                    </div>
+
+                                    <div class="text-xs text-secondary">
+                                        Payment: <strong class="text-on-surface">@item.PaymentMethod</strong> 
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+                                    <div class="sm:col-span-5 h-44 rounded-xl overflow-hidden">
+                                        <img src="@coverImg" alt="Room" class="w-full h-full object-cover" />
+                                    </div>
+
+                                    <div class="sm:col-span-7 flex flex-col justify-between gap-4">
+                                        <div>
+                                            <span class="text-primary font-semibold text-xs uppercase tracking-wider block mb-1">
+                                                Room @(item.Room?.RoomNumber ?? "Assigned upon arrival")
+                                            </span>
+                                            <h2 class="font-headline text-2xl font-bold text-on-surface">
+                                                @(item.Room?.RoomType?.Name ?? "Luxury Sanctuary Suite")
+                                            </h2>
+
+                                            <div class="grid grid-cols-2 gap-2 mt-3 text-xs text-on-surface-variant">
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="material-symbols-outlined text-base text-primary">calendar_month</span>
+                                                    <span>@item.CheckInDate.ToString("MMM dd") – @item.CheckOutDate.ToString("MMM dd, yyyy")</span>
+                                                </div>
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="material-symbols-outlined text-base text-primary">schedule</span>
+                                                    <span>@nights Night(s)</span>
+                                                </div>
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="material-symbols-outlined text-base text-primary">group</span>
+                                                    <span>@item.NumberOfGuests Guest(s)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-3 bg-surface-container rounded-lg flex items-center justify-between">
+                                            <div>
+                                                <span class="text-[11px] uppercase tracking-wider text-secondary block">Total Stay Paid</span>
+                                                <span class="font-headline text-xl font-bold text-primary">@item.TotalAmount.ToString("N0") EGP</span>
+                                            </div>
+
+                                            <a asp-controller="Booking" asp-action="Voucher" asp-route-id="@item.Id"
+                                               class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+                                                <span class="material-symbols-outlined text-base">print</span> Printable Voucher
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 flex flex-wrap items-center justify-between gap-3 bg-surface-container-low/50 -mx-6 -mb-6 p-4 sm:px-6 rounded-b-xl border-t border-black/5">
+                                    <div class="text-xs text-secondary">
+                                        Booked on @item.CreatedAt.ToString("MMM dd, yyyy - hh:mm tt")
+                                    </div>
+
+                                    <div class="flex items-center gap-3">
+                                        <a asp-controller="Booking" asp-action="Voucher" asp-route-id="@item.Id"
+                                           class="px-4 py-2 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-container transition shadow-sm">
+                                            View Voucher
+                                        </a>
+                                        @if (item.Status.ToString() == "CheckedOut" || item.Status.ToString() == "Completed")
+{
+    <a asp-controller="Reviews" asp-action="Create" asp-route-bookingId="@item.Id" class="px-4 py-2 bg-amber-100 text-amber-800 text-xs font-semibold rounded-xl hover:bg-amber-200 transition flex items-center gap-1.5 shadow-sm">
+        <span class="material-symbols-outlined text-base">star</span> Rate Stay
+    </a>
+}
+@if (item.Room != null)
+{
+    <div class="flex items-center gap-2 mt-2">
+        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
+            <span class="material-symbols-outlined text-sm">meeting_room</span> Room @item.Room.RoomNumber
+        </span>
+        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface-variant">
+            Floor @item.Room.FloorNumber
+        </span>
+    </div>
+}
+
+                                        @if (item.Status == Hotel_MVC.Enums.BookingStatus.Confirmed && item.CheckInDate > DateTime.Today.AddDays(1))
+                                        {
+                                            <form asp-controller="Booking" asp-action="CancelBooking" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="px-4 py-2 rounded-lg bg-red-50 text-red-700 text-xs font-semibold hover:bg-red-100 transition">
+                                                    Cancel Stay
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </div>
+                            </article>
+                        }
+                    }
+                </div>
+
+                <!-- Concierge Support Sidebar -->
+                <aside class="lg:col-span-4 flex flex-col gap-6">
+                    <div class="sticky top-28 bg-surface-container-lowest rounded-2xl p-7 shadow-sm border border-black/5 flex flex-col gap-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined text-2xl">support_agent</span>
+                            </div>
+                            <div>
+                                <span class="text-primary font-semibold text-xs uppercase tracking-wider block">Always At Hand</span>
+                                <h3 class="font-headline text-lg font-bold text-on-surface">Concierge Desk</h3>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-on-surface-variant leading-relaxed">
+                            Need airport pick-up, private yacht excursions, or special dining arrangements? Contact our concierge 24/7.
+                        </p>
+
+                        <div class="flex flex-col gap-2.5 pt-2">
+                            <a href="tel:+201000000000" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-primary text-white rounded-xl text-xs font-semibold hover:bg-primary-container transition shadow-sm">
+                                <span class="material-symbols-outlined text-base">call</span> Call Concierge Desk
+                            </a>
+                            <a href="mailto:reservations@emahotel.com" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-surface-container text-on-surface rounded-xl text-xs font-semibold hover:bg-surface-container-high transition">
+                                <span class="material-symbols-outlined text-base">mail</span> Email Reservations
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        function filterBookings(status, btn) {
+            document.querySelectorAll('#bookingTabGroup .tab-btn').forEach(b => {
+                b.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-semibold');
+                b.classList.add('text-on-surface-variant', 'font-medium');
+            });
+            btn.classList.remove('text-on-surface-variant', 'font-medium');
+            btn.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-semibold');
+
+            document.querySelectorAll('#bookingsContainer .booking-card').forEach(card => {
+                if (status === 'all' || card.getAttribute('data-status') === status) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+}

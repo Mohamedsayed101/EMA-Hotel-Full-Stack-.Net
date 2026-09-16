@@ -1,0 +1,177 @@
+﻿@model List<Hotel_MVC.Models.Review>
+@{
+    ViewData["Title"] = "Luxury Sanctuary & Suites";
+}
+
+<!-- Hero Section -->
+<section class="relative w-full min-h-[92vh] flex flex-col justify-between -mt-20 overflow-hidden">
+
+    <!-- Background -->
+    <div class="absolute inset-0 bg-cover bg-center scale-105"
+         style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDsep9BRYY2IIL6i5LePqaLf3nHtslH2A0DUuWkv59cGPCuU76pzyHgKgtEP4WgU7a9HTzaNZDQEUI6goYE9j4pY8S7SdB2yB5Y5s4Zmgh-S3HJBHpyJT9M2HDaN9Ol_7HMClBZiAikhE6dfu5xjKhvjL98ifcIRzjphDOrEw2kCxGlvVCvQRt2mJYgrLiZJfdQh6V1xxzcVi-WfExHGBb-DSenuc6bHHOyQ2ntX9xD8sc7zW8savh-');">
+    </div>
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/80"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 w-full max-w-[1320px] mx-auto px-6 lg:px-12 pt-44 pb-20 flex flex-col items-center text-center my-auto">
+
+        <!-- Badges -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-white text-[11px] font-semibold tracking-widest uppercase">
+                <span class="material-symbols-outlined text-sm text-[#ffddb3]">hotel_class</span>
+                Forbes 5-Star Sanctuaries
+            </span>
+
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-white text-[11px] font-semibold tracking-widest uppercase">
+                <span class="material-symbols-outlined text-sm text-[#ffddb3]">waves</span>
+                Red Sea Horizon
+            </span>
+        </div>
+
+        <!-- Hero Headline -->
+        <h1 class="font-headline text-4xl sm:text-6xl lg:text-7xl text-white font-normal max-w-4xl tracking-tight leading-tight">
+            An Unbroken Sanctuary Above the Horizon
+        </h1>
+
+        <p class="font-body text-white/80 max-w-2xl text-base sm:text-lg mt-4 font-light leading-relaxed">
+            Immerse yourself in limestone serenity, tactile coastal textures, and curated hospitality tailored for the discerning traveler.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a asp-controller="Rooms" asp-action="Index" class="px-8 py-4 bg-primary text-white rounded-xl font-semibold text-sm hover:bg-primary-container transition shadow-lg">
+                Explore Rooms &amp; Suites
+            </a>
+            <a asp-controller="Home" asp-action="Contact" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-xl font-semibold text-sm hover:bg-white/20 transition border border-white/20">
+                Contact Concierge
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Amenities & Facilities Section -->
+<section class="w-full bg-surface-container-low py-20">
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-12">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+            <span class="text-primary font-semibold text-xs uppercase tracking-widest">Thoughtful Luxuries</span>
+            <h2 class="font-headline text-3xl sm:text-4xl font-bold text-on-surface mt-1">Curated Hotel Amenities</h2>
+            <p class="text-on-surface-variant text-sm mt-2">Every detail designed for your peaceful sanctuary experience.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-black/5 text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-2xl">pool</span>
+                </div>
+                <h3 class="font-headline text-lg font-semibold text-on-surface">Infinity Lagoon</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Temperature-controlled sea-view swimming pools.</p>
+            </div>
+
+            <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-black/5 text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-2xl">spa</span>
+                </div>
+                <h3 class="font-headline text-lg font-semibold text-on-surface">Holistic Spa</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Authentic salt scrubs and coastal wellness rituals.</p>
+            </div>
+
+            <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-black/5 text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-2xl">restaurant</span>
+                </div>
+                <h3 class="font-headline text-lg font-semibold text-on-surface">Artisan Dining</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Locally sourced organic Mediterranean menus.</p>
+            </div>
+
+            <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-black/5 text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-primary-fixed text-primary flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-2xl">directions_car</span>
+                </div>
+                <h3 class="font-headline text-lg font-semibold text-on-surface">Private Transfer</h3>
+                <p class="text-xs text-on-surface-variant mt-1">Complimentary luxury valet &amp; airport shuttle service.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dynamic Verified Guest Reviews Section -->
+<section class="max-w-[1320px] mx-auto px-6 lg:px-12 py-20">
+    <div class="text-center mb-14">
+        <span class="text-primary font-semibold text-xs uppercase tracking-widest">Verified Guest Reflections</span>
+        <h2 class="font-headline text-3xl sm:text-4xl font-bold text-on-surface mt-1">What Our Guests Say</h2>
+        <div class="flex items-center justify-center gap-1 mt-2.5 text-amber-500">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <span class="material-symbols-outlined text-lg">star</span>
+            }
+            <span class="text-xs font-bold text-on-surface ml-2">
+                (@(ViewBag.AverageRating != null ? ((double)ViewBag.AverageRating).ToString("F1") : "5.0") / 5.0)
+            </span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var review in Model)
+            {
+                <div class="bg-surface-container-lowest p-7 rounded-2xl shadow-sm border border-black/5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex text-amber-500 mb-3">
+                            @for (int s = 1; s <= review.Rating; s++)
+                            {
+                                <span class="material-symbols-outlined text-base">star</span>
+                            }
+                        </div>
+                        <p class="text-sm text-on-surface-variant italic leading-relaxed">
+                            "@(review.Comment ?? "An unforgettable luxury sanctuary stay with immaculate hospitality and coastal calm.")"
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-black/5 flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-primary-fixed text-primary font-semibold text-xs flex items-center justify-center">
+                            @(review.Guest?.FirstName?.Substring(0, 1) ?? "G")
+                        </div>
+                        <div>
+                            <span class="text-sm font-semibold text-on-surface block">
+                                @(review.Guest != null ? $"{review.Guest.FirstName} {review.Guest.LastName}" : "Verified Resident")
+                            </span>
+                            <span class="text-[11px] text-secondary">
+                                @(review.Guest?.Nationality ?? "International Traveler")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-span-3 text-center py-8 text-on-surface-variant text-sm">
+                No guest reflections published yet. Be the first to share your sanctuary experience!
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="max-w-[1320px] mx-auto px-6 lg:px-12 pb-20">
+    <div class="w-full bg-primary rounded-3xl p-10 sm:p-14 text-center text-white relative overflow-hidden shadow-lg">
+        <div class="relative z-10 max-w-xl mx-auto">
+            <h2 class="font-headline text-3xl sm:text-4xl font-bold tracking-tight">Reserve Your Sanctuary Experience</h2>
+            <p class="text-white/80 text-sm mt-3 leading-relaxed">
+                Step into an atmosphere of timeless coastal peace. Select from our ocean-facing suites and bespoke private villas.
+            </p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <a asp-controller="Rooms" asp-action="Index" class="px-7 py-3.5 bg-white text-primary rounded-xl font-semibold text-sm hover:bg-surface-container-low transition shadow-md">
+                    Explore All Rooms &amp; Suites
+                </a>
+                <a asp-controller="Home" asp-action="Contact" class="px-7 py-3.5 bg-primary-container text-white rounded-xl font-semibold text-sm hover:opacity-90 transition border border-white/20">
+                    Contact Concierge Desk
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

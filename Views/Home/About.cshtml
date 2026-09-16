@@ -1,0 +1,400 @@
+﻿@{
+    ViewData["Title"] = "About EMA Hotel — Sanctuary & Suites";
+}
+
+<main class="flex flex-col w-full selection:bg-primary/20 selection:text-primary">
+
+    <!-- Hero -->
+    <header class="relative w-full -mt-20 overflow-hidden bg-on-background text-surface min-h-[90vh] flex items-center justify-center">
+
+        <div class="absolute inset-0 w-full h-full bg-cover bg-center scale-105 transition-transform duration-1000 ease-out brightness-90"
+             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDE-eI3xZ27Azr12aWnpCqEf_1xPpxi5KfhBQinW2Go6IsA922J4lArstnWJ5KpU7uLNlOo8KMXG34YvaApSGbvDI51dyF_fteVgbZ1rls9IEv_CezI7942UQrMQ9vXGCRbYAasLH2Z5bCfOrWGjimLkrwxn7MFM5hGAlVJQj6EYvGrCxVwEO2FBJiGv7bZAqHKO8rYVNgJS0ZsDbw8dLMJQCUGL2_MuW7pBLPpBk0pqBQiyIchSZrJ')"
+             role="img"
+             aria-label="EMA Hotel exterior landscape view">
+        </div>
+
+        <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-surface backdrop-blur-[1px]"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 lg:px-margin pt-40 pb-24 flex flex-col items-center text-center">
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface/10 backdrop-blur-md border border-surface/20 mb-8 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></span>
+                <span class="font-label-caps text-label-caps tracking-widest uppercase text-surface">
+                    Sanctuary &amp; Suites
+                </span>
+            </div>
+
+            <h1 class="font-display-hero text-4xl sm:text-6xl md:text-7xl text-surface font-light tracking-tight leading-tight max-w-4xl drop-shadow-sm">
+                Quiet luxury, crafted for the conscious traveler.
+            </h1>
+
+            <p class="mt-6 font-body-lead text-body-lead text-surface-container-high/90 max-w-2xl font-light leading-relaxed">
+                A sanctuary of timeless comfort, architectural grace, and mindful hospitality along peaceful coastlines.
+            </p>
+
+            <div class="mt-12">
+                <a href="#our-story"
+                   class="group inline-flex flex-col items-center gap-2 text-surface-container hover:text-primary-fixed transition-colors duration-300"
+                   aria-label="Scroll to Our Story">
+                    <span class="font-label-caps text-label-caps tracking-widest uppercase text-surface-variant group-hover:text-primary-fixed transition-colors">
+                        Discover
+                    </span>
+                    <span class="material-symbols-outlined text-2xl transition-transform duration-300 group-hover:translate-y-1.5">
+                        arrow_downward
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- Our Story -->
+    <section class="relative w-full py-24 md:py-32 bg-surface" id="our-story">
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-margin">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-gutter items-center">
+
+                <!-- Narrative & Metrics -->
+                <div class="lg:col-span-6 flex flex-col items-start">
+                    <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest mb-4">
+                        Origins &amp; Essence
+                    </span>
+
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface font-normal mb-8 leading-tight">
+                        Honoring the art of gentle respite.
+                    </h2>
+
+                    <blockquote class="relative pl-6 border-l-2 border-primary/50 text-base sm:text-lg text-on-surface-variant font-light leading-relaxed mb-10">
+                        Founded with a passion for architectural grace and natural calm, EMA Hotel offers a restful retreat from the modern rush. Every space is curated with natural materials, ambient warmth, and deeply personalized service.
+                    </blockquote>
+
+                    <!-- Semantic Data List for Stats -->
+                    <dl class="w-full grid grid-cols-3 gap-6 pt-6 border-t border-outline-variant/30">
+                        <div class="flex flex-col">
+                            <dt class="order-2 font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">
+                                Renewable Living
+                            </dt>
+                            <dd class="order-1 font-headline-sm text-headline-sm text-primary font-medium">
+                                100%
+                            </dd>
+                        </div>
+
+                        <div class="flex flex-col border-l border-outline-variant/30 pl-6">
+                            <dt class="order-2 font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">
+                                Private Residences
+                            </dt>
+                            <dd class="order-1 font-headline-sm text-headline-sm text-primary font-medium">
+                                42
+                            </dd>
+                        </div>
+
+                        <div class="flex flex-col border-l border-outline-variant/30 pl-6">
+                            <dt class="order-2 font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">
+                                Tailored Concierge
+                            </dt>
+                            <dd class="order-1 font-headline-sm text-headline-sm text-primary font-medium">
+                                24 / 7
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <!-- Featured Image & Floating Note -->
+                <div class="lg:col-span-6 relative">
+                    <figure class="relative w-full h-[420px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl group">
+                        <img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                             alt="Sunlit minimalist lounge corner in EMA Hotel"
+                             loading="lazy"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIIh2w5X4yKCG5zT8X--ylsiDku8xllEbmVj0EFMkxZWE3IWOu9oyVIN5WX71KBTdJkphl7FDlfLv7f3DOmCoPCogue43lPdKZWXQy61GRcgK7L0-x9YZUoxVMajhynbWsltbFfMM9j7jeH4EA0xtte1Egzs6njCeYBE3-LUItbHbHNf1O8Y3lhitC2RuB4X9gj0HGKALpIUyfD342tCYrXD3YjYe89pR6jFQf40ljxuKdJHn2cT33" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/30 to-transparent"></div>
+                        <figcaption class="sr-only">EMA Hotel curated indoor corner</figcaption>
+                    </figure>
+
+                    <div class="hidden sm:flex absolute -bottom-6 -left-6 p-6 bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-xl border border-outline-variant/20 max-w-[260px] flex-col gap-2">
+                        <div class="flex items-center gap-2 text-primary">
+                            <span class="material-symbols-outlined text-[22px]">hotel_class</span>
+                            <span class="font-label-caps text-label-caps uppercase text-on-surface font-semibold">
+                                Curated Rest
+                            </span>
+                        </div>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                            Designed to quiet the senses and reconnect with coastal stillness.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Distinctive Pillars -->
+    <section class="relative w-full py-24 md:py-32 bg-surface-container-low border-y border-outline-variant/20">
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-margin">
+
+            <header class="max-w-2xl mb-16">
+                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest">
+                    Distinctive Quality
+                </span>
+                <h2 class="mt-4 font-headline-lg text-headline-lg text-on-surface font-normal">
+                    Why Experience EMA
+                </h2>
+                <p class="mt-4 font-body-lead text-body-lead text-on-surface-variant font-light">
+                    A bespoke harmony of thoughtful architecture, tactile intimacy, and unobtrusive luxury.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Feature 1 -->
+                <article class="group p-8 bg-surface rounded-xl border border-outline-variant/30 hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary group-hover:text-white transition-colors duration-300">
+                                architecture
+                            </span>
+                        </div>
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">
+                            Architectural Silence
+                        </h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Natural limestone, organic acoustics, and unhurried calm.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Feature 2 -->
+                <article class="group p-8 bg-surface rounded-xl border border-outline-variant/30 hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary group-hover:text-white transition-colors duration-300">
+                                room_service
+                            </span>
+                        </div>
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">
+                            Intuitive Hospitality
+                        </h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            24/7 dedicated concierges anticipating your every requirement.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Feature 3 -->
+                <article class="group p-8 bg-surface rounded-xl border border-outline-variant/30 hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary group-hover:text-white transition-colors duration-300">
+                                eco
+                            </span>
+                        </div>
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">
+                            Sustainable Luxury
+                        </h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            100% renewable power, local farm-to-table cuisine, and plastic-free amenities.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Feature 4 -->
+                <article class="group p-8 bg-surface rounded-xl border border-outline-variant/30 hover:border-primary/40 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary group-hover:text-white transition-colors duration-300">
+                                landscape
+                            </span>
+                        </div>
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">
+                            Panoramic Sanctuaries
+                        </h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Unrivaled coastal vistas framing every sunrise and quiet twilight.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Meet Our Team -->
+    <section class="w-full py-24 md:py-32 bg-surface">
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-margin">
+
+            <header class="text-center max-w-2xl mx-auto mb-16">
+                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest block mb-3">
+                    Behind The Experience
+                </span>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface font-normal mb-4">
+                    Meet Our Leadership
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant font-light">
+                    The artisans, engineers, and visionaries crafting seamless sanctuaries for your stay.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Team Member 1 -->
+                <article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-outline-variant/20 transition-all duration-300 group">
+                    <div class="relative w-full aspect-[4/5] overflow-hidden bg-surface-container">
+                        <img src="~/Images/team/mohamed-sayed.png"
+                             alt="Mohamed Sayed - Team Leader"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/30 via-transparent to-transparent"></div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">
+                                Mohamed Sayed
+                            </h3>
+                            <p class="font-label-md text-label-md text-primary mt-1">
+                                Team Leader / Full-Stack
+                            </p>
+                        </div>
+
+                        <footer class="flex items-center gap-3 mt-6 pt-4 border-t border-outline-variant/30 text-xs">
+                            <a href="https://www.linkedin.com/in/mohamed-sayed-439a54347/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Mohamed Sayed LinkedIn Profile"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface-container-low text-secondary hover:text-primary hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-[16px]">work</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/Mohamedsayed101"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Mohamed Sayed GitHub Profile"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface-container-low text-secondary hover:text-primary hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-[16px]">code</span>
+                                <span>GitHub</span>
+                            </a>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- Team Member 2 -->
+                <article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-outline-variant/20 transition-all duration-300 group">
+                    <div class="relative w-full aspect-[4/5] overflow-hidden bg-surface-container">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsrlvtthANCwemFIrQ7KbGJFhfXi1bgv3vYFW6ueT9BHQPyahrOsBcojMZJDLr1DqhEG2_HXehZqBf8To7bpi1Ry1ty15WgIm_WH_ybDCIutzu6C9pxC2rXaSYTDRbeyDx0x-pwBLMaQknF_Xj44ue3jVd8fO6oG_m3Ecfz1e9Hw4pTDWS0UU2EC0R1oGi4okPbGdJtZY-jOzOl9l8LbtTjJBEaMMJyhqUjb6grH5NhrxPKgWBe55F"
+                             alt="Adam Mohamed - Software Engineer / Full-Stack Developer"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/30 via-transparent to-transparent"></div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">
+                                Adam Mohamed
+                            </h3>
+                            <p class="font-label-md text-label-md text-primary mt-1">
+                                Software Engineer / Full-Stack
+                            </p>
+                        </div>
+
+                        <footer class="flex items-center gap-3 mt-6 pt-4 border-t border-outline-variant/30 text-xs">
+                            <a href="https://www.linkedin.com/in/adam-mohamed-486585413/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Adam Mohamed LinkedIn Profile"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface-container-low text-secondary hover:text-primary hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-[16px]">work</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/adam90390-sudo"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Adam Mohamed GitHub Profile"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface-container-low text-secondary hover:text-primary hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-[16px]">code</span>
+                                <span>GitHub</span>
+                            </a>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- Team Member 3 -->
+                <article class="flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-outline-variant/20 transition-all duration-300 group">
+                    <div class="relative w-full aspect-[4/5] overflow-hidden bg-surface-container">
+                        <img src="~/Images/team/Esraa-Hamdy.jpeg"
+                             alt="Esraa Hamdy - Full-Stack .Net Engineer"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/30 via-transparent to-transparent"></div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">
+                                Esraa Hamdy
+                            </h3>
+                            <p class="font-label-md text-label-md text-primary mt-1">
+                                Full-Stack .Net Engineer
+                            </p>
+                        </div>
+
+                        <footer class="flex items-center gap-3 mt-6 pt-4 border-t border-outline-variant/30 text-xs">
+                            <a href="https://www.linkedin.com/in/esraa-hamdy-599b43349/"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Esraa Hamdy LinkedIn Profile"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface-container-low text-secondary hover:text-primary hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-[16px]">work</span>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/esraa31336"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label="Esraa Hamdy GitHub Profile"
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface-container-low text-secondary hover:text-primary hover:bg-surface-container transition-colors">
+                                <span class="material-symbols-outlined text-[16px]">code</span>
+                                <span>GitHub</span>
+                            </a>
+                        </footer>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Call to Action -->
+    <aside class="w-full py-16 bg-surface-container-high border-t border-outline-variant/30">
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-margin flex flex-col md:flex-row items-center justify-between gap-8">
+
+            <div class="max-w-xl text-center md:text-left">
+                <h3 class="font-headline-md text-headline-md text-on-surface font-normal mb-2">
+                    Experience the quiet elegance of EMA.
+                </h3>
+                <p class="font-body-md text-body-md text-on-surface-variant font-light">
+                    Reserve your suite and awaken to coastal serenity designed just for you.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a asp-controller="Rooms"
+                   asp-action="Index"
+                   class="inline-flex items-center justify-center px-8 py-3.5 bg-primary text-on-primary font-label-md text-label-md rounded-xl hover:bg-primary-container transition-all duration-200 shadow-sm text-white">
+                    Explore Suites
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="Contact"
+                   class="inline-flex items-center justify-center px-7 py-3.5 bg-surface-container-lowest text-on-surface border border-outline-variant/40 font-label-md text-label-md rounded-xl hover:bg-surface transition-all duration-200 shadow-sm">
+                    Contact Concierge
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+</main>

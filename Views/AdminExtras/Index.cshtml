@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Hotel_MVC.Models.Extra>
+@{
+    ViewData["Title"] = "Manage Extras";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-12 space-y-8">
+
+        <!-- Page Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="text-primary font-semibold text-xs uppercase tracking-widest">Administrative Catalog</span>
+                <h1 class="font-headline text-3xl sm:text-4xl font-bold text-on-surface mt-1">Extras &amp; Add-ons</h1>
+                <p class="text-sm text-on-surface-variant mt-1">Breakfast, transfers, and other guest add-ons management.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a asp-controller="AdminDashboard" asp-action="Index" class="px-4 py-2.5 bg-surface-container text-on-surface text-xs font-semibold rounded-xl hover:bg-surface-container-high transition">
+                    Dashboard
+                </a>
+                <a asp-action="Create" class="px-5 py-2.5 bg-primary text-white text-xs font-semibold rounded-xl hover:bg-primary-container transition shadow-md flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-base">add</span> Add New Extra
+                </a>
+            </div>
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center justify-between">
+                <span>@TempData["Success"]</span>
+                <button type="button" onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-900 font-bold">&times;</button>
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center justify-between">
+                <span>@TempData["Error"]</span>
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-600 hover:text-red-900 font-bold">&times;</button>
+            </div>
+        }
+
+        <!-- Extras Table Card -->
+        <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-black/5 overflow-hidden">
+            <div class="px-6 py-5 border-b border-black/5 flex items-center justify-between">
+                <h3 class="font-headline text-xl font-bold text-on-surface">Available Add-ons</h3>
+                <span class="text-xs text-on-surface-variant">Total Items: @Model.Count()</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[700px] text-left border-collapse">
+                    <thead class="bg-surface-container-low text-[11px] uppercase tracking-wider font-semibold text-on-surface-variant border-b border-black/5">
+                        <tr>
+                            <th class="px-6 py-4">Service Name</th>
+                            <th class="px-6 py-4">Price</th>
+                            <th class="px-6 py-4">Pricing Type</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 text-sm">
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-on-surface-variant py-12">No extras or add-ons found.</td>
+                            </tr>
+                        }
+                        @foreach (var extra in Model)
+                        {
+                            <tr class="hover:bg-surface-container-low/50 transition">
+                                <td class="px-6 py-4 font-semibold text-on-surface">@extra.Name</td>
+                                <td class="px-6 py-4 font-medium text-primary">@extra.Price.ToString("N0") EGP</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-surface-container text-on-surface-variant">
+                                        @extra.PricingType
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <a asp-action="Edit" asp-route-id="@extra.Id" class="px-3 py-1.5 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@extra.Id" class="px-3 py-1.5 bg-red-50 text-red-700 text-xs font-semibold rounded-lg hover:bg-red-100 transition">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

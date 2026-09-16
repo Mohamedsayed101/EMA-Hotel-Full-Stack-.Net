@@ -1,0 +1,41 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Sanctuary Status";
+    int? code = ViewBag.StatusCode as int?;
+}
+
+<div class="min-h-[75vh] flex flex-col items-center justify-center text-center px-6 py-16 bg-surface">
+    <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-5">
+        <span class="material-symbols-outlined text-4xl">
+            @(code == 404 ? "search_off" : "error_outline")
+        </span>
+    </div>
+
+    <h1 class="font-headline text-6xl font-bold text-on-surface tracking-tight mb-2">
+        @(code ?? 500)
+    </h1>
+
+    <h2 class="font-headline text-2xl text-primary font-semibold mb-3">
+        @(code == 404 ? "Sanctuary Not Found" : "An Unexpected Interruption Occurred")
+    </h2>
+
+    <p class="text-on-surface-variant max-w-md text-sm mb-8 leading-relaxed">
+        @(ViewBag.ErrorMessage ?? "The page or suite you are searching for might have been retired or is temporarily inaccessible. Our concierge desk is at your disposal.")
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4">
+        <a asp-controller="Home" asp-action="Index" class="px-6 py-3 bg-primary text-white rounded-xl text-sm font-semibold hover:bg-primary-container transition shadow-sm">
+            Return to Sanctuary Home
+        </a>
+        <a asp-controller="Home" asp-action="Contact" class="px-6 py-3 bg-surface-container text-on-surface rounded-xl text-sm font-semibold hover:bg-surface-container-high transition">
+            Contact Reception Desk
+        </a>
+    </div>
+
+    @if (Model?.ShowRequestId ?? false)
+    {
+        <p class="mt-8 text-[11px] text-on-surface-variant/60 font-mono">
+            Tracking Diagnostic ID: @Model.RequestId
+        </p>
+    }
+</div>

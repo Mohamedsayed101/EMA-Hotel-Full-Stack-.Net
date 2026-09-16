@@ -1,0 +1,18 @@
+﻿using Hotel_MVC.Enums;
+
+namespace Hotel_MVC.Models
+{
+    public class Room
+    {
+        public int Id { get; set; }
+        public string RoomNumber { get; set; }
+        public int FloorNumber { get; set; }
+        public RoomStatus Status { get; set; } = RoomStatus.Available;
+
+        public int RoomTypeId { get; set; }
+        public RoomType RoomType { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+       
+    }
+}

@@ -1,0 +1,41 @@
+﻿@model Hotel_MVC.Models.Extra
+@{
+    ViewData["Title"] = "Delete Extra";
+}
+
+<div class="w-full bg-surface min-h-screen py-10">
+    <div class="max-w-xl mx-auto px-6">
+
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <span class="text-red-600 font-semibold text-xs uppercase tracking-widest">Warning Action</span>
+                <h1 class="font-headline text-3xl font-bold text-on-surface mt-1">Delete Add-on</h1>
+            </div>
+            <a asp-action="Index" class="px-4 py-2 bg-surface-container text-on-surface text-xs font-semibold rounded-lg hover:bg-surface-container-high transition">
+                Back to List
+            </a>
+        </div>
+
+        <div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-black/5 space-y-6">
+            <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">
+                Are you sure you want to delete this service add-on? This action cannot be undone.
+            </div>
+
+            <div class="bg-surface-container-low p-5 rounded-xl space-y-2">
+                <p class="text-xs text-on-surface-variant uppercase font-semibold">Service Details</p>
+                <h3 class="font-bold text-on-surface text-lg">@Model.Name</h3>
+                <p class="text-sm text-on-surface-variant">Price: <span class="font-semibold text-primary">@Model.Price.ToString("N0") EGP</span> (@Model.PricingType)</p>
+            </div>
+
+            <form asp-action="Delete" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <a asp-action="Index" class="px-5 py-2.5 bg-surface-container text-on-surface text-sm font-semibold rounded-xl hover:bg-surface-container-high transition">Cancel</a>
+                    <button type="submit" class="px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition shadow-sm">Confirm Delete</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

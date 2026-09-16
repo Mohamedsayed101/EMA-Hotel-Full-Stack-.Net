@@ -1,0 +1,12 @@
+# Sensitive local configuration
+appsettings.Development.json
+*.user
+*.userosscache
+*.suo
+
+# Build outputs & dependencies
+bin/
+obj/
+.vs/
+[Dd]ebug/
+[Rr]elease/
