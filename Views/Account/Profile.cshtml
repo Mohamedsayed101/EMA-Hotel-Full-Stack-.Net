@@ -1,270 +1,443 @@
-﻿@model Hotel_MVC.ViewModels.AccountVM.ProfileVM
+﻿
+@model Hotel_MVC.ViewModels.AccountVM.ProfileVM
 
 @{
     ViewData["Title"] = "Guest Profile & Preferences";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="max-w-[1320px] mx-auto px-6 lg:px-margin pt-6">
-        <div class="rounded-lg bg-green-50 border border-green-200 text-green-700 px-5 py-3">
-            @TempData["SuccessMessage"]
-        </div>
-    </div>
-}
+<div class="w-full bg-[#f8f6f2] min-h-screen">
 
-<main class="w-full pt-20 bg-surface min-h-screen">
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+    <section class="w-full px-6 lg:px-margin pt-10 pb-8">
+        <div class="max-w-[1320px] mx-auto">
 
-    <div class="flex flex-col w-full">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                
+                <div>
 
-        <!-- =========================
-             PROFILE HERO
-        ========================== -->
-        <div class="relative w-full overflow-hidden bg-surface-container-low py-10 lg:py-14">
+                    <p class="text-xs uppercase tracking-[0.25em] text-[#b08d57] font-semibold mb-3">
+                        Guest Portal
+                    </p>
 
-            <div class="max-w-[1320px] mx-auto px-6 lg:px-margin relative z-10">
+                    <h1 class="font-serif text-4xl md:text-5xl text-[#241d17]">
+                        Your Profile
+                    </h1>
 
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <p class="mt-3 text-stone-500 max-w-2xl">
+                        Manage your personal information, security,
+                        preferences and stay details.
+                    </p>
 
-                    <div class="space-y-3">
+                </div>
 
-                        <div class="flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-widest text-primary font-semibold">
+                <div class="text-sm text-stone-500">
 
-                            <span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+                    Membership ID
 
-                            <span>
-                                Guest Portal • Membership ID #EMA-MEM-4091
-                            </span>
-
-                        </div>
-
-                        <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                            Guest Profile &amp; Preferences
-                        </h1>
-
-                        <p class="font-body-lead text-body-lead text-on-surface-variant max-w-xl">
-                            Manage your personal credentials, sanctuary preferences, and reservation security.
-                        </p>
-
-                    </div>
-
-                    <div class="flex items-center gap-4 bg-surface-container-lowest px-5 py-3.5 rounded shadow-sm">
-
-                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
-
-                            <span class="material-symbols-outlined text-[22px]"
-                                  style="font-variation-settings: 'FILL' 1;">
-                                workspace_premium
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <div class="font-label-caps text-label-caps uppercase text-primary font-bold tracking-wider">
-                                EMA Circle Preferred Member
-                            </div>
-
-                            <div class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1.5 pt-0.5">
-
-                                <span class="font-medium text-on-surface">
-                                    11 Stays Completed
-                                </span>
-
-                                <span class="text-outline-variant">
-                                    •
-                                </span>
-
-                                <span>
-                                    48,500 Sanctuary Pts
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <span class="font-semibold text-[#241d17]">
+                        #EMA-MEM-4091
+                    </span>
 
                 </div>
 
             </div>
 
         </div>
+    </section>
 
 
-        <!-- =========================
-             PROFILE CONTENT
-        ========================== -->
-        <div class="max-w-[1320px] mx-auto px-6 lg:px-margin py-10 lg:py-16 w-full">
+    <!-- =========================================================
+         SUCCESS MESSAGE
+    ========================================================== -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <section class="w-full px-6 lg:px-margin pb-6">
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="max-w-[1320px] mx-auto">
+
+                <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-800 text-sm font-medium">
+
+                    @TempData["SuccessMessage"]
+
+                </div>
+
+            </div>
+
+        </section>
+    }
 
 
-                <!-- =========================
-                     LEFT SIDEBAR
-                ========================== -->
-                <div class="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-28">
+    <!-- =========================================================
+         ERROR MESSAGE
+    ========================================================== -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <section class="w-full px-6 lg:px-margin pb-6">
 
-                    <!-- Profile Card -->
-                    <div class="bg-surface-container-lowest rounded-xl p-6 lg:p-8 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+            <div class="max-w-[1320px] mx-auto">
 
-                        <div class="absolute top-0 inset-x-0 h-2 bg-primary"></div>
+                <div class="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-red-800 text-sm font-medium">
 
-                        <!-- Profile Image -->
-                        <div class="relative group mt-2 mb-4">
+                    @TempData["ErrorMessage"]
 
-                            <div class="w-28 h-28 rounded-full overflow-hidden shadow-md">
+                </div>
 
-                                <img alt="Eleanor Vance - Guest Portrait"
-                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                     src="~/Images/team/mohamed-sayed.png" />
+            </div>
+
+        </section>
+    }
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <section class="w-full px-6 lg:px-margin pb-16">
+
+        <div class="max-w-[1320px] mx-auto">
+
+            <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8">
+
+
+                <!-- =================================================
+                     SIDEBAR
+                ================================================== -->
+                <aside class="space-y-6">
+
+
+                    <!-- =================================================
+                         PROFILE CARD
+                    ================================================== -->
+                    <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+
+                        <div class="h-28 bg-[#241d17] relative">
+
+                            <div class="absolute -bottom-14 left-1/2 -translate-x-1/2">
+
+                                <div class="w-28 h-28 rounded-full border-4 border-white bg-stone-100 overflow-hidden shadow-md">
+
+
+                                    <!-- ===============================
+                                         CURRENT PROFILE IMAGE
+                                    ================================ -->
+                                    @if (!string.IsNullOrWhiteSpace(Model.ProfileImagePath))
+                                    {
+                                        <img src="@Model.ProfileImagePath"
+                                             alt="Profile photo"
+                                             id="profileImage"
+                                             class="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
+                                             onclick="openProfileImage()" />
+                                    }
+
+
+                                    <!-- ===============================
+                                         INITIALS
+                                    ================================ -->
+                                    <div id="profile-initials"
+                                         class="@(string.IsNullOrWhiteSpace(Model.ProfileImagePath)
+                                             ? "flex"
+                                             : "hidden")
+                                         w-full h-full items-center justify-center
+                                         bg-[#e8dfd2]
+                                         text-[#6f5a40]
+                                         text-3xl font-semibold">
+
+                                        @(
+                                            string.IsNullOrWhiteSpace(Model.FirstName)
+                                                ? "G"
+                                                : Model.FirstName.Substring(0, 1).ToUpper()
+                                        )
+
+                                    </div>
+
+
+                                    <!-- ===============================
+                                         PREVIEW IMAGE
+                                    ================================ -->
+                                    <img id="profile-image-preview"
+                                         src=""
+                                         alt="Profile photo preview"
+                                         class="hidden w-full h-full object-cover" />
+
+                                </div>
 
                             </div>
 
-                            <button class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md hover:bg-primary-container transition-all"
-                                    title="Update profile photo"
-                                    type="button">
-
-                                <span class="material-symbols-outlined text-[16px]">
-                                    photo_camera
-                                </span>
-
-                            </button>
-
                         </div>
 
 
-                        <h2 class="font-headline-sm text-headline-sm text-on-surface">
-                            @Model.FirstName @Model.LastName
-                        </h2>
+                        <div class="pt-20 pb-7 px-6 text-center">
 
-                        <span class="font-body-sm text-body-sm text-on-surface-variant">
-                            @Model.Email
-                        </span>
+                            <h2 class="font-serif text-2xl text-[#241d17]">
+
+                                @Model.FirstName @Model.LastName
+
+                            </h2>
 
 
-                        <!-- Membership -->
-                        <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary font-label-caps text-label-caps uppercase tracking-wider font-semibold">
+                            <p class="text-sm text-stone-500 mt-1 break-all">
 
-                            <span class="material-symbols-outlined text-[14px]">
-                                hotel_class
+                                @Model.Email
+
+                            </p>
+
+
+                            <div class="mt-4 inline-flex items-center gap-2 rounded-full bg-[#f4eee5] px-4 py-2 text-xs font-semibold text-[#8b6b3d]">
+
+                                <span class="material-symbols-outlined text-base">
+                                    workspace_premium
+                                </span>
+
+                                Preferred Member
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 PROFILE PHOTO UPLOAD
+                            ================================================== -->
+                            <div class="mt-6 pt-6 border-t border-stone-200">
+
+                                <form asp-controller="Account"
+                                      asp-action="ChangeProfileImage"
+                                      method="post"
+                                      enctype="multipart/form-data"
+                                      id="profile-image-form">
+
+                                    @Html.AntiForgeryToken()
+
+
+                                    <input type="file"
+                                           asp-for="ProfileImage"
+                                           id="profile-image-input"
+                                           accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                                           class="hidden" />
+
+
+                                    <!-- Change Photo -->
+
+                                    <button type="button"
+                                            id="change-profile-photo"
+                                            class="w-full rounded-xl border border-stone-300 px-4 py-3 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition">
+
+                                        <span class="material-symbols-outlined align-middle text-base mr-1">
+                                            photo_camera
+                                        </span>
+
+                                        Change Profile Photo
+
+                                    </button>
+
+
+                                    <!-- Selected File -->
+
+                                    <div id="selected-photo-info"
+                                         class="hidden mt-4 rounded-xl bg-[#f8f3eb] border border-[#eadcc8] p-4 text-left">
+
+                                        <div class="flex items-start gap-3">
+
+                                            <span class="material-symbols-outlined text-[#b08d57]">
+                                                image
+                                            </span>
+
+                                            <div class="min-w-0 flex-1">
+
+                                                <p class="text-sm font-semibold text-[#241d17]">
+                                                    Selected photo
+                                                </p>
+
+                                                <p id="selected-photo-name"
+                                                   class="text-xs text-stone-500 mt-1 break-all">
+                                                </p>
+
+                                                <p id="selected-photo-size"
+                                                   class="text-xs text-stone-400 mt-1">
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Validation Message -->
+
+                                    <p id="photo-validation-message"
+                                       class="hidden text-xs text-red-600 mt-2 text-left">
+                                    </p>
+
+
+                                    <!-- Upload -->
+
+                                    <button type="submit"
+                                            id="upload-profile-photo"
+                                            class="hidden w-full mt-3 rounded-xl bg-[#b08d57] px-4 py-3 text-sm font-semibold text-white hover:bg-[#9a7849] transition">
+
+                                        <span class="material-symbols-outlined align-middle text-base mr-1">
+                                            upload
+                                        </span>
+
+                                        Upload Photo
+
+                                    </button>
+
+
+                                    <!-- Cancel -->
+
+                                    <button type="button"
+                                            id="cancel-photo-selection"
+                                            class="hidden w-full mt-2 rounded-xl border border-stone-300 px-4 py-2.5 text-sm text-stone-600 hover:bg-stone-50 transition">
+
+                                        Cancel
+
+                                    </button>
+
+
+                                    <p class="text-[11px] leading-5 text-stone-400 mt-3">
+
+                                        JPG, JPEG, PNG or WEBP · Maximum 5 MB
+
+                                    </p>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         MEMBERSHIP CARD
+                    ================================================== -->
+                    <div class="bg-[#241d17] rounded-2xl p-6 text-white shadow-sm">
+
+                        <div class="flex items-center justify-between mb-6">
+
+                            <div>
+
+                                <p class="text-xs uppercase tracking-[0.2em] text-[#cdb58e]">
+                                    EMA Circle
+                                </p>
+
+                                <h3 class="font-serif text-xl mt-1">
+                                    Preferred Member
+                                </h3>
+
+                            </div>
+
+                            <span class="material-symbols-outlined text-[#cdb58e]">
+                                diamond
                             </span>
 
-                            Tier Preferred
-
                         </div>
 
 
-                        <div class="w-full h-[1px] bg-surface-variant my-6"></div>
+                        <div class="grid grid-cols-2 gap-4">
+
+                            <div>
+
+                                <p class="text-xs text-stone-400">
+                                    Stays
+                                </p>
+
+                                <p class="text-xl font-semibold mt-1">
+                                    11
+                                </p>
+
+                            </div>
 
 
-                        <!-- Navigation -->
-                        <nav class="w-full flex flex-col gap-1.5 text-left">
+                            <div>
 
-                            <a class="flex items-center justify-between px-4 py-3 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md font-semibold transition-colors"
-                               href="#personal-information">
+                                <p class="text-xs text-stone-400">
+                                    Points
+                                </p>
 
-                                <span class="flex items-center gap-3">
+                                <p class="text-xl font-semibold mt-1">
+                                    48,500
+                                </p>
 
-                                    <span class="material-symbols-outlined text-[20px]"
-                                          style="font-variation-settings: 'FILL' 1;">
-                                        person
-                                    </span>
+                            </div>
 
-                                    Personal Details
+                        </div>
 
-                                </span>
-
-                                <span class="material-symbols-outlined text-[18px]">
-                                    chevron_right
-                                </span>
-
-                            </a>
+                    </div>
 
 
-                            <a class="flex items-center justify-between px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md"
-                               href="#account-security">
+                    <!-- =================================================
+                         NAVIGATION
+                    ================================================== -->
+                    <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-3">
 
-                                <span class="flex items-center gap-3">
+                        <a href="#personal-details"
+                           class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-stone-700 hover:bg-[#f8f3eb] hover:text-[#8b6b3d] transition">
 
-                                    <span class="material-symbols-outlined text-[20px]">
-                                        lock_reset
-                                    </span>
+                            <span class="material-symbols-outlined">
+                                person
+                            </span>
 
-                                    Security &amp; Password
+                            Personal Details
 
-                                </span>
-
-                                <span class="material-symbols-outlined text-[18px]">
-                                    chevron_right
-                                </span>
-
-                            </a>
+                        </a>
 
 
-                            <a class="flex items-center justify-between px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md"
-                               href="#sanctuary-preferences">
+                        <a href="#security"
+                           class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-stone-700 hover:bg-[#f8f3eb] hover:text-[#8b6b3d] transition">
 
-                                <span class="flex items-center gap-3">
+                            <span class="material-symbols-outlined">
+                                lock
+                            </span>
 
-                                    <span class="material-symbols-outlined text-[20px]">
-                                        room_service
-                                    </span>
+                            Security & Password
 
-                                    Stay Preferences
-
-                                </span>
-
-                                <span class="material-symbols-outlined text-[18px]">
-                                    chevron_right
-                                </span>
-
-                            </a>
+                        </a>
 
 
-                            <a class="flex items-center justify-between px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md"
-                               href="#payment-methods">
+                        <a href="#preferences"
+                           class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-stone-700 hover:bg-[#f8f3eb] hover:text-[#8b6b3d] transition">
 
-                                <span class="flex items-center gap-3">
+                            <span class="material-symbols-outlined">
+                                tune
+                            </span>
 
-                                    <span class="material-symbols-outlined text-[20px]">
-                                        credit_card
-                                    </span>
+                            Stay Preferences
 
-                                    Payment Methods
-
-                                </span>
-
-                                <span class="material-symbols-outlined text-[18px]">
-                                    chevron_right
-                                </span>
-
-                            </a>
-
-                        </nav>
+                        </a>
 
 
-                        <div class="w-full h-[1px] bg-surface-variant my-6"></div>
+                        <a href="#payment-methods"
+                           class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-stone-700 hover:bg-[#f8f3eb] hover:text-[#8b6b3d] transition">
+
+                            <span class="material-symbols-outlined">
+                                credit_card
+                            </span>
+
+                            Payment Methods
+
+                        </a>
 
 
-                        <!-- Sign Out -->
+                        <div class="border-t border-stone-200 my-3"></div>
+
+
                         <form asp-controller="Account"
                               asp-action="Logout"
-                              method="post"
-                              class="w-full">
+                              method="post">
 
                             @Html.AntiForgeryToken()
 
-                            <button class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-surface-container hover:bg-error-container hover:text-on-error-container text-on-surface-variant font-label-md text-label-md font-medium transition-all group"
-                                    type="submit">
+                            <button type="submit"
+                                    class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition">
 
-                                <span class="material-symbols-outlined text-[18px] group-hover:text-error transition-colors">
+                                <span class="material-symbols-outlined">
                                     logout
                                 </span>
 
-                                <span>
-                                    Sign Out from Sanctuary
-                                </span>
+                                Sign Out
 
                             </button>
 
@@ -272,82 +445,34 @@
 
                     </div>
 
+                </aside>
 
-                    <!-- Concierge -->
-                    <div class="bg-surface-container-low rounded-xl p-6 shadow-sm flex items-start gap-4">
 
-                        <div class="p-2.5 rounded-full bg-surface-container-lowest text-primary shadow-sm flex-shrink-0">
+                <!-- =================================================
+                     MAIN CONTENT
+                ================================================== -->
+                <main class="space-y-8">
 
-                            <span class="material-symbols-outlined text-[22px]">
-                                concierge
-                            </span>
 
-                        </div>
+                    <!-- =================================================
+                         PERSONAL DETAILS
+                    ================================================== -->
+                    <section id="personal-details"
+                             class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 md:p-8">
 
-                        <div>
+                        <div class="mb-8">
 
-                            <h4 class="font-label-md text-label-md font-semibold text-on-surface">
-                                Dedicated Concierge
-                            </h4>
-
-                            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">
-                                Assigned to assist your retreat arrangements 24/7.
+                            <p class="text-xs uppercase tracking-[0.2em] text-[#b08d57] font-semibold">
+                                Personal Information
                             </p>
 
-                            <a class="inline-flex items-center gap-1 font-label-caps text-label-caps text-primary uppercase font-bold mt-2 tracking-wider hover:underline"
-                               asp-controller="Home"
-                               asp-action="Contact">
+                            <h2 class="font-serif text-3xl text-[#241d17] mt-2">
+                                Your Details
+                            </h2>
 
-                                Contact Desk
-
-                                <span class="material-symbols-outlined text-[14px]">
-                                    arrow_forward
-                                </span>
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     RIGHT CONTENT
-                ========================== -->
-                <div class="lg:col-span-8 flex flex-col gap-8">
-
-
-                    <!-- =========================
-                         PERSONAL INFORMATION
-                    ========================== -->
-                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
-                             id="personal-information">
-
-                        <div class="flex items-center justify-between pb-6 mb-8 border-b border-surface-variant/40">
-
-                            <div>
-
-                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
-                                    Sanctuary Records
-                                </span>
-
-                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
-                                    Personal Information
-                                </h3>
-
-                            </div>
-
-                            <span class="hidden sm:inline-flex items-center gap-1.5 text-secondary font-label-sm text-label-sm bg-surface-container-low px-3 py-1.5 rounded">
-
-                                <span class="material-symbols-outlined text-[16px]">
-                                    verified
-                                </span>
-
-                                Identity Verified
-
-                            </span>
+                            <p class="text-sm text-stone-500 mt-2">
+                                Keep your contact information up to date.
+                            </p>
 
                         </div>
 
@@ -360,604 +485,360 @@
 
                             @Html.AntiForgeryToken()
 
+
                             <div asp-validation-summary="ModelOnly"
-                                 class="text-red-600 text-sm mb-4">
+                                 class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
 
                                 <!-- First Name -->
-                                <div class="space-y-2">
 
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="firstName">
+                                <div>
+
+                                    <label asp-for="FirstName"
+                                           class="block text-sm font-medium text-stone-700 mb-2">
                                         First Name
                                     </label>
 
-                                    <div class="relative">
+                                    <input asp-for="FirstName"
+                                           class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-800 outline-none transition focus:border-[#b08d57] focus:ring-2 focus:ring-[#b08d57]/20" />
 
-                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
-                                            badge
-                                        </span>
-
-                                        <input asp-for="FirstName"
-                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="firstName"
-                                               type="text" />
-
-                                        <span asp-validation-for="FirstName"
-                                              class="text-red-600 text-sm">
-                                        </span>
-
-                                    </div>
+                                    <span asp-validation-for="FirstName"
+                                          class="text-sm text-red-600">
+                                    </span>
 
                                 </div>
 
 
                                 <!-- Last Name -->
-                                <div class="space-y-2">
 
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="lastName">
+                                <div>
+
+                                    <label asp-for="LastName"
+                                           class="block text-sm font-medium text-stone-700 mb-2">
                                         Last Name
                                     </label>
 
-                                    <div class="relative">
+                                    <input asp-for="LastName"
+                                           class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-800 outline-none transition focus:border-[#b08d57] focus:ring-2 focus:ring-[#b08d57]/20" />
 
-                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
-                                            person
-                                        </span>
-
-                                        <input asp-for="LastName"
-                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="lastName"
-                                               type="text" />
-
-                                        <span asp-validation-for="LastName"
-                                              class="text-red-600 text-sm">
-                                        </span>
-
-                                    </div>
+                                    <span asp-validation-for="LastName"
+                                          class="text-sm text-red-600">
+                                    </span>
 
                                 </div>
 
 
                                 <!-- Email -->
-                                <div class="space-y-2">
 
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="email">
+                                <div>
+
+                                    <label asp-for="Email"
+                                           class="block text-sm font-medium text-stone-700 mb-2">
                                         Email Address
                                     </label>
 
-                                    <div class="relative">
+                                    <input asp-for="Email"
+                                           readonly
+                                           class="w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-stone-500 cursor-not-allowed" />
 
-                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
-                                            mail
-                                        </span>
-
-                                        <input asp-for="Email"
-                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="email"
-                                               type="email"
-                                               readonly />
-
-                                        <span asp-validation-for="Email"
-                                              class="text-red-600 text-sm">
-                                        </span>
-
-                                    </div>
+                                    <p class="text-xs text-stone-400 mt-2">
+                                        Email address cannot be changed from this page.
+                                    </p>
 
                                 </div>
 
 
                                 <!-- Phone -->
-                                <div class="space-y-2">
 
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="phone">
+                                <div>
+
+                                    <label asp-for="PhoneNumber"
+                                           class="block text-sm font-medium text-stone-700 mb-2">
                                         Phone Number
                                     </label>
 
-                                    <div class="relative">
+                                    <input asp-for="PhoneNumber"
+                                           class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-800 outline-none transition focus:border-[#b08d57] focus:ring-2 focus:ring-[#b08d57]/20" />
 
-                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
-                                            call
-                                        </span>
-
-                                        <input asp-for="PhoneNumber"
-                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="phone"
-                                               type="tel" />
-
-                                        <span asp-validation-for="PhoneNumber"
-                                              class="text-red-600 text-sm">
-                                        </span>
-
-                                    </div>
+                                    <span asp-validation-for="PhoneNumber"
+                                          class="text-sm text-red-600">
+                                    </span>
 
                                 </div>
 
 
                                 <!-- Nationality -->
-                                <div class="space-y-2">
 
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="nationality">
+                                <div>
+
+                                    <label asp-for="Nationality"
+                                           class="block text-sm font-medium text-stone-700 mb-2">
                                         Nationality
                                     </label>
 
-                                    <div class="relative">
+                                    <select asp-for="Nationality"
+                                            class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-800 outline-none transition focus:border-[#b08d57] focus:ring-2 focus:ring-[#b08d57]/20">
 
-                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
-                                            public
-                                        </span>
+                                        <option value="">
+                                            Select nationality
+                                        </option>
 
-                                        <select asp-for="Nationality"
-                                                class="w-full h-12 pl-11 pr-10 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none cursor-pointer border border-surface-variant hover:border-outline-variant"
-                                                id="nationality">
+                                        <option value="Egyptian">
+                                            Egyptian
+                                        </option>
 
-                                            <option value="">Select nationality</option>
-                                            <option value="US">United States</option>
-                                            <option value="UK">United Kingdom</option>
-                                            <option value="CA">Canada</option>
-                                            <option value="FR">France</option>
-                                            <option value="CH">Switzerland</option>
-                                            <option value="JP">Japan</option>
-                                            <option value="EG">Egypt</option>
+                                        <option value="American">
+                                            American
+                                        </option>
 
-                                        </select>
+                                        <option value="British">
+                                            British
+                                        </option>
 
-                                        <span class="material-symbols-outlined absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant pointer-events-none text-[20px]">
-                                            expand_more
-                                        </span>
+                                        <option value="Canadian">
+                                            Canadian
+                                        </option>
 
-                                    </div>
+                                        <option value="French">
+                                            French
+                                        </option>
+
+                                        <option value="Swiss">
+                                            Swiss
+                                        </option>
+
+                                        <option value="Japanese">
+                                            Japanese
+                                        </option>
+
+                                        <option value="Other">
+                                            Other
+                                        </option>
+
+                                    </select>
 
                                 </div>
 
 
                                 <!-- Passport -->
-                                <div class="space-y-2">
-
-                                    <div class="flex items-center justify-between">
-
-                                        <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                               for="passportId">
-                                            Passport / ID Document
-                                        </label>
-
-                                        <span class="font-label-caps text-label-caps text-secondary uppercase">
-                                            Encrypted
-                                        </span>
-
-                                    </div>
-
-                                    <div class="relative">
-
-                                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">
-                                            shield
-                                        </span>
-
-                                        <input asp-for="PassportOrNationalId"
-                                               class="w-full h-12 pl-11 pr-4 bg-surface-container-low/70 rounded text-on-surface font-body-md text-body-md cursor-not-allowed border border-surface-variant/70 tracking-widest"
-                                               id="passportId"
-                                               readonly
-                                               type="text" />
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="pt-4 flex flex-wrap items-center justify-end gap-3">
-
-                                <button class="px-6 py-3 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md font-medium"
-                                        type="button"
-                                        id="discard-personal">
-
-                                    Discard
-
-                                </button>
-
-                                <button class="inline-flex items-center justify-center gap-2 px-7 py-3 rounded bg-primary text-on-primary font-label-md text-label-md font-medium shadow-[0_4px_14px_rgba(160,120,62,0.22)] hover:bg-primary-container transition-all"
-                                        type="submit">
-
-                                    <span class="material-symbols-outlined text-[18px]">
-                                        check
-                                    </span>
-
-                                    <span>
-                                        Save Changes
-                                    </span>
-
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </section>
-
-
-                    <!-- =========================
-                         STAY PREFERENCES
-                    ========================== -->
-                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
-                             id="sanctuary-preferences">
-
-                        <div class="flex items-center justify-between pb-6 mb-6 border-b border-surface-variant/40">
-
-                            <div>
-
-                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
-                                    Tailored Living
-                                </span>
-
-                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
-                                    Sanctuary Stay Preferences
-                                </h3>
-
-                            </div>
-
-                            <span class="material-symbols-outlined text-primary text-[28px]">
-                                spa
-                            </span>
-
-                        </div>
-
-                        <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mb-6">
-                            Our stewards curate every suite to your bespoke sensory standards prior to check-in.
-                        </p>
-
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-
-
-                            <!-- Room Placement -->
-                            <div class="p-4 rounded-lg bg-surface-container-low flex flex-col gap-2">
-
-                                <div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
-
-                                    <span class="material-symbols-outlined text-[18px]">
-                                        wb_sunny
-                                    </span>
-
-                                </div>
-
-                                <span class="font-label-md text-label-md font-semibold text-on-surface">
-                                    Room Placement
-                                </span>
-
-                                <span class="font-body-sm text-body-sm text-on-surface-variant">
-                                    High Floor Oceanfront with morning sunlight
-                                </span>
-
-                            </div>
-
-
-                            <!-- Bedding -->
-                            <div class="p-4 rounded-lg bg-surface-container-low flex flex-col gap-2">
-
-                                <div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
-
-                                    <span class="material-symbols-outlined text-[18px]">
-                                        bed
-                                    </span>
-
-                                </div>
-
-                                <span class="font-label-md text-label-md font-semibold text-on-surface">
-                                    Bedding Customization
-                                </span>
-
-                                <span class="font-body-sm text-body-sm text-on-surface-variant">
-                                    Feather-free organic botanical pillows
-                                </span>
-
-                            </div>
-
-
-                            <!-- Refreshment -->
-                            <div class="p-4 rounded-lg bg-surface-container-low flex flex-col gap-2">
-
-                                <div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
-
-                                    <span class="material-symbols-outlined text-[18px]">
-                                        local_bar
-                                    </span>
-
-                                </div>
-
-                                <span class="font-label-md text-label-md font-semibold text-on-surface">
-                                    Arrival Refreshment
-                                </span>
-
-                                <span class="font-body-sm text-body-sm text-on-surface-variant">
-                                    Chilled sparkling mineral water with fresh lime
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="flex items-center justify-between pt-2">
-
-                            <div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
-
-                                <span class="material-symbols-outlined text-primary text-[18px]">
-                                    tune
-                                </span>
-
-                                <span>
-                                    Updated automatically across all confirmed EMA retreats
-                                </span>
-
-                            </div>
-
-                            <button class="inline-flex items-center gap-1 font-label-md text-label-md font-medium text-primary hover:text-on-surface transition-colors"
-                                    type="button"
-                                    id="modify-preferences">
-
-                                <span>
-                                    Modify Preferences
-                                </span>
-
-                                <span class="material-symbols-outlined text-[16px]">
-                                    open_in_new
-                                </span>
-
-                            </button>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- =========================
-                         ACCOUNT SECURITY
-                    ========================== -->
-                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
-                             id="account-security">
-
-                        <div class="flex items-center justify-between pb-6 mb-8 border-b border-surface-variant/40">
-
-                            <div>
-
-                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
-                                    Access Protection
-                                </span>
-
-                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
-                                    Account Security &amp; Password
-                                </h3>
-
-                            </div>
-
-                            <span class="material-symbols-outlined text-outline text-[24px]">
-                                lock
-                            </span>
-
-                        </div>
-
-
-                        <form class="space-y-6"
-                              id="password-form">
-
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-
-
-                                <!-- Current Password -->
-                                <div class="space-y-2">
-
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="currentPassword">
-                                        Current Password
-                                    </label>
-
-                                    <div class="relative">
-
-                                        <input class="w-full h-12 pl-4 pr-11 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="currentPassword"
-                                               placeholder="••••••••••••"
-                                               type="password" />
-
-                                        <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors"
-                                                onclick="togglePasswordVisibility('currentPassword', this)"
-                                                title="Toggle password view"
-                                                type="button">
-
-                                            <span class="material-symbols-outlined text-[18px]">
-                                                visibility
-                                            </span>
-
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!-- New Password -->
-                                <div class="space-y-2">
-
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="newPassword">
-                                        New Password
-                                    </label>
-
-                                    <div class="relative">
-
-                                        <input class="w-full h-12 pl-4 pr-11 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="newPassword"
-                                               placeholder="Min 8 characters"
-                                               type="password" />
-
-                                        <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors"
-                                                onclick="togglePasswordVisibility('newPassword', this)"
-                                                title="Toggle password view"
-                                                type="button">
-
-                                            <span class="material-symbols-outlined text-[18px]">
-                                                visibility
-                                            </span>
-
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!-- Confirm Password -->
-                                <div class="space-y-2">
-
-                                    <label class="block font-label-md text-label-md text-on-surface font-medium"
-                                           for="confirmPassword">
-                                        Confirm Password
-                                    </label>
-
-                                    <div class="relative">
-
-                                        <input class="w-full h-12 pl-4 pr-11 bg-surface-container-lowest rounded text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 outline-none transition-all border border-surface-variant hover:border-outline-variant"
-                                               id="confirmPassword"
-                                               placeholder="Re-enter password"
-                                               type="password" />
-
-                                        <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors"
-                                                onclick="togglePasswordVisibility('confirmPassword', this)"
-                                                title="Toggle password view"
-                                                type="button">
-
-                                            <span class="material-symbols-outlined text-[18px]">
-                                                visibility
-                                            </span>
-
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-
-                                <div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
-
-                                    <span class="material-symbols-outlined text-[16px] text-tertiary">
-                                        check_circle
-                                    </span>
-
-                                    <span>
-                                        Includes uppercase letter, symbol, and 8+ characters
-                                    </span>
-
-                                </div>
-
-                                <button class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-inverse-surface text-surface-bright font-label-md text-label-md font-medium shadow-sm hover:bg-on-background transition-all"
-                                        type="submit">
-
-                                    <span class="material-symbols-outlined text-[18px]">
-                                        key
-                                    </span>
-
-                                    <span>
-                                        Update Password
-                                    </span>
-
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </section>
-
-
-                    <!-- =========================
-                         PAYMENT METHODS
-                    ========================== -->
-                    <section class="bg-surface-container-lowest rounded-xl p-6 lg:p-10 shadow-sm relative"
-                             id="payment-methods">
-
-                        <div class="flex items-center justify-between pb-6 mb-6 border-b border-surface-variant/40">
-
-                            <div>
-
-                                <span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">
-                                    Billing Security
-                                </span>
-
-                                <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-0.5">
-                                    Stored Payment Methods
-                                </h3>
-
-                            </div>
-
-                            <button class="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md font-medium"
-                                    type="button"
-                                    id="add-card">
-
-                                <span class="material-symbols-outlined text-[18px]">
-                                    add
-                                </span>
-
-                                <span>
-                                    Add Card
-                                </span>
-
-                            </button>
-
-                        </div>
-
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-
-                            <!-- Amex -->
-                            <div class="p-5 rounded-lg bg-surface-container-low flex flex-col justify-between h-36 relative overflow-hidden">
-
-                                <div class="flex items-center justify-between">
-
-                                    <div class="flex items-center gap-2">
-
-                                        <span class="material-symbols-outlined text-primary text-[24px]">
-                                            credit_card
-                                        </span>
-
-                                        <span class="font-label-md text-label-md font-semibold text-on-surface">
-                                            Amex Centurion
-                                        </span>
-
-                                    </div>
-
-                                    <span class="font-label-caps text-label-caps bg-primary text-on-primary px-2 py-0.5 rounded uppercase">
-                                        Default
-                                    </span>
-
-                                </div>
 
                                 <div>
 
-                                    <div class="font-body-md text-body-md text-on-surface tracking-widest font-medium">
-                                        •••• •••••• 39041
-                                    </div>
+                                    <label asp-for="PassportOrNationalId"
+                                           class="block text-sm font-medium text-stone-700 mb-2">
+                                        Passport / National ID
+                                    </label>
 
-                                    <div class="font-body-sm text-body-sm text-on-surface-variant flex justify-between mt-1">
+                                    <input asp-for="PassportOrNationalId"
+                                           readonly
+                                           class="w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-stone-500 cursor-not-allowed" />
 
-                                        <span>
-                                            Eleanor Vance
+                                    <p class="text-xs text-stone-400 mt-2">
+                                        This information is managed securely by the hotel.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-stone-200">
+
+                                <button type="button"
+                                        id="discard-personal"
+                                        class="rounded-xl border border-stone-300 px-6 py-3 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition">
+
+                                    Discard Changes
+
+                                </button>
+
+
+                                <button type="submit"
+                                        class="rounded-xl bg-[#b08d57] px-6 py-3 text-sm font-semibold text-white hover:bg-[#9a7849] transition">
+
+                                    Save Changes
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         SECURITY
+                    ================================================== -->
+                    <section id="security"
+                             class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 md:p-8">
+
+                        <div class="mb-8">
+
+                            <p class="text-xs uppercase tracking-[0.2em] text-[#b08d57] font-semibold">
+                                Account Security
+                            </p>
+
+                            <h2 class="font-serif text-3xl text-[#241d17] mt-2">
+                                Security & Password
+                            </h2>
+
+                            <p class="text-sm text-stone-500 mt-2">
+                                Change your password securely using your current password.
+                            </p>
+
+                        </div>
+
+
+                        <form asp-controller="Account"
+                              asp-action="ChangePassword"
+                              method="post"
+                              class="space-y-6"
+                              id="password-form"
+                              autocomplete="off">
+
+                            @Html.AntiForgeryToken()
+
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                            </div>
+
+
+                            <!-- Current Password -->
+
+                            <div>
+
+                                <label asp-for="CurrentPassword"
+                                       class="block text-sm font-medium text-stone-700 mb-2">
+                                    Current Password
+                                </label>
+
+                                <div class="relative">
+
+                                    <input asp-for="CurrentPassword"
+                                           type="password"
+                                           id="CurrentPassword"
+                                           value=""
+                                           autocomplete="current-password"
+                                           class="w-full rounded-xl border border-[#d8cec0] bg-white px-4 py-3 pr-12 text-sm text-[#241d17] outline-none transition focus:border-[#b08a57] focus:ring-2 focus:ring-[#b08a57]/20"
+                                           placeholder="Enter your current password" />
+
+                                    <button type="button"
+                                            onclick="togglePasswordVisibility('CurrentPassword', this)"
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 hover:text-[#8b6b3d]">
+
+                                        <span class="material-symbols-outlined">
+                                            visibility
                                         </span>
 
-                                        <span>
-                                            Exp 09/28
+                                    </button>
+
+                                </div>
+
+                                <span asp-validation-for="CurrentPassword"
+                                      class="text-sm text-red-600">
+                                </span>
+
+                            </div>
+
+
+                            <!-- New Password -->
+
+                            <div>
+
+                                <label asp-for="NewPassword"
+                                       class="block text-sm font-medium text-stone-700 mb-2">
+                                    New Password
+                                </label>
+
+                                <div class="relative">
+
+                                    <input asp-for="NewPassword"
+                                           type="password"
+                                           id="NewPassword"
+                                           autocomplete="new-password"
+                                           class="w-full rounded-xl border border-[#d8cec0] bg-white px-4 py-3 pr-12 text-sm text-[#241d17] outline-none transition focus:border-[#b08a57] focus:ring-2 focus:ring-[#b08a57]/20"
+                                           placeholder="Enter your new password" />
+
+                                    <button type="button"
+                                            onclick="togglePasswordVisibility('NewPassword', this)"
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 hover:text-[#8b6b3d]">
+
+                                        <span class="material-symbols-outlined">
+                                            visibility
                                         </span>
+
+                                    </button>
+
+                                </div>
+
+                                <span asp-validation-for="NewPassword"
+                                      class="text-sm text-red-600">
+                                </span>
+
+                            </div>
+
+
+                            <!-- Confirm Password -->
+
+                            <div>
+
+                                <label asp-for="ConfirmNewPassword"
+                                       class="block text-sm font-medium text-stone-700 mb-2">
+                                    Confirm New Password
+                                </label>
+
+                                <div class="relative">
+
+                                    <input asp-for="ConfirmNewPassword"
+                                           type="password"
+                                           id="ConfirmNewPassword"
+                                           autocomplete="new-password"
+                                           class="w-full rounded-xl border border-[#d8cec0] bg-white px-4 py-3 pr-12 text-sm text-[#241d17] outline-none transition focus:border-[#b08a57] focus:ring-2 focus:ring-[#b08a57]/20"
+                                           placeholder="Confirm your new password" />
+
+                                    <button type="button"
+                                            onclick="togglePasswordVisibility('ConfirmNewPassword', this)"
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 hover:text-[#8b6b3d]">
+
+                                        <span class="material-symbols-outlined">
+                                            visibility
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                                <span asp-validation-for="ConfirmNewPassword"
+                                      class="text-sm text-red-600">
+                                </span>
+
+                            </div>
+
+
+                            <div class="rounded-xl bg-[#f8f3eb] border border-[#eadcc8] p-4">
+
+                                <div class="flex gap-3">
+
+                                    <span class="material-symbols-outlined text-[#b08d57]">
+                                        info
+                                    </span>
+
+                                    <div>
+
+                                        <p class="text-sm font-semibold text-[#241d17]">
+                                            Password security
+                                        </p>
+
+                                        <p class="text-xs text-stone-500 mt-1">
+                                            Your new password must satisfy the security
+                                            requirements configured for your EMA Hotel account.
+                                        </p>
 
                                     </div>
 
@@ -966,26 +847,502 @@
                             </div>
 
 
-                            <!-- Visa -->
-                            <div class="p-5 rounded-lg bg-surface-container-low flex flex-col justify-between h-36 relative overflow-hidden">
+                            <div class="flex justify-end pt-4 border-t border-stone-200">
 
-                                <div class="flex items-center justify-between">
+                                <button type="submit"
+                                        class="rounded-xl bg-[#b08d57] px-6 py-3 text-sm font-semibold text-white hover:bg-[#9a7849] transition">
 
-                                    <div class="flex items-center gap-2">
+                                    Update Password
 
-                                        <span class="material-symbols-outlined text-secondary text-[24px]">
-                                            credit_card
-                                        </span>
+                                </button>
 
-                                        <span class="font-label-md text-label-md font-semibold text-on-surface">
-                                            Visa Infinite
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         STAY PREFERENCES
+                    ================================================== -->
+                    <section id="preferences"
+                             class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 md:p-8">
+
+                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+
+                            <div>
+
+                                <p class="text-xs uppercase tracking-[0.2em] text-[#b08d57] font-semibold">
+                                    Guest Preferences
+                                </p>
+
+                                <h2 class="font-serif text-3xl text-[#241d17] mt-2">
+                                    Stay Preferences
+                                </h2>
+
+                                <p class="text-sm text-stone-500 mt-2">
+                                    Save your preferences for future stays.
+                                </p>
+
+                            </div>
+
+
+                            <button type="button"
+                                    id="modify-preferences"
+                                    class="rounded-xl border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition">
+
+                                <span class="material-symbols-outlined align-middle text-base mr-1">
+                                    edit
+                                </span>
+
+                                Modify Preferences
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             DISPLAY MODE
+                        ================================================== -->
+                        <div id="preferences-display"
+                             class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+
+                            <!-- Breakfast -->
+
+                            <div class="rounded-2xl border border-stone-200 p-5">
+
+                                <div class="w-11 h-11 rounded-xl bg-[#f8f3eb] flex items-center justify-center text-[#b08d57]">
+
+                                    <span class="material-symbols-outlined">
+                                        restaurant
+                                    </span>
+
+                                </div>
+
+                                <h3 class="font-semibold text-[#241d17] mt-4">
+                                    Breakfast
+                                </h3>
+
+                                <p class="text-sm text-stone-500 mt-2">
+
+                                    @(Model.BreakfastPreference
+                                        ? "Requested"
+                                        : "Not requested")
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- Airport Pickup -->
+
+                            <div class="rounded-2xl border border-stone-200 p-5">
+
+                                <div class="w-11 h-11 rounded-xl bg-[#f8f3eb] flex items-center justify-center text-[#b08d57]">
+
+                                    <span class="material-symbols-outlined">
+                                        airport_shuttle
+                                    </span>
+
+                                </div>
+
+                                <h3 class="font-semibold text-[#241d17] mt-4">
+                                    Airport Pickup
+                                </h3>
+
+                                <p class="text-sm text-stone-500 mt-2">
+
+                                    @(Model.AirportPickupPreference
+                                        ? "Requested"
+                                        : "Not requested")
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- Late Checkout -->
+
+                            <div class="rounded-2xl border border-stone-200 p-5">
+
+                                <div class="w-11 h-11 rounded-xl bg-[#f8f3eb] flex items-center justify-center text-[#b08d57]">
+
+                                    <span class="material-symbols-outlined">
+                                        schedule
+                                    </span>
+
+                                </div>
+
+                                <h3 class="font-semibold text-[#241d17] mt-4">
+                                    Late Checkout
+                                </h3>
+
+                                <p class="text-sm text-stone-500 mt-2">
+
+                                    @(Model.LateCheckoutPreference
+                                        ? "Requested"
+                                        : "Not requested")
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- Room View -->
+
+                            <div class="rounded-2xl border border-stone-200 p-5 md:col-span-3">
+
+                                <div class="flex items-center gap-3">
+
+                                    <div class="w-11 h-11 rounded-xl bg-[#f8f3eb] flex items-center justify-center text-[#b08d57]">
+
+                                        <span class="material-symbols-outlined">
+                                            landscape
                                         </span>
 
                                     </div>
 
-                                    <button class="text-on-surface-variant hover:text-error text-[13px] font-label-sm font-medium transition-colors"
-                                            type="button"
-                                            id="remove-card">
+                                    <div>
+
+                                        <h3 class="font-semibold text-[#241d17]">
+                                            Preferred Room View
+                                        </h3>
+
+                                        <p class="text-sm text-stone-500">
+
+                                            @(string.IsNullOrWhiteSpace(Model.PreferredRoomView)
+                                                ? "No preference"
+                                                : Model.PreferredRoomView)
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Special Requests -->
+
+                            <div class="rounded-2xl border border-stone-200 p-5 md:col-span-3">
+
+                                <div class="flex items-start gap-3">
+
+                                    <div class="w-11 h-11 shrink-0 rounded-xl bg-[#f8f3eb] flex items-center justify-center text-[#b08d57]">
+
+                                        <span class="material-symbols-outlined">
+                                            notes
+                                        </span>
+
+                                    </div>
+
+                                    <div>
+
+                                        <h3 class="font-semibold text-[#241d17]">
+                                            Special Requests
+                                        </h3>
+
+                                        <p class="text-sm text-stone-500 mt-2">
+
+                                            @(string.IsNullOrWhiteSpace(Model.SpecialRequests)
+                                                ? "No special requests"
+                                                : Model.SpecialRequests)
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             EDIT MODE
+                        ================================================== -->
+                        <div id="preferences-editor"
+                             class="hidden mt-6">
+
+                            <form asp-controller="Account"
+                                  asp-action="UpdateStayPreferences"
+                                  method="post"
+                                  class="space-y-6">
+
+                                @Html.AntiForgeryToken()
+
+
+                                <!-- Preference Checkboxes -->
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+
+                                    <!-- Breakfast -->
+
+                                    <label class="flex items-center gap-4 rounded-2xl border border-stone-200 p-5 cursor-pointer hover:bg-stone-50 transition">
+
+                                        <input asp-for="BreakfastPreference"
+                                               type="checkbox"
+                                               class="h-5 w-5 rounded border-stone-300 text-[#b08d57] focus:ring-[#b08d57]" />
+
+                                        <div>
+
+                                            <p class="font-semibold text-[#241d17]">
+                                                Breakfast
+                                            </p>
+
+                                            <p class="text-xs text-stone-500 mt-1">
+                                                Request breakfast for future stays.
+                                            </p>
+
+                                        </div>
+
+                                    </label>
+
+
+                                    <!-- Airport -->
+
+                                    <label class="flex items-center gap-4 rounded-2xl border border-stone-200 p-5 cursor-pointer hover:bg-stone-50 transition">
+
+                                        <input asp-for="AirportPickupPreference"
+                                               type="checkbox"
+                                               class="h-5 w-5 rounded border-stone-300 text-[#b08d57] focus:ring-[#b08d57]" />
+
+                                        <div>
+
+                                            <p class="font-semibold text-[#241d17]">
+                                                Airport Pickup
+                                            </p>
+
+                                            <p class="text-xs text-stone-500 mt-1">
+                                                Request airport transportation.
+                                            </p>
+
+                                        </div>
+
+                                    </label>
+
+
+                                    <!-- Late Checkout -->
+
+                                    <label class="flex items-center gap-4 rounded-2xl border border-stone-200 p-5 cursor-pointer hover:bg-stone-50 transition">
+
+                                        <input asp-for="LateCheckoutPreference"
+                                               type="checkbox"
+                                               class="h-5 w-5 rounded border-stone-300 text-[#b08d57] focus:ring-[#b08d57]" />
+
+                                        <div>
+
+                                            <p class="font-semibold text-[#241d17]">
+                                                Late Checkout
+                                            </p>
+
+                                            <p class="text-xs text-stone-500 mt-1">
+                                                Request late checkout when available.
+                                            </p>
+
+                                        </div>
+
+                                    </label>
+
+                                </div>
+
+
+                                <!-- Room View -->
+
+                                <div>
+
+                                    <label asp-for="PreferredRoomView"
+                                           class="block text-sm font-semibold text-stone-700 mb-2">
+
+                                        Preferred Room View
+
+                                    </label>
+
+                                    <select asp-for="PreferredRoomView"
+                                            class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-[#b08d57] focus:ring-2 focus:ring-[#b08d57]/20">
+
+                                        <option value="">
+                                            No Preference
+                                        </option>
+
+                                        <option value="City View">
+                                            City View
+                                        </option>
+
+                                        <option value="Sea View">
+                                            Sea View
+                                        </option>
+
+                                        <option value="Garden View">
+                                            Garden View
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- Special Requests -->
+
+                                <div>
+
+                                    <label asp-for="SpecialRequests"
+                                           class="block text-sm font-semibold text-stone-700 mb-2">
+
+                                        Special Requests
+
+                                    </label>
+
+                                    <textarea asp-for="SpecialRequests"
+                                              rows="4"
+                                              maxlength="1000"
+                                              class="w-full rounded-xl border border-stone-300 px-4 py-3 outline-none focus:border-[#b08d57] focus:ring-2 focus:ring-[#b08d57]/20"
+                                              placeholder="Anything we should know before your stay?"></textarea>
+
+                                    <p class="text-xs text-stone-400 mt-2">
+                                        Maximum 1000 characters.
+                                    </p>
+
+                                </div>
+
+
+                                <!-- Buttons -->
+
+                                <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-stone-200">
+
+                                    <button type="button"
+                                            id="cancel-preferences"
+                                            class="rounded-xl border border-stone-300 px-6 py-3 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition">
+
+                                        Cancel
+
+                                    </button>
+
+
+                                    <button type="submit"
+                                            class="rounded-xl bg-[#b08d57] px-6 py-3 text-sm font-semibold text-white hover:bg-[#9a7849] transition">
+
+                                        <span class="material-symbols-outlined align-middle text-base mr-1">
+                                            save
+                                        </span>
+
+                                        Save Preferences
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         PAYMENT METHODS
+                    ================================================== -->
+                    <section id="payment-methods"
+                             class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 md:p-8">
+
+                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+
+                            <div>
+
+                                <p class="text-xs uppercase tracking-[0.2em] text-[#b08d57] font-semibold">
+                                    Billing
+                                </p>
+
+                                <h2 class="font-serif text-3xl text-[#241d17] mt-2">
+                                    Payment Methods
+                                </h2>
+
+                                <p class="text-sm text-stone-500 mt-2">
+                                    Secure payment methods connected through Paymob.
+                                </p>
+
+                            </div>
+
+
+                            <button type="button"
+                                    id="add-card"
+                                    class="rounded-xl border border-stone-300 px-5 py-3 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition">
+
+                                <span class="material-symbols-outlined align-middle text-base mr-1">
+                                    add_card
+                                </span>
+
+                                Add Card
+
+                            </button>
+
+                        </div>
+
+
+                        @if (!string.IsNullOrWhiteSpace(Model.PaymobMaskedPan))
+                        {
+                            <!-- ===============================
+                                 SAVED CARD
+                            ================================ -->
+                            <div class="rounded-2xl border border-stone-200 bg-white p-5">
+
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                                    <div class="flex items-center gap-4">
+
+                                        <div class="w-12 h-12 rounded-xl bg-[#f8f3eb] flex items-center justify-center">
+
+                                            <span class="material-symbols-outlined text-[#b08d57]">
+                                                credit_card
+                                            </span>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <p class="font-semibold text-[#241d17]">
+
+                                                @(string.IsNullOrWhiteSpace(Model.PaymobCardSubtype)
+                                                    ? "Saved Card"
+                                                    : Model.PaymobCardSubtype)
+
+                                                @Model.PaymobMaskedPan
+
+                                            </p>
+
+                                            <p class="text-xs text-stone-500 mt-1">
+
+                                                @(string.IsNullOrWhiteSpace(Model.PaymobCardHolderName)
+                                                    ? "Cardholder"
+                                                    : Model.PaymobCardHolderName)
+
+                                            </p>
+
+                                            @if (Model.PaymobCardSavedAt.HasValue)
+                                            {
+                                                <p class="text-xs text-stone-400 mt-1">
+
+                                                    Added
+                                                    @Model.PaymobCardSavedAt.Value.ToString("MMM dd, yyyy")
+
+                                                </p>
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <button type="button"
+                                            id="remove-card"
+                                            class="rounded-xl border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 transition">
 
                                         Remove
 
@@ -993,267 +1350,1113 @@
 
                                 </div>
 
-                                <div>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- ===============================
+                                 NO CARD
+                            ================================ -->
+                            <div class="rounded-2xl border border-dashed border-stone-300 bg-stone-50 p-8 text-center">
 
-                                    <div class="font-body-md text-body-md text-on-surface tracking-widest font-medium">
-                                        •••• •••• •••• 1084
-                                    </div>
+                                <div class="mx-auto w-14 h-14 rounded-full bg-white border border-stone-200 flex items-center justify-center">
 
-                                    <div class="font-body-sm text-body-sm text-on-surface-variant flex justify-between mt-1">
-
-                                        <span>
-                                            Eleanor Vance
-                                        </span>
-
-                                        <span>
-                                            Exp 12/26
-                                        </span>
-
-                                    </div>
+                                    <span class="material-symbols-outlined text-[#b08d57] text-2xl">
+                                        credit_card
+                                    </span>
 
                                 </div>
 
-                            </div>
 
-                        </div>
+                                <h3 class="font-semibold text-[#241d17] mt-4">
+                                    No saved payment methods
+                                </h3>
+
+
+                                <p class="text-sm text-stone-500 mt-2 max-w-md mx-auto">
+
+                                    Add a card securely through Paymob.
+                                    EMA Hotel does not store your full card number or CVV.
+
+                                </p>
+
+                            </div>
+                        }
 
                     </section>
 
-                </div>
+                </main>
 
             </div>
 
         </div>
 
+    </section>
 
-        <!-- =========================
-             TOAST
-        ========================== -->
-        <div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none"
-             id="toast-notification">
+</div>
 
-            <div class="bg-inverse-surface text-inverse-on-surface px-5 py-3.5 rounded-lg shadow-xl flex items-center gap-3">
 
-                <span class="material-symbols-outlined text-primary-fixed-dim text-[20px]">
-                    check_circle
-                </span>
+<!-- =========================================================
+     PROFILE IMAGE MODAL
+========================================================== -->
+<div id="profileImageModal"
+     class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 p-4"
+     onclick="closeProfileImage()">
 
-                <span class="font-body-sm text-body-sm font-medium"
-                      id="toast-message">
-                    Changes saved successfully.
-                </span>
+    <div class="relative max-w-4xl max-h-[90vh]"
+         onclick="event.stopPropagation()">
 
-            </div>
+        <button type="button"
+                onclick="closeProfileImage()"
+                class="absolute -top-12 right-0 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition">
 
-        </div>
+            &times;
+
+        </button>
+
+
+        <img id="profileImageLarge"
+             src=""
+             alt="Profile photo"
+             class="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl" />
 
     </div>
 
-</main>
+</div>
 
 
-@section Scripts {
+@section Scripts
+{
+
+    <partial name="_ValidationScriptsPartial" />
+
 
     <script>
 
-        // ==========================================
+        // =========================================================
         // PASSWORD VISIBILITY
-        // ==========================================
+        // =========================================================
 
-        function togglePasswordVisibility(inputId, triggerBtn) {
+        function togglePasswordVisibility(inputId, button) {
 
-            const input = document.getElementById(inputId);
+            const input =
+                document.getElementById(inputId);
 
-            if (!input) return;
+            if (!input) {
+                return;
+            }
 
-            const icon = triggerBtn.querySelector('.material-symbols-outlined');
+            const icon =
+                button.querySelector(
+                    ".material-symbols-outlined"
+                );
 
-            if (input.type === 'password') {
 
-                input.type = 'text';
+            if (input.type === "password") {
+
+                input.type = "text";
 
                 if (icon) {
-                    icon.textContent = 'visibility_off';
-                }
-
-            } else {
-
-                input.type = 'password';
-
-                if (icon) {
-                    icon.textContent = 'visibility';
+                    icon.textContent =
+                        "visibility_off";
                 }
 
             }
-        }
+            else {
 
+                input.type = "password";
 
-        // ==========================================
-        // TOAST
-        // ==========================================
+                if (icon) {
+                    icon.textContent =
+                        "visibility";
+                }
 
-        function showToast(message) {
-
-            const toast = document.getElementById('toast-notification');
-
-            const msgEl = document.getElementById('toast-message');
-
-            if (!toast || !msgEl) return;
-
-            msgEl.textContent = message;
-
-            toast.classList.remove(
-                'translate-y-20',
-                'opacity-0',
-                'pointer-events-none'
-            );
-
-            toast.classList.add(
-                'translate-y-0',
-                'opacity-100'
-            );
-
-
-            setTimeout(() => {
-
-                toast.classList.remove(
-                    'translate-y-0',
-                    'opacity-100'
-                );
-
-                toast.classList.add(
-                    'translate-y-20',
-                    'opacity-0',
-                    'pointer-events-none'
-                );
-
-            }, 3200);
+            }
 
         }
 
 
-        // ==========================================
+        // =========================================================
+        // PERSONAL DETAILS - DISCARD
+        // =========================================================
+
+        const discardPersonalButton =
+            document.getElementById(
+                "discard-personal"
+            );
 
 
-        // ==========================================
-        // DISCARD PERSONAL INFORMATION
-        // ==========================================
+        if (discardPersonalButton) {
 
-        document
-            .getElementById('discard-personal')
-            ?.addEventListener('click', function() {
+            discardPersonalButton.addEventListener(
+                "click",
+                function () {
 
-                showToast(
-                    'Changes discarded.'
+                    window.location.reload();
+
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // PROFILE IMAGE
+        // =========================================================
+
+        const profileImageInput =
+            document.getElementById(
+                "profile-image-input"
+            );
+
+
+        const changeProfilePhotoButton =
+            document.getElementById(
+                "change-profile-photo"
+            );
+
+
+        const uploadProfilePhotoButton =
+            document.getElementById(
+                "upload-profile-photo"
+            );
+
+
+        const cancelPhotoSelectionButton =
+            document.getElementById(
+                "cancel-photo-selection"
+            );
+
+
+        const selectedPhotoInfo =
+            document.getElementById(
+                "selected-photo-info"
+            );
+
+
+        const selectedPhotoName =
+            document.getElementById(
+                "selected-photo-name"
+            );
+
+
+        const selectedPhotoSize =
+            document.getElementById(
+                "selected-photo-size"
+            );
+
+
+        const photoValidationMessage =
+            document.getElementById(
+                "photo-validation-message"
+            );
+
+
+        const profileImagePreview =
+            document.getElementById(
+                "profile-image-preview"
+            );
+
+
+        // IMPORTANT:
+        // This exactly matches the HTML id.
+        const profileImage =
+            document.getElementById(
+                "profileImage"
+            );
+
+
+        const profileInitials =
+            document.getElementById(
+                "profile-initials"
+            );
+
+
+        const MAX_PROFILE_IMAGE_SIZE =
+            5 * 1024 * 1024;
+
+
+        const ALLOWED_PROFILE_EXTENSIONS = [
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".webp"
+        ];
+
+
+        const ALLOWED_PROFILE_TYPES = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+
+        // =========================================================
+        // RESET PHOTO
+        // =========================================================
+
+        function resetPhotoSelection() {
+
+            if (profileImageInput) {
+                profileImageInput.value = "";
+            }
+
+
+            if (selectedPhotoInfo) {
+                selectedPhotoInfo.classList.add(
+                    "hidden"
+                );
+            }
+
+
+            if (uploadProfilePhotoButton) {
+
+                uploadProfilePhotoButton.classList.add(
+                    "hidden"
                 );
 
-            });
+                uploadProfilePhotoButton.disabled =
+                    false;
+
+            }
 
 
-        // ==========================================
-        // PASSWORD
-        // ==========================================
+            if (cancelPhotoSelectionButton) {
 
-        document
-            .getElementById('password-form')
-            ?.addEventListener('submit', function(e) {
+                cancelPhotoSelectionButton.classList.add(
+                    "hidden"
+                );
 
-                e.preventDefault();
-
-                const currentPassword =
-                    document.getElementById('currentPassword');
-
-                const newPassword =
-                    document.getElementById('newPassword');
-
-                const confirmPassword =
-                    document.getElementById('confirmPassword');
+            }
 
 
-                if (
-                    newPassword &&
-                    confirmPassword &&
-                    newPassword.value !== confirmPassword.value
-                ) {
+            if (photoValidationMessage) {
 
-                    showToast(
-                        'New password and confirmation do not match.'
+                photoValidationMessage.textContent =
+                    "";
+
+                photoValidationMessage.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (profileImagePreview) {
+
+                profileImagePreview.src = "";
+
+                profileImagePreview.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (profileImage) {
+
+                profileImage.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+
+            if (!profileImage &&
+                profileInitials) {
+
+                profileInitials.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+        // =========================================================
+        // VALIDATION ERROR
+        // =========================================================
+
+        function showPhotoValidationError(
+            message
+        ) {
+
+            if (photoValidationMessage) {
+
+                photoValidationMessage.textContent =
+                    message;
+
+                photoValidationMessage.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+
+            if (selectedPhotoInfo) {
+
+                selectedPhotoInfo.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (uploadProfilePhotoButton) {
+
+                uploadProfilePhotoButton.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (cancelPhotoSelectionButton) {
+
+                cancelPhotoSelectionButton.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+
+            if (profileImagePreview) {
+
+                profileImagePreview.src = "";
+
+                profileImagePreview.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if (profileImage) {
+
+                profileImage.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+
+            if (!profileImage &&
+                profileInitials) {
+
+                profileInitials.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+        // =========================================================
+        // CLEAR PHOTO ERROR
+        // =========================================================
+
+        function clearPhotoValidationError() {
+
+            if (photoValidationMessage) {
+
+                photoValidationMessage.textContent =
+                    "";
+
+                photoValidationMessage.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+        // =========================================================
+        // FORMAT FILE SIZE
+        // =========================================================
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) {
+                return bytes + " B";
+            }
+
+
+            if (bytes < 1024 * 1024) {
+
+                return (
+                    bytes / 1024
+                ).toFixed(1) + " KB";
+
+            }
+
+
+            return (
+                bytes / (1024 * 1024)
+            ).toFixed(2) + " MB";
+
+        }
+
+
+        // =========================================================
+        // OPEN FILE PICKER
+        // =========================================================
+
+        if (
+            changeProfilePhotoButton &&
+            profileImageInput
+        ) {
+
+            changeProfilePhotoButton.addEventListener(
+                "click",
+                function () {
+
+                    profileImageInput.click();
+
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // FILE SELECTED
+        // =========================================================
+
+        if (profileImageInput) {
+
+            profileImageInput.addEventListener(
+                "change",
+                function () {
+
+                    const file =
+                        this.files &&
+                        this.files.length > 0
+                            ? this.files[0]
+                            : null;
+
+
+                    if (!file) {
+
+                        resetPhotoSelection();
+
+                        return;
+
+                    }
+
+
+                    // -----------------------------------------
+                    // Extension
+                    // -----------------------------------------
+
+                    const fileName =
+                        file.name.toLowerCase();
+
+
+                    const lastDotIndex =
+                        fileName.lastIndexOf(".");
+
+
+                    const extension =
+                        lastDotIndex >= 0
+                            ? fileName.substring(
+                                lastDotIndex
+                            )
+                            : "";
+
+
+                    if (
+                        !ALLOWED_PROFILE_EXTENSIONS
+                            .includes(extension)
+                    ) {
+
+                        this.value = "";
+
+                        showPhotoValidationError(
+                            "Only JPG, JPEG, PNG, and WEBP images are allowed."
+                        );
+
+                        return;
+
+                    }
+
+
+                    // -----------------------------------------
+                    // MIME
+                    // -----------------------------------------
+
+                    if (
+                        !ALLOWED_PROFILE_TYPES
+                            .includes(file.type)
+                    ) {
+
+                        this.value = "";
+
+                        showPhotoValidationError(
+                            "Invalid image type."
+                        );
+
+                        return;
+
+                    }
+
+
+                    // -----------------------------------------
+                    // Size
+                    // -----------------------------------------
+
+                    if (
+                        file.size >
+                        MAX_PROFILE_IMAGE_SIZE
+                    ) {
+
+                        this.value = "";
+
+                        showPhotoValidationError(
+                            "The image size must not exceed 5 MB."
+                        );
+
+                        return;
+
+                    }
+
+
+                    // -----------------------------------------
+                    // File information
+                    // -----------------------------------------
+
+                    if (selectedPhotoName) {
+
+                        selectedPhotoName.textContent =
+                            file.name;
+
+                    }
+
+
+                    if (selectedPhotoSize) {
+
+                        selectedPhotoSize.textContent =
+                            formatFileSize(
+                                file.size
+                            );
+
+                    }
+
+
+                    if (selectedPhotoInfo) {
+
+                        selectedPhotoInfo.classList.remove(
+                            "hidden"
+                        );
+
+                    }
+
+
+                    clearPhotoValidationError();
+
+
+                    // -----------------------------------------
+                    // Preview
+                    // -----------------------------------------
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload =
+                        function (event) {
+
+                            if (profileImagePreview) {
+
+                                profileImagePreview.src =
+                                    event.target.result;
+
+                                profileImagePreview.classList.remove(
+                                    "hidden"
+                                );
+
+                            }
+
+
+                            if (profileImage) {
+
+                                profileImage.classList.add(
+                                    "hidden"
+                                );
+
+                            }
+
+
+                            if (profileInitials) {
+
+                                profileInitials.classList.add(
+                                    "hidden"
+                                );
+
+                            }
+
+                        };
+
+
+                    reader.onerror =
+                        function () {
+
+                            showPhotoValidationError(
+                                "Could not preview this image."
+                            );
+
+                        };
+
+
+                    reader.readAsDataURL(file);
+
+
+                    // -----------------------------------------
+                    // Buttons
+                    // -----------------------------------------
+
+                    if (uploadProfilePhotoButton) {
+
+                        uploadProfilePhotoButton.classList.remove(
+                            "hidden"
+                        );
+
+                    }
+
+
+                    if (cancelPhotoSelectionButton) {
+
+                        cancelPhotoSelectionButton.classList.remove(
+                            "hidden"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // CANCEL PHOTO
+        // =========================================================
+
+        if (cancelPhotoSelectionButton) {
+
+            cancelPhotoSelectionButton.addEventListener(
+                "click",
+                function () {
+
+                    resetPhotoSelection();
+
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // PHOTO FORM SUBMIT
+        // =========================================================
+
+        const profileImageForm =
+            document.getElementById(
+                "profile-image-form"
+            );
+
+
+        if (profileImageForm) {
+
+            profileImageForm.addEventListener(
+                "submit",
+                function (event) {
+
+                    const file =
+                        profileImageInput &&
+                        profileImageInput.files &&
+                        profileImageInput.files.length > 0
+                            ? profileImageInput.files[0]
+                            : null;
+
+
+                    if (!file) {
+
+                        event.preventDefault();
+
+                        showPhotoValidationError(
+                            "Please select an image first."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !ALLOWED_PROFILE_TYPES
+                            .includes(file.type)
+                    ) {
+
+                        event.preventDefault();
+
+                        showPhotoValidationError(
+                            "Invalid image type."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        file.size >
+                        MAX_PROFILE_IMAGE_SIZE
+                    ) {
+
+                        event.preventDefault();
+
+                        showPhotoValidationError(
+                            "The image size must not exceed 5 MB."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (uploadProfilePhotoButton) {
+
+                        uploadProfilePhotoButton.disabled =
+                            true;
+
+
+                        uploadProfilePhotoButton.innerHTML = `
+                            <span class="material-symbols-outlined align-middle text-base mr-1">
+                                progress_activity
+                            </span>
+                            Uploading...
+                        `;
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // STAY PREFERENCES
+        // =========================================================
+
+        const modifyPreferences =
+            document.getElementById(
+                "modify-preferences"
+            );
+
+
+        const preferencesDisplay =
+            document.getElementById(
+                "preferences-display"
+            );
+
+
+        const preferencesEditor =
+            document.getElementById(
+                "preferences-editor"
+            );
+
+
+        const cancelPreferences =
+            document.getElementById(
+                "cancel-preferences"
+            );
+
+
+        if (modifyPreferences) {
+
+            modifyPreferences.addEventListener(
+                "click",
+                function () {
+
+                    preferencesDisplay?.classList.add(
+                        "hidden"
                     );
 
-                    return;
+
+                    preferencesEditor?.classList.remove(
+                        "hidden"
+                    );
+
+
+                    modifyPreferences.classList.add(
+                        "hidden"
+                    );
+
                 }
+            );
+
+        }
 
 
-                if (currentPassword) {
-                    currentPassword.value = '';
+        if (cancelPreferences) {
+
+            cancelPreferences.addEventListener(
+                "click",
+                function () {
+
+                    preferencesEditor?.classList.add(
+                        "hidden"
+                    );
+
+
+                    preferencesDisplay?.classList.remove(
+                        "hidden"
+                    );
+
+
+                    modifyPreferences?.classList.remove(
+                        "hidden"
+                    );
+
                 }
+            );
 
-                if (newPassword) {
-                    newPassword.value = '';
-                }
-
-                if (confirmPassword) {
-                    confirmPassword.value = '';
-                }
+        }
 
 
-                showToast(
-                    'Security password successfully renewed.'
-                );
+        // =========================================================
+        // PAYMENT METHODS
+        // =========================================================
 
+        const addCard =
+            document.getElementById(
+                "add-card"
+            );
+
+
+        if (addCard) {
+            addCard.addEventListener("click", function () {
+                window.location.href = "/Account/AddCard";
             });
+        }
 
 
-        // ==========================================
-        // MODIFY PREFERENCES
-        // ==========================================
-
-        document
-            .getElementById('modify-preferences')
-            ?.addEventListener('click', function() {
-
-                showToast(
-                    'Preference editor will be available soon.'
-                );
-
-            });
-
-
-        // ==========================================
-        // ADD CARD
-        // ==========================================
-
-        document
-            .getElementById('add-card')
-            ?.addEventListener('click', function() {
-
-                showToast(
-                    'Payment method management will be available soon.'
-                );
-
-            });
-
-
-        // ==========================================
+        // =========================================================
         // REMOVE CARD
-        // ==========================================
+        // =========================================================
+
+        const removeCard =
+            document.getElementById(
+                "remove-card"
+            );
+
+
+        if (removeCard) {
+
+            removeCard.addEventListener(
+                "click",
+                function () {
+
+                    const confirmed =
+                        window.confirm(
+                            "Are you sure you want to remove this saved card?"
+                        );
+
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+
+                    window.location.href =
+                        "/Account/RemoveCard";
+
+                }
+            );
+
+        }
+
+
+        // =========================================================
+        // PROFILE IMAGE MODAL
+        // =========================================================
+
+        function openProfileImage() {
+
+            const image =
+                document.getElementById(
+                    "profileImage"
+                );
+
+
+            const modal =
+                document.getElementById(
+                    "profileImageModal"
+                );
+
+
+            const largeImage =
+                document.getElementById(
+                    "profileImageLarge"
+                );
+
+
+            if (
+                !image ||
+                !modal ||
+                !largeImage
+            ) {
+
+                return;
+
+            }
+
+
+            largeImage.src =
+                image.src;
+
+
+            modal.classList.remove(
+                "hidden"
+            );
+
+
+            modal.classList.add(
+                "flex"
+            );
+
+
+            document.body.classList.add(
+                "overflow-hidden"
+            );
+
+        }
+
+
+        function closeProfileImage() {
+
+            const modal =
+                document.getElementById(
+                    "profileImageModal"
+                );
+
+
+            const largeImage =
+                document.getElementById(
+                    "profileImageLarge"
+                );
+
+
+            if (!modal) {
+                return;
+            }
+
+
+            modal.classList.add(
+                "hidden"
+            );
+
+
+            modal.classList.remove(
+                "flex"
+            );
+
+
+            document.body.classList.remove(
+                "overflow-hidden"
+            );
+
+
+            if (largeImage) {
+
+                largeImage.src = "";
+
+            }
+
+        }
+
+
+        // =========================================================
+        // ESCAPE MODAL
+        // =========================================================
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeProfileImage();
+
+                }
+
+            }
+        );
+
+
+        // =========================================================
+        // SMOOTH SCROLL
+        // =========================================================
 
         document
-            .getElementById('remove-card')
-            ?.addEventListener('click', function() {
+            .querySelectorAll(
+                'a[href^="#"]'
+            )
+            .forEach(
+                function (link) {
 
-                const confirmed = confirm(
-                    'Remove this payment method?'
-                );
+                    link.addEventListener(
+                        "click",
+                        function (event) {
 
-                if (!confirmed) return;
+                            const targetId =
+                                this.getAttribute(
+                                    "href"
+                                );
 
-                showToast(
-                    'Payment method removed from this demo.'
-                );
 
-            });
+                            if (
+                                !targetId ||
+                                targetId === "#"
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            const target =
+                                document.querySelector(
+                                    targetId
+                                );
+
+
+                            if (!target) {
+
+                                return;
+
+                            }
+
+
+                            event.preventDefault();
+
+
+                            target.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+
+                        }
+                    );
+
+                }
+            );
 
     </script>
-
 }

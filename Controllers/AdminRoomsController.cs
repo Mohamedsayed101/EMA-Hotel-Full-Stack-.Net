@@ -15,13 +15,23 @@ namespace Hotel_MVC.Controllers
         public AdminRoomsController(AppDbContext context) => _context = context;
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? search, RoomStatus? status, string? sort, int page = 1)
+        public async Task<IActionResult> Index(
+     string? search,
+     RoomStatus? status,
+     string? sort,
+     int page = 1)
         {
             const int pageSize = 10;
-            var query = _context.Rooms.Include(r => r.RoomType).AsQueryable();
+
+            var query = _context.Rooms
+                .Include(r => r.RoomType)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
-                query = query.Where(r => r.RoomNumber.Contains(search) || r.RoomType.Name.Contains(search));
+                query = query.Where(r =>
+                    r.RoomNumber.Contains(search) ||
+                    r.RoomType.Name.Contains(search));
+
             if (status.HasValue)
                 query = query.Where(r => r.Status == status.Value);
 
@@ -32,14 +42,20 @@ namespace Hotel_MVC.Controllers
                 "status" => query.OrderBy(r => r.Status),
                 _ => query.OrderBy(r => r.RoomNumber)
             };
+
             var total = await query.CountAsync();
-            var rooms = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var rooms = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
             ViewBag.Search = search;
             ViewBag.Status = status;
             ViewBag.Sort = sort;
             ViewBag.Page = page;
             ViewBag.TotalPages = (int)Math.Ceiling(total / (double)pageSize);
+
             return View(rooms);
         }
 
@@ -141,9 +157,11 @@ namespace Hotel_MVC.Controllers
             if (room == null) 
                 return NotFound();
 
-            if (room.Bookings.Any(b => b.Status != BookingStatus.Cancelled))
+            if (room.Bookings.Any())
             {
-                TempData["Error"] = "This room has active booking history and cannot be deleted. Set it to Maintenance instead.";
+                TempData["Error"] =
+                    "This room cannot be deleted because it has booking history. Set it to Maintenance instead.";
+
                 return RedirectToAction(nameof(Index));
             }
 

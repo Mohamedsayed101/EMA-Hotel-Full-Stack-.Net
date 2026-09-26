@@ -1,8 +1,10 @@
 using Hotel_MVC.Data;
 using Hotel_MVC.Models;
+using Hotel_MVC.Models.Payment;
+using Hotel_MVC.Services;
+using Hotel_MVC.Services.Payment;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Hotel_MVC.Services;
 
 namespace Hotel_MVC
 {
@@ -12,8 +14,12 @@ namespace Hotel_MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Environment.IsDevelopment()
+                ? builder.Configuration.GetConnectionString("MyConnection")
+                : builder.Configuration.GetConnectionString("MonsterAspConnection");
+
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+                options.UseSqlServer(connectionString));
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -24,13 +30,23 @@ namespace Hotel_MVC
              .AddEntityFrameworkStores<AppDbContext>()
              .AddDefaultTokenProviders();
 
-            builder.Services
-                .AddAuthentication()
-                .AddGoogle(options =>
+            builder.Services.Configure<PaymobOptions>(builder.Configuration.GetSection("Paymob"));
+            builder.Services.AddHttpClient<IPaymobService, PaymobService>();
+
+            var googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+            var googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+
+            var authenticationBuilder = builder.Services.AddAuthentication();
+
+            if (!string.IsNullOrWhiteSpace(googleClientId) &&
+                !string.IsNullOrWhiteSpace(googleClientSecret))
+            {
+                authenticationBuilder.AddGoogle(options =>
                 {
-                    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
-                    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+                    options.ClientId = googleClientId;
+                    options.ClientSecret = googleClientSecret;
                 });
+            }
 
             builder.Services.ConfigureApplicationCookie(options =>
             {

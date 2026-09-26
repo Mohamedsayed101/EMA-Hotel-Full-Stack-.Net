@@ -40,6 +40,9 @@ namespace Hotel_MVC.Services
 
             using var smtp = new SmtpClient();
 
+            smtp.ServerCertificateValidationCallback =
+                (sender, certificate, chain, sslPolicyErrors) => true;
+
             await smtp.ConnectAsync(
                 _settings.Host,
                 _settings.Port,

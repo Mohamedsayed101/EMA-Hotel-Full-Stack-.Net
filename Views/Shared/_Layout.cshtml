@@ -37,65 +37,380 @@
 <body class="h-full font-body bg-surface text-on-surface antialiased flex flex-col justify-between selection:bg-primary/20">
 
     <!-- Header / Navbar -->
-    <header class="sticky top-0 z-50 w-full bg-surface/90 backdrop-blur-md border-b border-black/5">
-        <div class="max-w-[1320px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-            <a asp-controller="Home" asp-action="Index" class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary text-3xl">hotel_class</span>
-                <span class="font-headline text-2xl font-bold tracking-tight text-on-surface">EMA Hotel</span>
+    <!-- Header / Navbar -->
+<header class="sticky top-0 z-50 w-full bg-surface/90 backdrop-blur-md border-b border-black/5">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-12 min-h-20 py-3 flex items-center justify-between gap-4">
+
+        <!-- Logo -->
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="flex items-center gap-2 shrink-0">
+
+            <span class="material-symbols-outlined text-primary text-3xl">
+                hotel_class
+            </span>
+
+            <span class="font-headline text-xl sm:text-2xl font-bold tracking-tight text-on-surface whitespace-nowrap">
+                EMA Hotel
+            </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium text-on-surface-variant">
+
+            <!-- Public Links -->
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="hover:text-primary transition whitespace-nowrap">
+                Home
             </a>
 
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-on-surface-variant">
-                <!-- 1. الروابط التي تظهر للجميع (سواء مسجل دخول أو لأ) -->
-                <a asp-controller="Home" asp-action="Index" class="hover:text-primary transition">Home</a>
-                <a asp-controller="Home" asp-action="About" class="hover:text-primary transition">
-                    About
+            <a asp-controller="Home"
+               asp-action="About"
+               class="hover:text-primary transition whitespace-nowrap">
+                About
+            </a>
+
+            <a asp-controller="Rooms"
+               asp-action="Index"
+               class="hover:text-primary transition whitespace-nowrap">
+                Rooms &amp; Suites
+            </a>
+
+            <!-- AI Concierge -->
+            <a asp-controller="Concierge"
+               asp-action="Index"
+               class="inline-flex items-center gap-1.5 text-primary font-semibold hover:opacity-80 transition whitespace-nowrap">
+
+                <span class="material-symbols-outlined text-base">
+                    smart_toy
+                </span>
+
+                <span>AI Concierge</span>
+            </a>
+
+            <!-- Guest Links -->
+            @if (User.Identity?.IsAuthenticated == true &&
+                 !User.IsInRole("Admin") &&
+                 !User.IsInRole("Receptionist"))
+            {
+                <a asp-controller="Booking"
+                   asp-action="MyBookings"
+                   class="hover:text-primary transition whitespace-nowrap">
+                    My Bookings
                 </a>
-                <a asp-controller="Rooms" asp-action="Index" class="hover:text-primary transition">Rooms &amp; Suites</a>
-                
-                <!-- AI Concierge Link (Publicly Accessible) -->
-                <a asp-controller="Concierge" asp-action="Index" class="inline-flex items-center gap-1.5 text-primary font-semibold hover:opacity-80 transition">
-                    <span class="material-symbols-outlined text-base">smart_toy</span>
+
+                <a asp-controller="Account"
+                   asp-action="Profile"
+                   class="hover:text-primary transition whitespace-nowrap">
+                    My Profile
+                </a>
+            }
+
+            <!-- Admin Links -->
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="AdminDashboard"
+                   asp-action="Index"
+                   class="text-primary font-semibold hover:underline whitespace-nowrap">
+                    Admin Dashboard
+                </a>
+
+                <a asp-controller="AdminRooms"
+                   asp-action="Index"
+                   class="hover:text-primary transition whitespace-nowrap">
+                    Manage Rooms
+                </a>
+
+                <a asp-controller="AdminRoomTypes"
+                   asp-action="Index"
+                   class="hover:text-primary transition whitespace-nowrap">
+                    Room Types
+                </a>
+
+                <a asp-controller="AdminExtras"
+                   asp-action="Index"
+                   class="hover:text-primary transition whitespace-nowrap">
+                    Extras
+                </a>
+
+                <a asp-controller="AdminBookings"
+                   asp-action="Index"
+                   class="hover:text-primary transition whitespace-nowrap">
+                    All Bookings
+                </a>
+            }
+
+            <!-- Receptionist Links -->
+            @if (User.IsInRole("Receptionist"))
+            {
+                <a asp-controller="Receptionist"
+                   asp-action="Index"
+                   class="text-primary font-semibold hover:underline whitespace-nowrap">
+                    Reception Desk
+                </a>
+            }
+
+        </nav>
+
+        <!-- Desktop Authentication -->
+        <div class="hidden lg:flex items-center shrink-0">
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form asp-controller="Account"
+                      asp-action="Logout"
+                      method="post">
+
+                    <button type="submit"
+                            class="px-5 py-2.5 bg-surface-container-low text-on-surface text-xs font-semibold rounded-xl hover:bg-surface-container-high transition whitespace-nowrap">
+                        Sign Out
+                    </button>
+
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account"
+                   asp-action="Login"
+                   class="px-6 py-2.5 bg-primary text-white text-xs font-semibold rounded-xl hover:bg-primary-container transition shadow-sm whitespace-nowrap">
+                    Sign In
+                </a>
+            }
+
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuButton"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl text-on-surface hover:bg-surface-container-low transition">
+
+            <span id="mobileMenuIcon"
+                  class="material-symbols-outlined text-2xl">
+                menu
+            </span>
+
+        </button>
+
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobileMenu"
+         class="lg:hidden hidden border-t border-black/5 bg-surface/95 backdrop-blur-md">
+
+        <nav class="max-w-[1320px] mx-auto px-4 sm:px-6 py-4">
+
+            <div class="flex flex-col gap-1">
+
+                <!-- Public Links -->
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="mobile-nav-link">
+                    <span class="material-symbols-outlined">home</span>
+                    <span>Home</span>
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="About"
+                   class="mobile-nav-link">
+                    <span class="material-symbols-outlined">info</span>
+                    <span>About</span>
+                </a>
+
+                <a asp-controller="Rooms"
+                   asp-action="Index"
+                   class="mobile-nav-link">
+                    <span class="material-symbols-outlined">hotel</span>
+                    <span>Rooms &amp; Suites</span>
+                </a>
+
+                <a asp-controller="Concierge"
+                   asp-action="Index"
+                   class="mobile-nav-link text-primary font-semibold">
+                    <span class="material-symbols-outlined">smart_toy</span>
                     <span>AI Concierge</span>
                 </a>
 
-                <!-- 2. الروابط التي تظهر فقط للمستخدم العادي المسجل دخول (Guest) وليست للأدمن أو الريسبشن -->
-                @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin") && !User.IsInRole("Receptionist"))
+                <!-- Guest Links -->
+                @if (User.Identity?.IsAuthenticated == true &&
+                     !User.IsInRole("Admin") &&
+                     !User.IsInRole("Receptionist"))
                 {
-                    <a asp-controller="Booking" asp-action="MyBookings" class="hover:text-primary transition">My Bookings</a>
-                    <a asp-controller="Account" asp-action="Profile" class="hover:text-primary transition">My Profile</a>
+                    <a asp-controller="Booking"
+                       asp-action="MyBookings"
+                       class="mobile-nav-link">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                        <span>My Bookings</span>
+                    </a>
+
+                    <a asp-controller="Account"
+                       asp-action="Profile"
+                       class="mobile-nav-link">
+                        <span class="material-symbols-outlined">person</span>
+                        <span>My Profile</span>
+                    </a>
                 }
 
-                <!-- 3. روابط خاصة بالأدمن (Admin Links) -->
+                <!-- Admin Links -->
                 @if (User.IsInRole("Admin"))
                 {
-                    <a asp-controller="AdminDashboard" asp-action="Index" class="text-primary font-semibold hover:underline">Admin Dashboard</a>
-                    <a asp-controller="AdminRooms" asp-action="Index" class="hover:text-primary transition">Manage Rooms</a>
-                    <a asp-controller="AdminRoomTypes" asp-action="Index" class="hover:text-primary transition">Room Types</a>
-                    <a asp-controller="AdminExtras" asp-action="Index" class="hover:text-primary transition">Extras</a>
-                    <a asp-controller="AdminBookings" asp-action="Index" class="hover:text-primary transition">All Bookings</a>
+                    <div class="my-2 border-t border-black/5"></div>
+
+                    <a asp-controller="AdminDashboard"
+                       asp-action="Index"
+                       class="mobile-nav-link text-primary font-semibold">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span>Admin Dashboard</span>
+                    </a>
+
+                    <a asp-controller="AdminRooms"
+                       asp-action="Index"
+                       class="mobile-nav-link">
+                        <span class="material-symbols-outlined">meeting_room</span>
+                        <span>Manage Rooms</span>
+                    </a>
+
+                    <a asp-controller="AdminRoomTypes"
+                       asp-action="Index"
+                       class="mobile-nav-link">
+                        <span class="material-symbols-outlined">category</span>
+                        <span>Room Types</span>
+                    </a>
+
+                    <a asp-controller="AdminExtras"
+                       asp-action="Index"
+                       class="mobile-nav-link">
+                        <span class="material-symbols-outlined">room_service</span>
+                        <span>Extras</span>
+                    </a>
+
+                    <a asp-controller="AdminBookings"
+                       asp-action="Index"
+                       class="mobile-nav-link">
+                        <span class="material-symbols-outlined">book_online</span>
+                        <span>All Bookings</span>
+                    </a>
                 }
 
-                <!-- 4. روابط خاصة بموظف الاستقبال (Receptionist Links) -->
+                <!-- Receptionist -->
                 @if (User.IsInRole("Receptionist"))
                 {
-                    <a asp-controller="Receptionist" asp-action="Index" class="text-primary font-semibold hover:underline">Reception Desk</a>
-                }
-            </div>
+                    <div class="my-2 border-t border-black/5"></div>
 
-            <div class="flex items-center gap-4">
+                    <a asp-controller="Receptionist"
+                       asp-action="Index"
+                       class="mobile-nav-link text-primary font-semibold">
+                        <span class="material-symbols-outlined">support_agent</span>
+                        <span>Reception Desk</span>
+                    </a>
+                }
+
+                <!-- Authentication -->
+                <div class="my-3 border-t border-black/5"></div>
+
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <form asp-controller="Account" asp-action="Logout" method="post" class="inline">
-                        <button type="submit" class="px-5 py-2.5 bg-surface-container-low text-on-surface text-xs font-semibold rounded-xl hover:bg-surface-container-high transition">Sign Out</button>
+                    <form asp-controller="Account"
+                          asp-action="Logout"
+                          method="post">
+
+                        <button type="submit"
+                                class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-on-surface hover:bg-surface-container-low transition text-left">
+
+                            <span class="material-symbols-outlined text-lg">
+                                logout
+                            </span>
+
+                            <span>Sign Out</span>
+
+                        </button>
+
                     </form>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login" class="px-6 py-2.5 bg-primary text-white text-xs font-semibold rounded-xl hover:bg-primary-container transition shadow-sm">Sign In</a>
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       class="w-full flex items-center justify-center gap-2 px-5 py-3 bg-primary text-white text-sm font-semibold rounded-xl hover:bg-primary-container transition shadow-sm">
+
+                        <span class="material-symbols-outlined text-lg">
+                            login
+                        </span>
+
+                        <span>Sign In</span>
+
+                    </a>
                 }
+
             </div>
-        </div>
-    </header>
+
+        </nav>
+
+    </div>
+</header>
+
+<style>
+    .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #524438;
+        transition: all 0.2s ease;
+    }
+
+    .mobile-nav-link:hover {
+        background-color: #fcedeb;
+        color: #79551e;
+    }
+
+    .mobile-nav-link .material-symbols-outlined {
+        font-size: 1.25rem;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const menuButton = document.getElementById("mobileMenuButton");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const menuIcon = document.getElementById("mobileMenuIcon");
+
+        if (!menuButton || !mobileMenu || !menuIcon) return;
+
+        menuButton.addEventListener("click", function () {
+
+            const isOpen = !mobileMenu.classList.contains("hidden");
+
+            mobileMenu.classList.toggle("hidden");
+
+            menuButton.setAttribute("aria-expanded", (!isOpen).toString());
+
+            menuButton.setAttribute(
+                "aria-label",
+                isOpen ? "Open navigation menu" : "Close navigation menu"
+            );
+
+            menuIcon.textContent = isOpen ? "menu" : "close";
+        });
+
+        // Close menu after clicking a navigation link
+        mobileMenu.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                mobileMenu.classList.add("hidden");
+                menuIcon.textContent = "menu";
+                menuButton.setAttribute("aria-expanded", "false");
+                menuButton.setAttribute("aria-label", "Open navigation menu");
+            });
+        });
+
+    });
+</script>
 
     <!-- Main Content -->
     <main class="flex-grow">
@@ -103,15 +418,255 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full bg-surface-container-low border-t border-black/5 py-12">
-        <div class="max-w-[1320px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-on-surface-variant">
-            <p>&copy; @DateTime.Now.Year EMA Luxury Sanctuary &amp; Suites. All rights reserved.</p>
-            <div class="flex items-center gap-6">
-                <a asp-controller="Home" asp-action="Index" class="hover:text-primary transition">Privacy Policy</a>
-                <a asp-controller="Concierge" asp-action="Index" class="hover:text-primary transition">Concierge Support</a>
+    <!-- Footer -->
+    <footer class="w-full bg-[#241d17] text-white">
+
+        <!-- Main Footer -->
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-12 py-14 lg:py-16">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-14">
+
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="inline-flex items-center gap-2 mb-5">
+
+                        <span class="material-symbols-outlined text-[#d8b477] text-3xl">
+                            hotel_class
+                        </span>
+
+                        <span class="font-headline text-2xl font-bold tracking-tight">
+                            EMA Hotel
+                        </span>
+
+                    </a>
+
+                    <p class="text-sm leading-7 text-white/65 max-w-sm">
+                        A refined stay where timeless elegance meets thoughtful
+                        hospitality, comfort, and modern luxury.
+                    </p>
+
+                    <div class="mt-6 flex items-center gap-3">
+
+                        <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10">
+                            <span class="material-symbols-outlined text-lg text-[#d8b477]">
+                                hotel
+                            </span>
+                        </span>
+
+                        <span class="text-xs text-white/50">
+                            Luxury • Comfort • Hospitality
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Explore -->
+                <div>
+
+                    <h3 class="font-headline text-lg font-semibold mb-5">
+                        Explore
+                    </h3>
+
+                    <ul class="space-y-3 text-sm">
+
+                        <li>
+                            <a asp-controller="Home"
+                               asp-action="Index"
+                               class="footer-link">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home"
+                               asp-action="About"
+                               class="footer-link">
+                                About Us
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Rooms"
+                               asp-action="Index"
+                               class="footer-link">
+                                Rooms &amp; Suites
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Concierge"
+                               asp-action="Index"
+                               class="footer-link">
+                                AI Concierge
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Guest Services -->
+                <div>
+
+                    <h3 class="font-headline text-lg font-semibold mb-5">
+                        Guest Services
+                    </h3>
+
+                    <ul class="space-y-3 text-sm">
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            @if (!User.IsInRole("Admin") && !User.IsInRole("Receptionist"))
+                            {
+                                <li>
+                                    <a asp-controller="Booking"
+                                       asp-action="MyBookings"
+                                       class="footer-link">
+                                        My Bookings
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Account"
+                                       asp-action="Profile"
+                                       class="footer-link">
+                                        My Profile
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-controller="Account"
+                                   asp-action="Login"
+                                   class="footer-link">
+                                    Sign In
+                                </a>
+                            </li>
+                        }
+
+                        <li>
+                            <a asp-controller="Concierge"
+                               asp-action="Index"
+                               class="footer-link">
+                                Concierge Support
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Contact -->
+                <div>
+
+                    <h3 class="font-headline text-lg font-semibold mb-5">
+                        Contact
+                    </h3>
+
+                    <ul class="space-y-4 text-sm text-white/65">
+
+                        <li class="flex items-start gap-3">
+
+                            <span class="material-symbols-outlined text-[#d8b477] text-xl">
+                                location_on
+                            </span>
+
+                            <span>
+                                EMA Hotel &amp; Suites<br />
+                                Egypt
+                            </span>
+
+                        </li>
+
+                        <li class="flex items-center gap-3">
+
+                            <span class="material-symbols-outlined text-[#d8b477] text-xl">
+                                mail
+                            </span>
+
+                            <span>
+                                info@emahotel.com
+                            </span>
+
+                        </li>
+
+                        <li class="flex items-center gap-3">
+
+                            <span class="material-symbols-outlined text-[#d8b477] text-xl">
+                                phone
+                            </span>
+
+                            <span>
+                                +20 100 000 0000
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
             </div>
+
         </div>
+
+
+        <!-- Bottom Footer -->
+        <div class="border-t border-white/10">
+
+            <div class="max-w-[1320px] mx-auto px-6 lg:px-12 py-5">
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/45">
+
+                    <p class="text-center sm:text-left">
+                        &copy; @DateTime.Now.Year EMA Luxury Sanctuary &amp; Suites.
+                        All rights reserved.
+                    </p>
+
+                    <div class="flex items-center gap-6">
+
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="hover:text-[#d8b477] transition">
+                            Privacy Policy
+                        </a>
+
+                        <a asp-controller="Concierge"
+                           asp-action="Index"
+                           class="hover:text-[#d8b477] transition">
+                            Concierge Support
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </footer>
+
+
+    <style>
+            .footer-link {
+                color: rgba(255, 255, 255, 0.65);
+                transition: color 0.2s ease;
+            }
+
+                .footer-link:hover {
+                    color: #d8b477;
+                }
+    </style>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

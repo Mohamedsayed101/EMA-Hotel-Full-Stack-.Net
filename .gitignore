@@ -1,5 +1,8 @@
 # Sensitive local configuration
 appsettings.Development.json
+appsettings.Production.json
+
+# User-specific Visual Studio files
 *.user
 *.userosscache
 *.suo
@@ -10,3 +13,9 @@ obj/
 .vs/
 [Dd]ebug/
 [Rr]elease/
+
+# User-uploaded files
+wwwroot/uploads/
+
+# Local publish profile user settings
+Properties/PublishProfiles/*.pubxml.user

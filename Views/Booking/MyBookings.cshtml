@@ -44,6 +44,28 @@
             </div>
         </section>
 
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <section class="w-full px-6 lg:px-margin pt-6">
+                <div class="max-w-[1320px] mx-auto">
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-800 text-sm font-medium">
+                        @TempData["SuccessMessage"]
+                    </div>
+                </div>
+            </section>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <section class="w-full px-6 lg:px-margin pt-6">
+                <div class="max-w-[1320px] mx-auto">
+                    <div class="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-red-800 text-sm font-medium">
+                        @TempData["ErrorMessage"]
+                    </div>
+                </div>
+            </section>
+        }
+
         <!-- Filter Tabs -->
         <section class="w-full bg-surface px-6 lg:px-margin pt-6 pb-2">
             <div class="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -195,12 +217,18 @@
         </span>
     </div>
 }
-
-                                        @if (item.Status == Hotel_MVC.Enums.BookingStatus.Confirmed && item.CheckInDate > DateTime.Today.AddDays(1))
+                                        @if (item.Status == Hotel_MVC.Enums.BookingStatus.Confirmed)
                                         {
-                                            <form asp-controller="Booking" asp-action="CancelBooking" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                                            <form asp-controller="Booking"
+                                                  asp-action="CancelBooking"
+                                                  asp-route-id="@item.Id"
+                                                  method="post"
+                                                  onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+
                                                 @Html.AntiForgeryToken()
-                                                <button type="submit" class="px-4 py-2 rounded-lg bg-red-50 text-red-700 text-xs font-semibold hover:bg-red-100 transition">
+
+                                                <button type="submit"
+                                                        class="px-4 py-2 rounded-lg bg-red-50 text-red-700 text-xs font-semibold hover:bg-red-100 transition">
                                                     Cancel Stay
                                                 </button>
                                             </form>
